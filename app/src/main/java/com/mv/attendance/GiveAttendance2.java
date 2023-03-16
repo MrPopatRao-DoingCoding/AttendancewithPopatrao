@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.budiyev.android.codescanner.CodeScanner;
@@ -38,6 +39,7 @@ public class GiveAttendance2 extends AppCompatActivity {
 
         CodeScannerView scannerView = findViewById(R.id.camView_Mode2);
         mCodeScanner = new CodeScanner(this, scannerView);
+        mCodeScanner.startPreview();
         mCodeScanner.setDecodeCallback(new DecodeCallback() {
             @Override
             public void onDecoded(@NonNull Result result) {
@@ -46,6 +48,7 @@ public class GiveAttendance2 extends AppCompatActivity {
                     public void run() {
                         long unixTimeStamp = System.currentTimeMillis() / 1000L;
                         String textFromQRCode = result.getText();
+                        Log.d("QWERT", textFromQRCode);
                         //TODO: create a boolean function 'check_textFromQRCode_isCorrect(textFromQRCode, unixTimeStamp)' to check whether the qrcode is in correct format in class Mode2QRCodeProperties
                         if(Mode2QRCodeProperties.check_textFromQRCode_isCorrect(textFromQRCode, unixTimeStamp) == true){
                             //QR Code is in correct format. Now we need to up-load it
@@ -60,6 +63,7 @@ public class GiveAttendance2 extends AppCompatActivity {
                         }
 
 
+                        mCodeScanner.startPreview();
                         }
                     });
                 }
@@ -67,6 +71,10 @@ public class GiveAttendance2 extends AppCompatActivity {
             });
         }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
+}
 
     //After scanning successfully ://

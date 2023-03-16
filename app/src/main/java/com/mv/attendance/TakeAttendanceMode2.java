@@ -19,14 +19,14 @@ public class TakeAttendanceMode2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_take_attendance_mode2);
 
-        idBtoGiveAttendance2 = findViewById(R.id.idBtoTakeAttendance2);
+        idBtoGiveAttendance2 = findViewById(R.id.idBtoGiveAttendance2);
         idBtoTakeAttendance2 = findViewById(R.id.idBtoTakeAttendance2);
 
         idBtoGiveAttendance2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(TakeAttendanceMode2.this, AttendanceListViewMode2.class);
-
+                Intent intent = new Intent(TakeAttendanceMode2.this, GiveAttendance2.class);
+                startActivity(intent);
 
 
             }
@@ -35,8 +35,8 @@ public class TakeAttendanceMode2 extends AppCompatActivity {
         idBtoTakeAttendance2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(TakeAttendanceMode2.this, GiveAttendance2.class);
-
+                Intent intent = new Intent(TakeAttendanceMode2.this, AttendanceListViewMode2.class);
+                startActivity(intent);
 
             }
         });

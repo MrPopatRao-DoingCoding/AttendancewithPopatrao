@@ -22,7 +22,7 @@ public class HomeActivity extends AppCompatActivity {
         giveAttendance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, GiveAttendance2.class);
+                Intent intent = new Intent(HomeActivity.this, GiveAttendance.class);
                 startActivity(intent);
             }
         });
@@ -30,7 +30,7 @@ public class HomeActivity extends AppCompatActivity {
         takeAttendance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, AttendanceListViewMode2.class);
+                Intent intent = new Intent(HomeActivity.this, TakeAttendanceList.class);
                 startActivity(intent);
             }
         });
