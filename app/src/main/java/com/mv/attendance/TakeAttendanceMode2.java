@@ -35,7 +35,7 @@ public class TakeAttendanceMode2 extends AppCompatActivity {
         idBtoTakeAttendance2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(TakeAttendanceMode2.this, .class);
+                Intent intent = new Intent(TakeAttendanceMode2.this, GiveAttendance2.class);
 
 
             }

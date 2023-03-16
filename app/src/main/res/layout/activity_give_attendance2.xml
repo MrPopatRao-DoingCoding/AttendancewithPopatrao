@@ -11,13 +11,13 @@
         android:layout_height="match_parent">
 
         <com.budiyev.android.codescanner.CodeScannerView
-            android:id="@+id/camView"
+            android:id="@+id/camView_Mode2"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </FrameLayout>
 
     <TextView
-        android:id="@+id/idTVScannedData2"
+        android:id="@+id/idTVScannedData2_Mode2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -25,7 +25,7 @@
         android:background="@color/black_shade_1"
         android:gravity="center"
         android:padding="10dp"
-        android:text="Scanned Data will appear here"
+        android:text="Scan the code shown by your teacher"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@color/yellow"
