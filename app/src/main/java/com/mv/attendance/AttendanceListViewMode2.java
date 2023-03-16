@@ -26,18 +26,18 @@ public class AttendanceListViewMode2 extends AppCompatActivity {
         //new_attendance_session_button=findViewById(R.id.buttonNewAttendance);
 
         List<String> ListElementsArrayList = new ArrayList<>();
-        List<AttendanceSession> ListAttendanceSession = new ArrayList<>();
-        if(!sh.getString("ListAttendanceSession", "").equals("")){
+        List<Lecture> ListOfAttendanceSessions = new ArrayList<>();
+        /*if(!sh.getString("ListAttendanceSession", "").equals("")){
             //Gson gson = new Gson();
             //String jsonFromPreviousActivityAttendanceSession = sh.getString("ListAttendanceSession", "");
             //ListElementsArrayList = gson.fromJson(jsonFromPreviousActivityAttendanceSession, String.class);
-            ListAttendanceSession = getList(sh.getString("ListAttendanceSession", ""), AttendanceSession.class);
+            ListOfAttendanceSessions = getList(sh.getString("ListAttendanceSession", ""), AttendanceSession.class);
 
-        }
+        }*/
 
-        if(ListAttendanceSession.size()>0){
-            for(int i=0;i<ListAttendanceSession.size();i++){
-                ListElementsArrayList.add(ListAttendanceSession.get(i).title);
+        if(ListOfAttendanceSessions.size()>0){
+            for(int i=0;i<ListOfAttendanceSessions.size();i++){
+                ListElementsArrayList.add(ListOfAttendanceSessions.get(i).Title);
             }
         }
 
