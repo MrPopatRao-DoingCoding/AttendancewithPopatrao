@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.budiyev.android.codescanner.CodeScanner;
@@ -19,6 +20,7 @@ public class GiveAttendance2 extends AppCompatActivity {
 
     private CodeScanner mCodeScanner;
     private TextView scannerTV;
+    private SeekBar zoomSeekBar;
 
     //List<AttendanceSession> ListAttendanceSession;
     //Integer countInListAttendance;
@@ -37,8 +39,13 @@ public class GiveAttendance2 extends AppCompatActivity {
 
         scannerTV.setText("Scan the code shown by your teacher");
 
+        zoomSeekBar = findViewById(R.id.zoomSeekBar);
+        zoomSeekBar.setProgress(0);
+
         CodeScannerView scannerView = findViewById(R.id.camView_Mode2);
         mCodeScanner = new CodeScanner(this, scannerView);
+        //mCodeScanner.setZoom(1);
+        Log.d("QWERT", "Zoom - " + mCodeScanner.getZoom());
         mCodeScanner.startPreview();
         mCodeScanner.setDecodeCallback(new DecodeCallback() {
             @Override
@@ -69,7 +76,26 @@ public class GiveAttendance2 extends AppCompatActivity {
                 }
                 ;
             });
+
+        zoomSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                mCodeScanner.setZoom(1+i/3);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
         }
+
+
 
     @Override
     protected void onStart() {

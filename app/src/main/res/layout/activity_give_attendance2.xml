@@ -29,6 +29,20 @@
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@color/yellow"
+        android:alpha="0.7"
         android:textSize="18sp" />
+    <SeekBar
+        android:id="@+id/zoomSeekBar"
+        android:max="100"
+        android:progress="50"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="28dp"
+        android:layout_marginLeft="28dp"
+        android:alpha="0.7"
+        android:background="@color/black_shade_1"
+        android:layout_marginBottom="28dp"/>
+
 
 </RelativeLayout>
