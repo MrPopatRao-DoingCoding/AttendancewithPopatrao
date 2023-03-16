@@ -75,7 +75,7 @@ public class GiveAttendance2 extends AppCompatActivity {
                         }
                     });
                 }
-                ;
+
             });
 
         zoomSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {

@@ -84,7 +84,7 @@ class GiveAttendance : AppCompatActivity() {
         val drawable = QrCodeDrawable(applicationContext, data, options)
 
 
-        if(kotlin.math.abs(sh.getLong("savedTime", 167666442) - getTime()) > 2) {
+        if(kotlin.math.abs(sh.getLong("savedTime", 167666442) - getTime()) > 20) {     ////////Change time here!!
             qrCodeIV.setImageDrawable(drawable)
         }
         Log.d("QWERT", "Saved - " + sh.getLong("savedTime", 167666442).toString() +"   Current - " + getTime())
