@@ -70,15 +70,3 @@ public class GiveAttendance2 extends AppCompatActivity {
     }
 
     //After scanning successfully ://
-
-
-
-
-
-
-
-
-
-
-
-}
