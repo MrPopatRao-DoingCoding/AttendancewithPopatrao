@@ -23,7 +23,7 @@ public class AttendanceListViewMode2 extends AppCompatActivity {
         setContentView(R.layout.activity_attendance_list_view_mode2);
 
         listViewPast=findViewById(R.id.listViewPast);
-        new_attendance_session_button=findViewById(R.id.buttonNewAttendance);
+        //new_attendance_session_button=findViewById(R.id.buttonNewAttendance);
 
         List<String> ListElementsArrayList = new ArrayList<>();
         List<AttendanceSession> ListAttendanceSession = new ArrayList<>();
