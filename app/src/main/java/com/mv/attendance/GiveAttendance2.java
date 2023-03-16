@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
+import com.google.gson.Gson;
 import com.google.zxing.Result;
 
 import java.util.List;
@@ -98,8 +99,15 @@ public class GiveAttendance2 extends AppCompatActivity {
 
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onStop() {
+        mCodeScanner.releaseResources();
+        super.onStop();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mCodeScanner.startPreview();
     }
 }
 
