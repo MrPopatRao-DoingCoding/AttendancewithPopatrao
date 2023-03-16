@@ -51,7 +51,7 @@ public class GiveAttendance2 extends AppCompatActivity {
                             //QR Code is in correct format. Now we need to up-load it
                             //TODO: create a constructor in Mode2QRCodeProperties which takes string of QRCode and assigns specific values inside the object.
                             Mode2QRCodeProperties QRProperties = new Mode2QRCodeProperties(textFromQRCode, unixTimeStamp);
-
+                            //TODO: create a function in Mode2QRCODEProperties which compares current time and QRCodeTime
                             if(QRProperties.checkIfTimeInBuffer(2)){
                                 //TODO: Upload details to firebase realtime database.
                             }
