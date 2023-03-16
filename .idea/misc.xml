@@ -24,7 +24,9 @@
         <entry key="..\:/users/madhur/Apps/AndroidStudio/Projects/Attendance/app/src/main/res/layout/activity_take_attendance_list.xml" value="0.264" />
         <entry key="..\:/users/madhur/Apps/AndroidStudio/Projects/Attendance/app/src/main/res/layout/list_item_background.xml" value="0.536" />
         <entry key="..\:/users/madhur/Apps/AndroidStudio/Projects/Attendance/app/src/main/res/layout/white_alert_dialogue_background.xml" value="0.1598731884057971" />
-        <entry key="..\:/users/madhur/Apps/AndroidStudio/Projects/AttendancewithPopatrao/app/src/main/res/layout/activity_home.xml" value="0.11302083333333333" />
+        <entry key="..\:/users/madhur/Apps/AndroidStudio/Projects/AttendancewithPopatrao/app/src/main/res/layout/activity_attendance_list_view_mode2.xml" value="0.264" />
+        <entry key="..\:/users/madhur/Apps/AndroidStudio/Projects/AttendancewithPopatrao/app/src/main/res/layout/activity_home.xml" value="0.264" />
+        <entry key="..\:/users/madhur/Apps/AndroidStudio/Projects/AttendancewithPopatrao/app/src/main/res/layout/activity_take_attendance_list.xml" value="0.151268115942029" />
       </map>
     </option>
   </component>
