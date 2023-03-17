@@ -1,5 +1,9 @@
 package com.mv.attendance;
 
+import android.util.Log;
+
+import java.util.Arrays;
+
 public class Lecture {
 
     String Title, Teacher_name;
@@ -25,8 +29,8 @@ public class Lecture {
         this.Title = Title;
     }
 
-    public Lecture() {
-    }
+
+
 
 
 

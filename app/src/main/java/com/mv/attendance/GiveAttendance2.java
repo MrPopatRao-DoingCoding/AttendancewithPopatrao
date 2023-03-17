@@ -60,11 +60,19 @@ public class GiveAttendance2 extends AppCompatActivity {
                         //TODO: create a boolean function 'check_textFromQRCode_isCorrect(textFromQRCode, unixTimeStamp)' to check whether the qrcode is in correct format in class Mode2QRCodeProperties
                         if(Mode2QRCodeProperties.check_textFromQRCode_isCorrect(textFromQRCode, unixTimeStamp) == true){
                             //QR Code is in correct format. Now we need to up-load it
+
                             //TODO: create a constructor in Mode2QRCodeProperties which takes string of QRCode and assigns specific values inside the object.
                             Mode2QRCodeProperties QRProperties = new Mode2QRCodeProperties(textFromQRCode, unixTimeStamp);
                             //TODO: create a function in Mode2QRCODEProperties which compares current time and QRCodeTime
+
                             if(QRProperties.checkIfTimeInBuffer(2)){
                                 //TODO: Upload details to firebase realtime database.
+                                SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
+                                String nameOfStudent = sh.getString("Name", "");
+                                String RollNoOfStudent = sh.getString("Roll No", "");
+                                String divOfStudent = sh.getString("Div", "");
+
+
                             }
 
 
