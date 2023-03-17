@@ -8,11 +8,13 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class TakeAttendanceMode2 extends AppCompatActivity {
 
 
+    ImageView setting_image;
     Button idBtoGiveAttendance2;
     Button idBtoTakeAttendance2;
     @SuppressLint("MissingInflatedId")
@@ -21,10 +23,19 @@ public class TakeAttendanceMode2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_take_attendance_mode2);
 
+        setting_image = findViewById(R.id.setting_image);
         idBtoGiveAttendance2 = findViewById(R.id.idBtoGiveAttendance2);
         idBtoTakeAttendance2 = findViewById(R.id.idBtoTakeAttendance2);
 
         SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
+
+        setting_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TakeAttendanceMode2.this, SettingsActivity.class);
+                startActivity(intent);
+            }
+        });
 
         idBtoGiveAttendance2.setOnClickListener(new View.OnClickListener() {
             @Override

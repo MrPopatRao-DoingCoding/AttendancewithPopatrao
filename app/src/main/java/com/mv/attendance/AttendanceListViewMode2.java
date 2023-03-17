@@ -48,6 +48,9 @@ public class AttendanceListViewMode2 extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+                    ListElementsArrayList.remove(i);
+                    adapter.notifyDataSetChanged();
+
                     return true;
                 }
             }
