@@ -8,8 +8,8 @@ public class Mode2QRCodeProperties {
     Lecture lecture;
     Student this_student;
     long time_when_QRCode_Scanned;
-    static String Title;
-    static String  Teacher_name;
+    static String Title1;
+    static String  Teacher1;
 
     String QR_CODE_Encoded_Title;
     String QR_CODE_Encoded_trName;
@@ -21,9 +21,9 @@ public class Mode2QRCodeProperties {
 
         String[] strsplit = textFromQRCode.split("\\|");
         this.first = strsplit[0];
-        this.Title = strsplit[1];
-        this.Teacher_name = strsplit[2];
-        this.QR_CODE_Encoded_time = Integer.parseInt(strsplit[3]);
+        this.Title1 = strsplit[1];
+        this.Teacher1 = strsplit[2];
+        this.QR_CODE_Encoded_time = Long.parseLong(strsplit[3]);
 
 
 
@@ -46,7 +46,9 @@ public class Mode2QRCodeProperties {
 
     }
 
-    public boolean checkIfTimeInBuffer(int seconds) {
+    public boolean checkIfTimeInBuffer(long seconds) {
+        long unixTime = System.currentTimeMillis() / 1000L;
+        seconds = unixTime - QR_CODE_Encoded_time;
 
         return true;
     }

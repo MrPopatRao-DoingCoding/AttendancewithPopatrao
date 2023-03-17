@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.google.zxing.Result;
 
@@ -22,6 +24,9 @@ public class GiveAttendance2 extends AppCompatActivity {
     private CodeScanner mCodeScanner;
     private TextView scannerTV;
     private SeekBar zoomSeekBar;
+
+    FirebaseDatabase database;
+    DatabaseReference reference;
 
     //List<AttendanceSession> ListAttendanceSession;
     //Integer countInListAttendance;
@@ -57,20 +62,29 @@ public class GiveAttendance2 extends AppCompatActivity {
                         long unixTimeStamp = System.currentTimeMillis() / 1000L;
                         String textFromQRCode = result.getText();
                         Log.d("QWERT", textFromQRCode);
-                        //TODO: create a boolean function 'check_textFromQRCode_isCorrect(textFromQRCode, unixTimeStamp)' to check whether the qrcode is in correct format in class Mode2QRCodeProperties
+
                         if(Mode2QRCodeProperties.check_textFromQRCode_isCorrect(textFromQRCode, unixTimeStamp) == true){
                             //QR Code is in correct format. Now we need to up-load it
 
-                            //TODO: create a constructor in Mode2QRCodeProperties which takes string of QRCode and assigns specific values inside the object.
                             Mode2QRCodeProperties QRProperties = new Mode2QRCodeProperties(textFromQRCode, unixTimeStamp);
-                            //TODO: create a function in Mode2QRCODEProperties which compares current time and QRCodeTime
+
 
                             if(QRProperties.checkIfTimeInBuffer(2)){
-                                //TODO: Upload details to firebase realtime database.
+
                                 SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
                                 String nameOfStudent = sh.getString("Name", "");
-                                String RollNoOfStudent = sh.getString("Roll No", "");
+                                int RollNoOfStudent = Integer.parseInt(sh.getString("Roll No", ""));
                                 String divOfStudent = sh.getString("Div", "");
+
+                                Student std = new Student(RollNoOfStudent,divOfStudent,nameOfStudent);
+
+                                //Lecture Lecture1 = new Lecture(Mode2QRCodeProperties.Teacher1,Mode2QRCodeProperties.Title1);
+
+                                database = FirebaseDatabase.getInstance();
+                                reference = database.getReference("Students");
+
+                                reference.child(QRProperties.Teacher1).setValue(QRProperties.Title1);
+                                reference.child(QRProperties.Title1).setValue(std);
 
 
                             }
