@@ -26,6 +26,7 @@ public class AttendanceListViewMode2 extends AppCompatActivity {
         //new_attendance_session_button=findViewById(R.id.buttonNewAttendance);
 
         List<String> ListElementsArrayList = new ArrayList<>();
+        //ListElementsArrayList.add("Hello");
         List<Lecture> ListOfAttendanceSessions = new ArrayList<>();
         /*if(!sh.getString("ListAttendanceSession", "").equals("")){
             //Gson gson = new Gson();

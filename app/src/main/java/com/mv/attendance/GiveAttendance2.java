@@ -89,7 +89,7 @@ public class GiveAttendance2 extends AppCompatActivity {
         zoomSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                mCodeScanner.setZoom(1+i/3);
+                mCodeScanner.setZoom(1+i/2);
             }
 
             @Override

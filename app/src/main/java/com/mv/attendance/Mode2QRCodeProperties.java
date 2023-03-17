@@ -37,7 +37,7 @@ public class Mode2QRCodeProperties {
 
         }
 
-        if(first != "{}"){return false;}
+        if(!first.equals("{}")){return false;}
         if(textFromQRCode==null||textFromQRCode.isEmpty()){return false;}
         if(count!=4){return false;}
 

@@ -8,6 +8,22 @@
 
     tools:context=".HomeActivity">
 
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ImageView
+            android:id="@+id/setting_image"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/ic_menu_manage" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
     <ImageView
         android:layout_width="200dp"
         android:layout_height="200dp"
