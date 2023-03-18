@@ -2,12 +2,17 @@ package com.mv.attendance;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
@@ -36,10 +41,15 @@ public class GiveAttendance2 extends AppCompatActivity {
     //SharedPreferences.Editor myEdit;
 
 
+    private static final int CAMERA_PERMISSION_CODE = 100;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_give_attendance2);
+
+        checkPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE);
 
         scannerTV = findViewById(R.id.idTVScannedData2_Mode2);
 
@@ -121,6 +131,38 @@ public class GiveAttendance2 extends AppCompatActivity {
             }
         });
         }
+
+    public void checkPermission(String permission, int requestCode)
+    {
+        // Checking if permission is not granted
+        if (ContextCompat.checkSelfPermission(GiveAttendance2.this, permission) == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(GiveAttendance2.this, new String[] { permission }, requestCode);
+        }
+        else {
+            //Toast.makeText(GiveAttendance2.this, "Permission already granted", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults)
+    {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == CAMERA_PERMISSION_CODE) {
+
+            // Checking whether user granted the permission or not.
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                // Showing the toast message
+                Toast.makeText(GiveAttendance2.this, "Camera Permission Granted", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Toast.makeText(GiveAttendance2.this, "Camera Permission Denied", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 
 
 
