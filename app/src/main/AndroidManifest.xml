@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Attendance">
         <activity
+            android:name=".Mode2TakeAttendanceShowQRCode"
+            android:exported="false" />
+        <activity
             android:name=".AttendanceListViewMode2"
             android:exported="false" />
         <activity

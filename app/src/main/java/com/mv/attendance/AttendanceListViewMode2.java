@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -68,6 +71,8 @@ public class AttendanceListViewMode2 extends AppCompatActivity {
             }
         );
 
+        SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+
         new_attendance_session_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,6 +90,7 @@ public class AttendanceListViewMode2 extends AppCompatActivity {
                 //final EditText inputEditTextRollNoOfStudent = new EditText(getApplicationContext());
                 inputEditTextTitle.setHint("Title");
                 inputEditTextNameOfTeacher.setHint("Teacher Name");
+                inputEditTextNameOfTeacher.setText(sh.getString("Name", ""));
                 //inputEditTextRollNoOfStudent.setHint("Roll No.");
                 //inputEditTextRollNoOfStudent.setInputType(InputType.TYPE_CLASS_NUMBER);
                 layout.addView(inputEditTextTitle);
@@ -105,6 +111,10 @@ public class AttendanceListViewMode2 extends AppCompatActivity {
                                 myEdit.putString("ListAttendanceSession", jsonToListElementsAdapterList);
                                 myEdit.apply();
                                 mainDisplayAttendanceTextView.setText(finalListAttendanceSession[0].get(countInListAttendance).generateStringNonRepeatative());*/
+                                Intent intent = new Intent(AttendanceListViewMode2.this, Mode2TakeAttendanceShowQRCode.class);
+                                intent.putExtra("Title", inputEditTextTitle.getText().toString());
+                                intent.putExtra("TeacherName", inputEditTextNameOfTeacher.getText().toString());
+                                startActivity(intent);
                                 dialog.dismiss();
                             }
                         })
