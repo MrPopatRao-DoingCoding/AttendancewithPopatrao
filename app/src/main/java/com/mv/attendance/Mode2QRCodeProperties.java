@@ -20,9 +20,9 @@ public class Mode2QRCodeProperties {
         //{}|MAS|Popatrao|1679044524|
 
         String[] strsplit = textFromQRCode.split("\\|");
-        this.first = strsplit[0];
-        this.Title1 = strsplit[1];
-        this.Teacher1 = strsplit[2];
+        first = strsplit[0];
+        Title1 = strsplit[1];
+        Teacher1 = strsplit[2];
         this.QR_CODE_Encoded_time = Long.parseLong(strsplit[3]);
 
 
@@ -32,12 +32,14 @@ public class Mode2QRCodeProperties {
 
     public static boolean check_textFromQRCode_isCorrect(String textFromQRCode, long unixTimeStamp){
         int count = 0;
-        for(int i=0; i<=textFromQRCode.length();i++){
+        for(int i=0; i<textFromQRCode.length();i++){
             if((textFromQRCode.charAt(i) == '|')){count++;}
 
         }
 
-        if(!first.equals("{}")){return false;}
+        String first_two_digits = textFromQRCode.substring(0, 2);
+
+        if(!first_two_digits.equals("{}")){return false;}
         if(textFromQRCode==null||textFromQRCode.isEmpty()){return false;}
         if(count!=4){return false;}
 
