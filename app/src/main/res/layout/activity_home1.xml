@@ -18,7 +18,8 @@
             android:layout_height="60dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_menu_manage" />
+            android:src="@drawable/ic_baseline_settings_24"
+            app:tint="@color/green" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
