@@ -20,7 +20,7 @@ import android.widget.ImageView;
 
 public class HomeActivity1 extends AppCompatActivity {
 
-    ImageView setting_image;
+    ImageView setting_image, mode2Img, mode1Img;
     CardView Mode1_card;
     CardView Mode2_card;
 
@@ -32,6 +32,8 @@ public class HomeActivity1 extends AppCompatActivity {
         setContentView(R.layout.activity_home1);
 
         setting_image = findViewById(R.id.setting_image);
+        mode2Img = findViewById(R.id.imgOfMode2);
+        mode1Img = findViewById(R.id.imgOfMode1);
         Mode1_card = findViewById(R.id.idMode1_card);
         Mode2_card = findViewById(R.id.idMode2_card);
 
@@ -77,14 +79,14 @@ public class HomeActivity1 extends AppCompatActivity {
         });
     }
 
-/*
+
     @Override
     protected void onStart() {
         super.onStart();
-        AnimatedVectorDrawable d = (AnimatedVectorDrawable) getDrawable(R.drawable.settings_anim);
-        AnimatedVectorDrawable d_rev = (AnimatedVectorDrawable) getDrawable(R.drawable.settings_anim_reverse);
+        AnimatedVectorDrawable d = (AnimatedVectorDrawable) getDrawable(R.drawable.projector_mode2_animation);
+        AnimatedVectorDrawable d_rev = (AnimatedVectorDrawable) getDrawable(R.drawable.projector_mode2_animation_reverese);
 
-        setting_image.setImageDrawable(d);
+        mode2Img.setImageDrawable(d);
         //d.start();
 
         d.registerAnimationCallback(new Animatable2.AnimationCallback() {
@@ -95,7 +97,7 @@ public class HomeActivity1 extends AppCompatActivity {
                     @Override
                     public void run() {
                         //Do something after 100ms
-                        setting_image.setImageDrawable(d_rev);
+                        mode2Img.setImageDrawable(d_rev);
                         d_rev.start();
                         Log.d("QWERT", "unfdnvvfvfvffvvvvvvvvvvvvvvvvvvv");
                     }
@@ -112,10 +114,54 @@ public class HomeActivity1 extends AppCompatActivity {
                     @Override
                     public void run() {
                         //Do something after 100ms
-                        setting_image.setImageDrawable(d);
+                        mode2Img.setImageDrawable(d);
                         d.start();
                     }
                 }, 800);
+
+            }
+        });
+
+        d.start();
+
+
+
+
+        AnimatedVectorDrawable d2 = (AnimatedVectorDrawable) getDrawable(R.drawable.phone_qr_mode1_animation);
+        AnimatedVectorDrawable d2_rev = (AnimatedVectorDrawable) getDrawable(R.drawable.phone_qr_mode1_animation_reverse);
+
+        mode1Img.setImageDrawable(d2);
+        //d.start();
+
+        d.registerAnimationCallback(new Animatable2.AnimationCallback() {
+            @Override
+            public void onAnimationEnd(Drawable drawable) {
+                final Handler handler = new Handler(Looper.getMainLooper());
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //Do something after 100ms
+                        mode1Img.setImageDrawable(d2_rev);
+                        d2_rev.start();
+                        Log.d("QWERT", "unfdnvvfvfvffvvvvvvvvvvvvvvvvvvv");
+                    }
+                }, 1200);
+
+            }
+        });
+
+        d_rev.registerAnimationCallback(new Animatable2.AnimationCallback() {
+            @Override
+            public void onAnimationEnd(Drawable drawable) {
+                final Handler handler = new Handler(Looper.getMainLooper());
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //Do something after 100ms
+                        mode1Img.setImageDrawable(d2);
+                        d2.start();
+                    }
+                }, 1200);
 
             }
         });
@@ -126,7 +172,7 @@ public class HomeActivity1 extends AppCompatActivity {
             Log.d("QWERT", "onCreate: instancefound" + d.toString());
             animationOfSettings = (AnimatedVectorDrawable) d;
             animationOfSettings.start();
-        }*h
+        }*/
     }
-    */
+
 }
