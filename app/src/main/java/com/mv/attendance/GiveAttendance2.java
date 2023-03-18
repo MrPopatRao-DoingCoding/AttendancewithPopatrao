@@ -84,7 +84,11 @@ public class GiveAttendance2 extends AppCompatActivity {
                                 reference = database.getReference("Students");
 
                                 reference.child(QRProperties.Teacher1).setValue(QRProperties.Title1);
-                                reference.child(QRProperties.Title1).setValue(std);
+                                reference.child(QRProperties.Title1).setValue(nameOfStudent);
+                                reference.child(QRProperties.Title1).setValue(RollNoOfStudent);
+                                reference.child(QRProperties.Title1).setValue(divOfStudent);
+
+
 
 
                             }
