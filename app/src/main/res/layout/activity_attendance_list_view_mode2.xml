@@ -30,8 +30,8 @@
         android:background="@drawable/grey_alert_dialogue_background"
         tools:listitem="@layout/list_item_background" />
 
-    <!--ImageButton
-        android:id="@+id/buttonNewAttendance"
+    <ImageButton
+        android:id="@+id/buttonNewAttendanceMode2ThroughQRCode"
         android:layout_width="55dp"
         android:layout_height="55dp"
         android:src="@drawable/ic_baseline_add_24"
@@ -44,6 +44,6 @@
         android:stateListAnimator="@null"
         android:foreground="?attr/selectableItemBackground"
         android:clickable="true"
-        android:background="@drawable/button_background_green"/-->
+        android:background="@drawable/button_background_green"/>
 
 </RelativeLayout>
