@@ -51,4 +51,6 @@ dependencies {
     implementation 'com.github.alexzhirkevich:custom-qr-generator:1.5.6'
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.7.20'
+
+    implementation 'androidx.biometric:biometric:1.0.1'
 }

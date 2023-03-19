@@ -24,10 +24,6 @@ public class Mode2QRCodeProperties {
         Title1 = strsplit[1];
         Teacher1 = strsplit[2];
         this.QR_CODE_Encoded_time = Long.parseLong(strsplit[3]);
-
-
-
-
     }
 
     public static boolean check_textFromQRCode_isCorrect(String textFromQRCode, long unixTimeStamp){

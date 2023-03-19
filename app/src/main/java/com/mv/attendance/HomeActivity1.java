@@ -1,6 +1,9 @@
 package com.mv.attendance;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.biometric.BiometricPrompt;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 
@@ -10,6 +13,7 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.Animatable2;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -20,6 +24,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.concurrent.Executor;
 
 public class HomeActivity1 extends AppCompatActivity {
 
@@ -31,6 +38,7 @@ public class HomeActivity1 extends AppCompatActivity {
 
     //private AnimatedVectorDrawable animationOfSettings;
 
+    @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +89,39 @@ public class HomeActivity1 extends AppCompatActivity {
             }
         });
 
+
+
+        // creating a variable for our Executor
+        Executor executor = ContextCompat.getMainExecutor(this);
+        // this will give us result of AUTHENTICATION
+        final BiometricPrompt biometricPrompt = new BiometricPrompt(HomeActivity1.this, executor, new BiometricPrompt.AuthenticationCallback() {
+            @Override
+            public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
+                super.onAuthenticationError(errorCode, errString);
+            }
+
+            // THIS METHOD IS CALLED WHEN AUTHENTICATION IS SUCCESS
+            @Override
+            public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
+                super.onAuthenticationSucceeded(result);
+                Intent intent = new Intent(HomeActivity1.this, GiveAttendance2.class);
+                startActivity(intent);
+                //Toast.makeText(getApplicationContext(), "Login Success", Toast.LENGTH_SHORT).show();
+                //loginbutton.setText("Login Successful");
+            }
+            @Override
+            public void onAuthenticationFailed() {
+                super.onAuthenticationFailed();
+            }
+        });
+        // creating a variable for our promptInfo
+        // BIOMETRIC DIALOG
+        final BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder().setTitle("Security! 😁")
+                .setDescription("Use your fingerprint to access the next screen!").setNegativeButtonText("Cancel").build();
+
+
+
+
         Mode2_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,8 +129,7 @@ public class HomeActivity1 extends AppCompatActivity {
                     Intent intent = new Intent(HomeActivity1.this, AttendanceListViewMode2.class);
                     startActivity(intent);
                 } else {
-                    Intent intent = new Intent(HomeActivity1.this, GiveAttendance2.class);
-                    startActivity(intent);
+                    biometricPrompt.authenticate(promptInfo);
                 }
             }
         });
