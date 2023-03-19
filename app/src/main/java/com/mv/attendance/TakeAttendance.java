@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -49,10 +50,14 @@ public class TakeAttendance extends AppCompatActivity {
     SharedPreferences sh;
     SharedPreferences.Editor myEdit;
 
+    private static final int CAMERA_PERMISSION_CODE = 100;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_take_attendance);
+
+        checkPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE);
 
 
         Gson gson = new Gson();
@@ -197,17 +202,34 @@ public class TakeAttendance extends AppCompatActivity {
         mCodeScanner.startPreview();
     }
 
+    public void checkPermission(String permission, int requestCode)
+    {
+        // Checking if permission is not granted
+        if (ContextCompat.checkSelfPermission(TakeAttendance.this, permission) == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(TakeAttendance.this, new String[] { permission }, requestCode);
+        }
+        else {
+            //Toast.makeText(GiveAttendance2.this, "Permission already granted", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults)
+    {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(grantResults.length>0){
-            boolean camerAccepted = grantResults[0]==PackageManager.PERMISSION_GRANTED;
-            boolean vibrationAccepted = grantResults[1]==PackageManager.PERMISSION_GRANTED;
-            if(camerAccepted && vibrationAccepted){
-                Toast.makeText(this, "Permissions Granted!", Toast.LENGTH_SHORT).show();
+
+        if (requestCode == CAMERA_PERMISSION_CODE) {
+
+            // Checking whether user granted the permission or not.
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                // Showing the toast message
+                Toast.makeText(TakeAttendance.this, "Camera Permission Granted", Toast.LENGTH_SHORT).show();
             }
-            else{
-                Toast.makeText(this, "Permissions denied\nGrant permissions first!", Toast.LENGTH_SHORT).show();
+            else {
+                Toast.makeText(TakeAttendance.this, "Camera Permission Denied", Toast.LENGTH_SHORT).show();
             }
         }
     }

@@ -2,6 +2,7 @@ package com.mv.attendance;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,12 +18,16 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 public class HomeActivity1 extends AppCompatActivity {
 
     ImageView setting_image, mode2Img, mode1Img;
     CardView Mode1_card;
     CardView Mode2_card;
+    RelativeLayout backgroundRelativeLayout;
+    TextView heading_text;
 
     //private AnimatedVectorDrawable animationOfSettings;
 
@@ -36,13 +41,24 @@ public class HomeActivity1 extends AppCompatActivity {
         mode1Img = findViewById(R.id.imgOfMode1);
         Mode1_card = findViewById(R.id.idMode1_card);
         Mode2_card = findViewById(R.id.idMode2_card);
+        backgroundRelativeLayout = findViewById(R.id.activity_home1_background);
+        heading_text = findViewById(R.id.idTVHeading);
 
         SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
         String type = sh.getString("TypeOfPerson", "Not Set");
 
-        Animation rotation = AnimationUtils.loadAnimation(HomeActivity1.this, R.anim.rotate_settings_logo);
+        if(type.equals("Teacher")){
+            backgroundRelativeLayout.setBackgroundResource(R.drawable.background_home_gradient_teacher);
+            setting_image.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_light_blue), android.graphics.PorterDuff.Mode.SRC_IN);
+            heading_text.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.dark_light_blue));
+            Mode1_card.setCardBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.dark_light_blue));
+            Mode2_card.setCardBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.dark_light_blue));
+        }
+
+
+        /*Animation rotation = AnimationUtils.loadAnimation(HomeActivity1.this, R.anim.rotate_settings_logo);
         rotation.setFillAfter(true);
-        setting_image.startAnimation(rotation);
+        setting_image.startAnimation(rotation);*/
 
         setting_image.setOnClickListener(new View.OnClickListener() {
             @Override

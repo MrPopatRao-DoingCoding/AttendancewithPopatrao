@@ -4,8 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white_shade_1"
-    tools:context=".HomeActivity1">
+    android:background="@drawable/background_home_gradient"
+    android:layout_margin="10dp"
+    android:elevation="10dp"
+    tools:context=".HomeActivity1"
+    android:id="@+id/activity_home1_background">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -18,8 +21,8 @@
             android:layout_height="60dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/ic_baseline_settings_24"
-            app:tint="@color/green" />
+            android:src="@drawable/ic_baseline_person_24"
+            app:tint="@color/dark_green" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
@@ -36,11 +39,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/idIVLogo"
         android:layout_marginTop="20dp"
+        android:fontFamily="@font/freckle_face"
         android:gravity="center"
         android:padding="4dp"
         android:text="ATTENDANCE"
         android:textAlignment="center"
-        android:textColor="@color/green"
+        android:textColor="@color/dark_green"
         android:textSize="40sp"
         android:textStyle="bold" />
 
@@ -82,29 +86,30 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:text="Mode 1"
                 android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:fontFamily="@font/freckle_face"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.6"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.5"
-                android:text="Mode 1"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                app:layout_constraintVertical_bias="0.5" />
 
             <ImageView
                 android:id="@+id/imgOfMode1"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:src="@drawable/phone_qr_mode1_animation"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.3"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.5"
-                android:src="@drawable/phone_qr_mode1_animation"
-                app:tint="@color/white"/>
+                app:tint="@color/white" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -149,16 +154,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:text="Mode 2"
                 android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:fontFamily="@font/freckle_face"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.6"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.5"
-                android:text="Mode 2"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                app:layout_constraintVertical_bias="0.5" />
 
             <ImageView
                 android:id="@+id/imgOfMode2"
