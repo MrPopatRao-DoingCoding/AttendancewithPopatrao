@@ -170,6 +170,8 @@ public class AttendanceListViewMode2 extends AppCompatActivity {
 
                     Log.d("QWERT", "Titles   - " + String.valueOf(childrenList));
 
+                    
+
 
                 }
 
