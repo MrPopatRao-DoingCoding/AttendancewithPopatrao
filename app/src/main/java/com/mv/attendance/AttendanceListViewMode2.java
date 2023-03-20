@@ -1,5 +1,6 @@
 package com.mv.attendance;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -21,6 +22,11 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -30,6 +36,10 @@ public class AttendanceListViewMode2 extends AppCompatActivity {
 
     ListView listViewPast;
     ImageButton new_attendance_session_button, button_sort_alphabetically;
+
+    FirebaseDatabase database;
+
+    DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,6 +147,27 @@ public class AttendanceListViewMode2 extends AppCompatActivity {
                 alert.getWindow().setAttributes(lp);
             }
         });
+
+        database = FirebaseDatabase.getInstance();
+        reference = database.getReference("Lectures");
+
+        reference.child("Student").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if(task.isSuccessful()){
+
+                    DataSnapshot dataSnapshot = task.getResult();
+                    String name = String.valueOf(dataSnapshot.getValue());
+                    //System.out.println(name);
+
+
+                }
+
+            }
+        });
+
+
+
 
     }
 }
