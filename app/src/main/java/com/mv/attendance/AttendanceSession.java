@@ -66,7 +66,9 @@ public class AttendanceSession {
 
 
     public void sortStudents(){
-        present.sort(new Sortbyroll());
+        if (present!=null && present.size()!= 0) {
+            present.sort(new Sortbyroll());
+        }
     }
 
     public String generateString(){
