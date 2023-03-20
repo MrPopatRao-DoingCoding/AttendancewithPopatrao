@@ -150,10 +150,10 @@ public class AttendanceListViewMode2 extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("Lectures");
 
-        reference.child(sh.getString("Name", "")).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        reference.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if(task.isSuccessful()){
+                if(task.isSuccessful()) {
 
                     DataSnapshot dataSnapshot = task.getResult();
                     String name = String.valueOf(dataSnapshot.getValue());
@@ -161,24 +161,45 @@ public class AttendanceListViewMode2 extends AppCompatActivity {
                     Log.d("QWERT", "Data:  " + name);
                     Log.d("QWERT", "Children:  " + dataSnapshot.getChildren());
                     Iterator<DataSnapshot> i = dataSnapshot.getChildren().iterator();
-                    List<String> childrenList = new ArrayList<>();
-                    while(i.hasNext()){
+                    List<String> teacherName = new ArrayList<>();
+                    while (i.hasNext()) {
                         //Log.d("QWERT", "ChildrenValues:  " + i.next());
-                        childrenList.add(i.next().getKey());
+                        teacherName.add(i.next().getKey());
                     }
 
-                    Log.d("QWERT", "Titles   - " + String.valueOf(childrenList));
+                    if(teacherName.contains(sh.getString("Name", ""))){
 
-                    final ArrayAdapter<String> adapter = new ArrayAdapter<> (AttendanceListViewMode2.this, android.R.layout.simple_list_item_1, childrenList);
-                    listViewPast.setAdapter(adapter);
+                        reference.child(sh.getString("Name", "")).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DataSnapshot> task) {
+                            if (task.isSuccessful()) {
 
-                    
+                                DataSnapshot dataSnapshot = task.getResult();
+                                String name = String.valueOf(dataSnapshot.getValue());
+                                //System.out.println(name);
+                                Log.d("QWERT", "Data:  " + name);
+                                Log.d("QWERT", "Children:  " + dataSnapshot.getChildren());
+                                Iterator<DataSnapshot> i = dataSnapshot.getChildren().iterator();
+                                List<String> childrenList = new ArrayList<>();
+                                while (i.hasNext()) {
+                                    //Log.d("QWERT", "ChildrenValues:  " + i.next());
+                                    childrenList.add(i.next().getKey());
+                                }
+
+                                Log.d("QWERT", "Titles   - " + String.valueOf(childrenList));
+
+                                final ArrayAdapter<String> adapter = new ArrayAdapter<>(AttendanceListViewMode2.this, android.R.layout.simple_list_item_1, childrenList);
+                                listViewPast.setAdapter(adapter);
 
 
-                }
+                            }
 
-            }
-        });
+                        }
+                    });
+                    }
+                }}});
+
+
 
 
 
