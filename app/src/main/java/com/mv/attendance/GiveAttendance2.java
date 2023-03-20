@@ -22,7 +22,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.google.zxing.Result;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GiveAttendance2 extends AppCompatActivity {
 
@@ -94,8 +96,9 @@ public class GiveAttendance2 extends AppCompatActivity {
                                 reference = database.getReference("Lectures");
 
 
-
-                                reference.child(Mode2QRCodeProperties.Teacher1).child(Mode2QRCodeProperties.Title1).child("Student").setValue(nameOfStudent);
+                                Map<String, Object> addToFirebase = new HashMap<String,Object>();
+                                addToFirebase.put(nameOfStudent, QRProperties.QR_CODE_Encoded_time);
+                                reference.child(Mode2QRCodeProperties.Teacher1).child(Mode2QRCodeProperties.Title1).child("Student").updateChildren(addToFirebase);
 
 
                                 Toast.makeText(GiveAttendance2.this, "Attendance marked  successfully!", Toast.LENGTH_SHORT).show();
