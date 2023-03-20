@@ -28,12 +28,12 @@
         android:layout_width="409dp"
         android:layout_height="601dp"
         android:layout_below="@id/idTVHeading"
-        android:layout_marginTop="81dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="81dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
-        android:elevation="10dp"
         android:background="@drawable/grey_alert_dialogue_background"
+        android:elevation="10dp"
         tools:listitem="@layout/list_item_background" />
 
     <ImageButton

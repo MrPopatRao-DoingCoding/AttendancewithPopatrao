@@ -66,15 +66,14 @@ public class AttendanceListViewMode2 extends AppCompatActivity {
             }
         }
 
-        final ArrayAdapter<String> adapter = new ArrayAdapter<> (AttendanceListViewMode2.this, android.R.layout.simple_list_item_1, ListElementsArrayList);
-        listViewPast.setAdapter(adapter);
+
 
         listViewPast.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                     ListElementsArrayList.remove(i);
-                    adapter.notifyDataSetChanged();
+                    //adapter.notifyDataSetChanged();
 
                     return true;
                 }
@@ -169,6 +168,9 @@ public class AttendanceListViewMode2 extends AppCompatActivity {
                     }
 
                     Log.d("QWERT", "Titles   - " + String.valueOf(childrenList));
+
+                    final ArrayAdapter<String> adapter = new ArrayAdapter<> (AttendanceListViewMode2.this, android.R.layout.simple_list_item_1, childrenList);
+                    listViewPast.setAdapter(adapter);
 
                     
 
