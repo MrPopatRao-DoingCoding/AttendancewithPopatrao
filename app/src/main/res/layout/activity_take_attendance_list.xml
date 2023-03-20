@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white_shade_1"
+    android:background="@drawable/background_home_gradient_teacher"
+    android:layout_margin="10dp"
+    android:elevation="10dp"
     tools:context=".HomeActivity">
 
 
@@ -17,7 +19,7 @@
         android:padding="4dp"
         android:text="ATTENDANCE"
         android:textAlignment="center"
-        android:textColor="@color/green"
+        android:textColor="@color/dark_light_blue"
         android:textSize="40sp"
         android:textStyle="bold" />
 
@@ -27,6 +29,9 @@
         android:layout_height="601dp"
         android:layout_below="@id/idTVHeading"
         android:layout_marginTop="81dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/grey_alert_dialogue_background"
         tools:listitem="@layout/list_item_background" />
 
@@ -40,7 +45,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/button_background_green"
+        android:background="@drawable/button_background_blue"
         android:clickable="true"
         android:elevation="10dp"
         android:foreground="?attr/selectableItemBackground"

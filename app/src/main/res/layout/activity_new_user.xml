@@ -24,9 +24,10 @@
         android:layout_margin="40dp"
         android:layout_marginTop="48dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.172"
+        app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/whoAreYou"
+        app:cardBackgroundColor="@color/green"
         android:id="@+id/cardViewStudent">
 
         <TextView
@@ -48,9 +49,10 @@
         android:layout_margin="40dp"
         android:layout_marginTop="48dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.828"
+        app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/whoAreYou"
+        app:cardBackgroundColor="@color/light_blue"
         android:id="@+id/cardViewTeacher">
 
         <TextView

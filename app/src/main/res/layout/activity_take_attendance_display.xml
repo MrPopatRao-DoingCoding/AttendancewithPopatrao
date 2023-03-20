@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white_shade_1"
+    android:background="@drawable/background_home_gradient_teacher"
+    android:layout_margin="10dp"
+    android:elevation="10dp"
     tools:context=".HomeActivity">
 
 
@@ -17,7 +19,7 @@
         android:padding="4dp"
         android:text="ATTENDANCE"
         android:textAlignment="center"
-        android:textColor="@color/green"
+        android:textColor="@color/dark_light_blue"
         android:textSize="40sp"
         android:textStyle="bold" />
 
@@ -25,15 +27,20 @@
         android:layout_width="409dp"
         android:layout_height="601dp"
         android:layout_below="@id/textViewTitle"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp"
+        android:scrollbars="none"
         android:layout_marginTop="73dp">
 
         <TextView
             android:id="@+id/textViewPast"
-            android:layout_width="409dp"
-            android:layout_height="601dp"
-            android:background="@drawable/green_list_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/blue_list_background"
             android:text="Helloqw\nfef\n\ner\n\n\n\\n\nerefefef\ner\n\nn\\n\n\n\n\n\n\n\n\n\n\rrt\n\n\rtnntrrtrtn\n\n\trnrttr\n\n\nrtnrt\n\n\n\rt\n\n\nrr\n"
             android:textColor="@color/white"
+            android:elevation="10dp"
             android:textSize="20sp" />
     </ScrollView>
 
@@ -47,7 +54,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/button_background_green"
+        android:background="@drawable/button_background_blue"
         android:clickable="true"
         android:elevation="10dp"
         android:foreground="?attr/selectableItemBackground"
@@ -66,7 +73,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="100dp"
-        android:background="@drawable/button_background_green"
+        android:background="@drawable/button_background_blue"
         android:clickable="true"
         android:elevation="10dp"
         android:foreground="?attr/selectableItemBackground"
@@ -85,7 +92,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="180dp"
-        android:background="@drawable/button_background_green"
+        android:background="@drawable/button_background_blue"
         android:clickable="true"
         android:elevation="10dp"
         android:foreground="?attr/selectableItemBackground"
@@ -104,7 +111,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="260dp"
-        android:background="@drawable/button_background_green"
+        android:background="@drawable/button_background_blue"
         android:clickable="true"
         android:elevation="10dp"
         android:foreground="?attr/selectableItemBackground"

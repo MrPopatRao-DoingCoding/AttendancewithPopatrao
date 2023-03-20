@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:background="@drawable/green_list_background"
+    android:background="@drawable/blue_list_background"
     >
     <TextView
         android:id="@+id/txtDat"
