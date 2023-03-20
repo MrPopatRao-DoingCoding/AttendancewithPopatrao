@@ -91,14 +91,15 @@ public class GiveAttendance2 extends AppCompatActivity {
                                 //Lecture Lecture1 = new Lecture(Mode2QRCodeProperties.Teacher1,Mode2QRCodeProperties.Title1);
 
                                 database = FirebaseDatabase.getInstance();
-                                reference = database.getReference("Students");
+                                reference = database.getReference("Lectures");
 
 
 
-                                reference.child(QRProperties.Teacher1).setValue(QRProperties.Title1);
-                                reference.child(QRProperties.Title1).setValue(nameOfStudent);
-                                reference.child(QRProperties.Title1).setValue(RollNoOfStudent);
-                                reference.child(QRProperties.Title1).setValue(divOfStudent);
+                                reference.child(Mode2QRCodeProperties.Teacher1).child(Mode2QRCodeProperties.Title1).child("Student").setValue(nameOfStudent);
+
+
+                                Toast.makeText(GiveAttendance2.this, "Attendance marked  successfully!", Toast.LENGTH_SHORT).show();
+
 
 
 
