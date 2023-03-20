@@ -12,7 +12,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -27,9 +27,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class AttendanceListViewMode2 extends AppCompatActivity {
@@ -151,7 +151,7 @@ public class AttendanceListViewMode2 extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("Lectures");
 
-        reference.child("Student").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        reference.child(sh.getString("Name", "")).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if(task.isSuccessful()){
@@ -159,6 +159,16 @@ public class AttendanceListViewMode2 extends AppCompatActivity {
                     DataSnapshot dataSnapshot = task.getResult();
                     String name = String.valueOf(dataSnapshot.getValue());
                     //System.out.println(name);
+                    Log.d("QWERT", "Data:  " + name);
+                    Log.d("QWERT", "Children:  " + dataSnapshot.getChildren());
+                    Iterator<DataSnapshot> i = dataSnapshot.getChildren().iterator();
+                    List<String> childrenList = new ArrayList<>();
+                    while(i.hasNext()){
+                        //Log.d("QWERT", "ChildrenValues:  " + i.next());
+                        childrenList.add(i.next().getKey());
+                    }
+
+                    Log.d("QWERT", "Titles   - " + String.valueOf(childrenList));
 
 
                 }
