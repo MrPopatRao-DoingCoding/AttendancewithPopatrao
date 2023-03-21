@@ -11,7 +11,10 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import org.jsoup.Jsoup;
@@ -25,6 +28,7 @@ public class SettingsActivity extends AppCompatActivity {
     EditText editTextName;
     EditText editTextRollNo;
     EditText editTextDivision;
+    ImageButton clearDataButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,7 @@ public class SettingsActivity extends AppCompatActivity {
         editTextName = findViewById(R.id.editTextName);
         editTextRollNo = findViewById(R.id.editTextRollNo);
         editTextDivision = findViewById(R.id.editTextDivision);
+        clearDataButton = findViewById(R.id.ClearDataButton);
 
         SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
         editTextName.setText(sh.getString("Name", ""));
@@ -122,6 +127,12 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
 
+        clearDataButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clearData();
+            }
+        });
 
 
     }
@@ -143,10 +154,10 @@ public class SettingsActivity extends AppCompatActivity {
         return Long.parseLong(elements.text());
     }
 
-    public void onBackPressed() {
+    public void clearData() {
         AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
 
-        builder.setMessage("Do you really want to  logout?");
+        builder.setMessage("Do you really want to logout?");
 
         builder.setTitle("Alert!");
 
@@ -159,7 +170,7 @@ public class SettingsActivity extends AppCompatActivity {
             SharedPreferences.Editor editor = sh.edit();
             editor.clear().apply();
 
-            Intent intent = new Intent(SettingsActivity.this, HomeActivity.class);
+            Intent intent = new Intent(SettingsActivity.this, NewUser.class);
             startActivity(intent);
 
         });

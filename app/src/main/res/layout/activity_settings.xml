@@ -12,14 +12,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:layout_marginBottom="40dp"
         android:gravity="center"
         android:padding="4dp"
         android:text="SETTINGS"
         android:textAlignment="center"
         android:textColor="@color/green"
         android:textSize="40sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="40dp"/>
+        android:textStyle="bold" />
 
     <LinearLayout
         android:id="@+id/linearLayoutName"
@@ -138,6 +138,27 @@
             android:layout_weight="100"
             android:backgroundTint="@color/green"/>
     </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/ClearDataButton"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/button_background_green"
+        android:backgroundTint="#EF0000"
+        android:clickable="true"
+        android:elevation="20dp"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:src="@drawable/ic_baseline_power_settings_new_24"
+        android:stateListAnimator="@null"
+        android:textAlignment="center"
+        app:tint="@color/white" />
 
     <!--Button
         android:layout_width="match_parent"
