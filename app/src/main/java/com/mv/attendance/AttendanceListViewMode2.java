@@ -27,6 +27,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -49,9 +50,7 @@ public class AttendanceListViewMode2 extends AppCompatActivity {
         listViewPast=findViewById(R.id.listViewPast);
         new_attendance_session_button=findViewById(R.id.buttonNewAttendanceMode2ThroughQRCode);
 
-        List<String> ListElementsArrayList = new ArrayList<>();
         //ListElementsArrayList.add("Hello");
-        List<Lecture> ListOfAttendanceSessions = new ArrayList<>();
         /*if(!sh.getString("ListAttendanceSession", "").equals("")){
             //Gson gson = new Gson();
             //String jsonFromPreviousActivityAttendanceSession = sh.getString("ListAttendanceSession", "");
@@ -59,26 +58,6 @@ public class AttendanceListViewMode2 extends AppCompatActivity {
             ListOfAttendanceSessions = getList(sh.getString("ListAttendanceSession", ""), AttendanceSession.class);
 
         }*/
-
-        if(ListOfAttendanceSessions.size()>0){
-            for(int i=0;i<ListOfAttendanceSessions.size();i++){
-                ListElementsArrayList.add(ListOfAttendanceSessions.get(i).Title);
-            }
-        }
-
-
-
-        listViewPast.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                    ListElementsArrayList.remove(i);
-                    //adapter.notifyDataSetChanged();
-
-                    return true;
-                }
-            }
-        );
 
         SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
 
@@ -191,6 +170,45 @@ public class AttendanceListViewMode2 extends AppCompatActivity {
                                 final ArrayAdapter<String> adapter = new ArrayAdapter<>(AttendanceListViewMode2.this, android.R.layout.simple_list_item_1, childrenList);
                                 listViewPast.setAdapter(adapter);
 
+                                listViewPast.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                                                                            @Override
+                                                                            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                                                                                AlertDialog.Builder builder = new AlertDialog.Builder(AttendanceListViewMode2.this);
+                                                                                builder.setMessage("Do you want to delete this?");
+                                                                                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                                                    @Override
+                                                                                    public void onClick(DialogInterface dialog, int which) {
+                                                                                        // Delete the selected item
+                                                                                        childrenList.remove(i);
+                                                                                        adapter.notifyDataSetChanged();
+                                                                                        dialog.dismiss();
+                                                                                    }
+                                                                                });
+                                                                                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                                                                    @Override
+                                                                                    public void onClick(DialogInterface dialog, int which) {
+                                                                                        dialog.dismiss();
+                                                                                    }
+                                                                                });
+                                                                                AlertDialog alert = builder.create();
+                                                                                alert.setTitle("Delete");
+                                                                                alert.show();
+
+                                                                                return true;
+                                                                            }
+                                                                        }
+                                );
+
+                                listViewPast.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                        Intent intent = new Intent(AttendanceListViewMode2.this, Mode2Studentslist.class);
+                                        intent.putExtra("NameOfClass", childrenList.get(i));
+                                        startActivity(intent);
+                                    }
+                                });
+
 
                             }
 
@@ -198,6 +216,9 @@ public class AttendanceListViewMode2 extends AppCompatActivity {
                     });
                     }
                 }}});
+
+
+
 
 
 
