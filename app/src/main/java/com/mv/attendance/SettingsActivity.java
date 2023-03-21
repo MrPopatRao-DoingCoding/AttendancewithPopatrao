@@ -1,14 +1,18 @@
 package com.mv.attendance;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -139,5 +143,34 @@ public class SettingsActivity extends AppCompatActivity {
         return Long.parseLong(elements.text());
     }
 
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
 
+        builder.setMessage("Do you really want to  logout?");
+
+        builder.setTitle("Alert!");
+
+        builder.setCancelable(false);
+
+        builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {
+
+
+            SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sh.edit();
+            editor.clear().apply();
+
+            Intent intent = new Intent(SettingsActivity.this, HomeActivity.class);
+            startActivity(intent);
+
+        });
+
+        builder.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {
+            dialog.cancel();
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
 }
+
+
