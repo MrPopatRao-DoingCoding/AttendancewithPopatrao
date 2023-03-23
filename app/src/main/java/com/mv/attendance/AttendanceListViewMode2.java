@@ -146,8 +146,12 @@ public class AttendanceListViewMode2 extends AppCompatActivity {
                         teacherName.add(i.next().getKey());
                     }
 
-                    if(teacherName.contains(sh.getString("Name", ""))){
+                    Log.d("QWERT", "Teachers -     " + teacherName);
 
+                    Log.d("QWERT", "Teacher name - " + sh.getString("Name", "NotFound"));
+
+                    if(teacherName.contains(sh.getString("Name", ""))){
+                        Log.d("QWERT", "Teacher detected");
                         reference.child(sh.getString("Name", "")).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DataSnapshot> task) {

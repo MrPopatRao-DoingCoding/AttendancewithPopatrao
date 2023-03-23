@@ -1,4 +1,4 @@
-package com;
+package com.mv.attendance;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,10 +15,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
-import com.mv.attendance.NewUser;
-import com.mv.attendance.R;
-import com.mv.attendance.SettingsActivity;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -28,8 +24,8 @@ import java.net.URL;
 public class Settings_teacher extends AppCompatActivity {
 
     EditText editTextName;
-    EditText editTextRollNo;
-    EditText editTextDivision;
+    //EditText editTextRollNo;
+    //EditText editTextDivision;
     ImageButton clearDataButton;
 
     EditText editTextPRN;
@@ -47,8 +43,7 @@ public class Settings_teacher extends AppCompatActivity {
 
         SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
         editTextName.setText(sh.getString("Name", ""));
-        editTextRollNo.setText(sh.getString("Roll No", ""));
-        editTextDivision.setText(sh.getString("Div", ""));
+        editTextPRN.setText(sh.getString("PRN", ""));
 
         SharedPreferences.Editor myEdit = sh.edit();
 
@@ -100,7 +95,7 @@ public class Settings_teacher extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                myEdit.putString("Roll No", editTextRollNo.getText().toString());
+                myEdit.putString("PRN", editTextPRN.getText().toString());
                 try {
                     long t = getTime();
                     myEdit.putLong("savedTime", t);

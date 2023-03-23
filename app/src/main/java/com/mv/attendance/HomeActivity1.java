@@ -71,8 +71,14 @@ public class HomeActivity1 extends AppCompatActivity {
         setting_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity1.this, SettingsActivity.class);
-                startActivity(intent);
+                if (type.equals("Teacher")) {
+                    Intent intent = new Intent(HomeActivity1.this, Settings_teacher.class);
+                    startActivity(intent);
+                }
+                else{
+                    Intent intent = new Intent(HomeActivity1.this, SettingsActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 

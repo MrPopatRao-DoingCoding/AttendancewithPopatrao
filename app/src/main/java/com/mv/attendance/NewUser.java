@@ -8,11 +8,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.EditText;
-
-import com.Settings_teacher;
 
 public class NewUser extends AppCompatActivity {
 
