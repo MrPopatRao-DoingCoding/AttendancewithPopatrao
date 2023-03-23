@@ -60,84 +60,9 @@
             android:textColorHint="@color/grey" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@id/linearLayoutName"
-        android:id="@+id/linearLayoutRollNo">
 
-        <TextView
-            android:id="@+id/textViewRollNo"
-            android:layout_width="0dp"
-            android:layout_weight="100"
-            android:layout_height="40dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginEnd="20dp"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:background="@drawable/button_background_green"
-            android:text="Roll No : "
-            android:textColor="@color/white"
-            android:textAllCaps="false"
-            android:elevation="10dp"
-            android:stateListAnimator="@null"/>
 
-        <EditText
-            android:id="@+id/editTextRollNo"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="20dp"
-            android:textColor="@color/green"
-            android:hint="Your Roll No"
-            android:inputType="number"
-            android:textColorHint="@color/grey"
-            android:layout_weight="100"
-            android:backgroundTint="@color/green"/>
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@id/linearLayoutRollNo"
-        android:id="@+id/linearLayoutDivision">
-
-        <TextView
-            android:id="@+id/textViewDivision"
-            android:layout_width="0dp"
-            android:layout_weight="100"
-            android:layout_height="40dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginEnd="20dp"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:background="@drawable/button_background_green"
-            android:text="Division : "
-            android:textColor="@color/white"
-            android:textAllCaps="false"
-            android:elevation="10dp"
-            android:stateListAnimator="@null"/>
-
-        <EditText
-            android:id="@+id/editTextDivision"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="20dp"
-            android:textColor="@color/green"
-            android:hint="Your Division"
-            android:textColorHint="@color/grey"
-            android:layout_weight="100"
-            android:backgroundTint="@color/green"/>
-    </LinearLayout>
 
     <ImageButton
         android:id="@+id/ClearDataButton"
@@ -190,7 +115,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_below="@id/linearLayoutDivision"
+        android:layout_below="@id/linearLayoutName"
         android:id="@+id/linearLayoutPRN">
 
         <TextView

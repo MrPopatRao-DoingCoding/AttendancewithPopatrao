@@ -1,4 +1,4 @@
-package com.mv.attendance;
+package com;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,10 +12,12 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
+
+import com.mv.attendance.NewUser;
+import com.mv.attendance.R;
+import com.mv.attendance.SettingsActivity;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -23,7 +25,7 @@ import org.jsoup.select.Elements;
 
 import java.net.URL;
 
-public class SettingsActivity extends AppCompatActivity {
+public class Settings_teacher extends AppCompatActivity {
 
     EditText editTextName;
     EditText editTextRollNo;
@@ -35,12 +37,12 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        setContentView(R.layout.activity_settings_teacher);
 
         editTextName = findViewById(R.id.editTextName);
-        editTextRollNo = findViewById(R.id.editTextRollNo);
-        editTextDivision = findViewById(R.id.editTextDivision);
+
         clearDataButton = findViewById(R.id.ClearDataButton);
+
         editTextPRN = findViewById(R.id.editTextPRN);
 
         SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
@@ -49,7 +51,6 @@ public class SettingsActivity extends AppCompatActivity {
         editTextDivision.setText(sh.getString("Div", ""));
 
         SharedPreferences.Editor myEdit = sh.edit();
-
 
         editTextName.addTextChangedListener(new TextWatcher() {
             @Override
@@ -77,58 +78,6 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        editTextRollNo.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                myEdit.putString("Roll No", editTextRollNo.getText().toString());
-                try {
-                    long t = getTime();
-                    myEdit.putLong("savedTime", t);
-                    Log.d("QWERT", "Time Saved as " + t);
-                } catch (Exception e) {
-                    long t = System.currentTimeMillis() / 1000L;
-                    myEdit.putLong("savedTime", t);
-                }
-                myEdit.apply();
-            }
-        });
-
-        editTextDivision.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                myEdit.putString("Div", editTextDivision.getText().toString());
-                try {
-                    long t = getTime();
-                    myEdit.putLong("savedTime", t);
-                    Log.d("QWERT", "Time Saved as " + t);
-                } catch (Exception e) {
-                    long t = System.currentTimeMillis() / 1000L;
-                    myEdit.putLong("savedTime", t);
-                }
-                myEdit.apply();
-            }
-        });
-
 
 
         clearDataButton.setOnClickListener(new View.OnClickListener() {
@@ -137,8 +86,6 @@ public class SettingsActivity extends AppCompatActivity {
                 clearData();
             }
         });
-
-
 
         editTextPRN.addTextChangedListener(new TextWatcher() {
             @Override
@@ -168,9 +115,34 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
 
+    public void clearData() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(Settings_teacher.this);
+
+        builder.setMessage("Do you really want to logout?");
+
+        builder.setTitle("Alert!");
+
+        builder.setCancelable(false);
+
+        builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {
 
 
+            SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sh.edit();
+            editor.clear().apply();
 
+            Intent intent = new Intent(Settings_teacher.this, NewUser.class);
+            startActivity(intent);
+
+        });
+
+        builder.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {
+            dialog.cancel();
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
 
     private long getTime() throws Exception {
         String url = "https://time.is/Unix_time_now";
@@ -186,34 +158,4 @@ public class SettingsActivity extends AppCompatActivity {
         return Long.parseLong(elements.text());
     }
 
-    public void clearData() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
-
-        builder.setMessage("Do you really want to logout?");
-
-        builder.setTitle("Alert!");
-
-        builder.setCancelable(false);
-
-        builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {
-
-
-            SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sh.edit();
-            editor.clear().apply();
-
-            Intent intent = new Intent(SettingsActivity.this, NewUser.class);
-            startActivity(intent);
-
-        });
-
-        builder.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {
-            dialog.cancel();
-        });
-
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
 }
-
-

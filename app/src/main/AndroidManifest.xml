@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Attendance">
         <activity
+            android:name=".Settings_teacher"
+            android:exported="false" />
+        <activity
             android:name=".Mode2Studentslist"
             android:exported="false" />
         <activity

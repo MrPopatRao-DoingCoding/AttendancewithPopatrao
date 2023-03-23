@@ -12,11 +12,15 @@ import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.Settings_teacher;
+
 public class NewUser extends AppCompatActivity {
 
     CardView studentCardView, teacherCardView;
-    EditText teacherPhoneNo;
+    EditText teacherPRN;
     Button teacherSubmitButton;
+
+    String PRN_teacher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +29,7 @@ public class NewUser extends AppCompatActivity {
 
         studentCardView = findViewById(R.id.cardViewStudent);
         teacherCardView = findViewById(R.id.cardViewTeacher);
-        teacherPhoneNo = findViewById(R.id.teacherInputPhoneNo);
+        teacherPRN = findViewById(R.id.teacherInputPhoneNo);
         teacherSubmitButton = findViewById(R.id.teacherInputSubmitButton);
 
         SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
@@ -53,9 +57,9 @@ public class NewUser extends AppCompatActivity {
                 teacherCardView.animate().alpha(0).setDuration(500).withEndAction(new Runnable() {
                     @Override
                     public void run() {
-                        teacherPhoneNo.setVisibility(View.VISIBLE);
-                        teacherPhoneNo.setAlpha(0);
-                        teacherPhoneNo.animate().alpha(1).setDuration(500);
+                        teacherPRN.setVisibility(View.VISIBLE);
+                        teacherPRN.setAlpha(0);
+                        teacherPRN.animate().alpha(1).setDuration(500);
                         teacherSubmitButton.setVisibility(View.VISIBLE);
                         teacherSubmitButton.setAlpha(0);
                         teacherSubmitButton.animate().alpha(1).setDuration(500);
@@ -69,9 +73,13 @@ public class NewUser extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //TODO: Upload number on Firebase
+                PRN_teacher = teacherPRN.getText().toString();
                 myEdit.putString("TypeOfPerson", "Teacher");
                 myEdit.apply();
+                myEdit.putString("PRN", PRN_teacher );
                 Intent intent = new Intent(NewUser.this, HomeActivity1.class);
+                startActivity(intent);
+                intent = new Intent(NewUser.this, Settings_teacher.class);
                 startActivity(intent);
                 finish();
             }
