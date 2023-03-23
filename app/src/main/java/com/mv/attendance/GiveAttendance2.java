@@ -87,20 +87,19 @@ public class GiveAttendance2 extends AppCompatActivity {
                                 String nameOfStudent = sh.getString("Name", "");
                                 int RollNoOfStudent = Integer.parseInt(sh.getString("Roll No", ""));
                                 String divOfStudent = sh.getString("Div", "");
+                                String PRN = sh.getString("PRN","");
 
                                 Student std = new Student(RollNoOfStudent,divOfStudent,nameOfStudent);
 
                                 //Lecture Lecture1 = new Lecture(Mode2QRCodeProperties.Teacher1,Mode2QRCodeProperties.Title1);
 
                                 database = FirebaseDatabase.getInstance();
-                                reference = database.getReference("Lectures");
+                                reference = database.getReference("Division");
 
 
                                 Map<String, Object> addToFirebase = new HashMap<String,Object>();
                                 addToFirebase.put(nameOfStudent, QRProperties.QR_CODE_Encoded_time);
-                                reference.child(Mode2QRCodeProperties.Teacher1).child(Mode2QRCodeProperties.Title1).child("Student").updateChildren(addToFirebase);
-
-
+                                reference.child(std.getDiv()).child(Mode2QRCodeProperties.Teacher1).child(Mode2QRCodeProperties.Title1).child("Student").child(PRN).setValue(std);
                                 Toast.makeText(GiveAttendance2.this, "Attendance marked  successfully!", Toast.LENGTH_SHORT).show();
 
 

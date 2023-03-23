@@ -153,7 +153,7 @@ public class SettingsActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                myEdit.putString("Roll No", editTextRollNo.getText().toString());
+                myEdit.putString("PRN", editTextPRN.getText().toString());
                 try {
                     long t = getTime();
                     myEdit.putLong("savedTime", t);

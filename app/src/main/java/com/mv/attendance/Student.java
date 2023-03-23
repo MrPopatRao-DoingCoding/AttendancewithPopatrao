@@ -10,11 +10,24 @@ public class Student {
     String div;
     String name;
 
+    public String getName() {
+        return name;
+    }
+
+    public String getDiv() {
+        return div;
+    }
+
+    public int getRollNo() {
+        return RollNo;
+    }
+
     public Student(int RollNo, String div, String name) {
         this.RollNo = RollNo;
         this.div = div;
         this.name = name;
     }
+
 
     public Student(String result) {
         String[] splitted = result.split("\\|");
