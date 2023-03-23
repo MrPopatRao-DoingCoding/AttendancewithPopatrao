@@ -27,9 +27,10 @@ class Mode2TakeAttendanceShowQRCode : AppCompatActivity() {
         qrCodeIV = findViewById(R.id.idTVQRCodeMode2TakeAttendance)
         val titleOfLectureAttendanceSession:String = intent.getStringExtra("Title").toString()
         val teacherOfLectureAttendanceSession:String = intent.getStringExtra("TeacherName").toString()
+        val divisionOfLectureAttendanceSession:String = intent.getStringExtra("Division").toString()
 
         var currentTime = (System.currentTimeMillis() / 1000).toInt()
-        var finalString = "{}|$titleOfLectureAttendanceSession|$teacherOfLectureAttendanceSession|$currentTime|"
+        var finalString = "{}|$titleOfLectureAttendanceSession|$teacherOfLectureAttendanceSession|$divisionOfLectureAttendanceSession|$currentTime|"
         val data: QrData = QrData.Text(finalString)
         var options = QrVectorOptions.Builder()
             .padding(.3f)
@@ -71,7 +72,7 @@ class Mode2TakeAttendanceShowQRCode : AppCompatActivity() {
             runOnUiThread {
                 //tvTime.text = SimpleDateFormat("dd MMM - HH:mm", Locale.US).format(Date())
                 var currentTime = (System.currentTimeMillis() / 1000).toInt()
-                finalString = "{}|$titleOfLectureAttendanceSession|$teacherOfLectureAttendanceSession|$currentTime|"
+                finalString = "{}|$titleOfLectureAttendanceSession|$teacherOfLectureAttendanceSession|$divisionOfLectureAttendanceSession|$currentTime|"
                 val data: QrData = QrData.Text(finalString)
                 options = QrVectorOptions.Builder()
                     .padding(.3f)

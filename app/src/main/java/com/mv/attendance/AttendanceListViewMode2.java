@@ -75,14 +75,17 @@ public class AttendanceListViewMode2 extends AppCompatActivity {
 
                 final EditText inputEditTextTitle = new EditText(getApplicationContext());
                 final EditText inputEditTextNameOfTeacher = new EditText(getApplicationContext());
+                final EditText divisionOfClass = new EditText(getApplicationContext());
                 //final EditText inputEditTextRollNoOfStudent = new EditText(getApplicationContext());
                 inputEditTextTitle.setHint("Title");
                 inputEditTextNameOfTeacher.setHint("Teacher Name");
                 inputEditTextNameOfTeacher.setText(sh.getString("Name", ""));
+                divisionOfClass.setHint("Division");
                 //inputEditTextRollNoOfStudent.setHint("Roll No.");
                 //inputEditTextRollNoOfStudent.setInputType(InputType.TYPE_CLASS_NUMBER);
                 layout.addView(inputEditTextTitle);
                 layout.addView(inputEditTextNameOfTeacher);
+                layout.addView(divisionOfClass);
                 //layout.addView(inputEditTextRollNoOfStudent);
                 builder.setMessage("Add a new lecture")
                         .setCancelable(false)
@@ -102,6 +105,7 @@ public class AttendanceListViewMode2 extends AppCompatActivity {
                                 Intent intent = new Intent(AttendanceListViewMode2.this, Mode2TakeAttendanceShowQRCode.class);
                                 intent.putExtra("Title", inputEditTextTitle.getText().toString());
                                 intent.putExtra("TeacherName", inputEditTextNameOfTeacher.getText().toString());
+                                intent.putExtra("Division", divisionOfClass.getText().toString());
                                 startActivity(intent);
                                 dialog.dismiss();
                             }
