@@ -33,6 +33,7 @@ public class HomeActivity1 extends AppCompatActivity {
     ImageView setting_image, mode2Img, mode1Img;
     CardView Mode1_card;
     CardView Mode2_card;
+    CardView Stats_card;
     RelativeLayout backgroundRelativeLayout;
     TextView heading_text;
 
@@ -49,6 +50,7 @@ public class HomeActivity1 extends AppCompatActivity {
         mode1Img = findViewById(R.id.imgOfMode1);
         Mode1_card = findViewById(R.id.idMode1_card);
         Mode2_card = findViewById(R.id.idMode2_card);
+        Stats_card = findViewById(R.id.idStats_card);
         backgroundRelativeLayout = findViewById(R.id.activity_home1_background);
         heading_text = findViewById(R.id.idTVHeading);
 
@@ -61,6 +63,7 @@ public class HomeActivity1 extends AppCompatActivity {
             heading_text.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.dark_light_blue));
             Mode1_card.setCardBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.dark_light_blue));
             Mode2_card.setCardBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.dark_light_blue));
+            Stats_card.setVisibility(View.GONE);
         }
 
 
