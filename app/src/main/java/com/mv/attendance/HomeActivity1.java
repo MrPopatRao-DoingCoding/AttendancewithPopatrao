@@ -101,7 +101,7 @@ public class HomeActivity1 extends AppCompatActivity {
         Stats_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(HomeActivity1.this, TakeAttendanceList.class);
+                Intent intent = new Intent(HomeActivity1.this, StatsActivity.class);
                 startActivity(intent);
             }
         });
