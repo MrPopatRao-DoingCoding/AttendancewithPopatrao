@@ -96,6 +96,7 @@ public class GiveAttendance2 extends AppCompatActivity {
                                 database = FirebaseDatabase.getInstance();
                                 reference = database.getReference("Division");
 
+                                //realtimedatabase
 
                                 Map<String, Object> addToFirebase = new HashMap<String,Object>();
                                 addToFirebase.put(nameOfStudent, QRProperties.QR_CODE_Encoded_time);
