@@ -83,6 +83,8 @@ public class GiveAttendance2 extends AppCompatActivity {
 
                             if(QRProperties.checkIfTimeInBuffer(2)){
 
+                                Log.d("QWERT", "Time checked");
+
                                 SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
                                 String nameOfStudent = sh.getString("Name", "");
                                 int RollNoOfStudent = Integer.parseInt(sh.getString("Roll No", ""));

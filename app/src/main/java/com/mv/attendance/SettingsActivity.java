@@ -47,6 +47,7 @@ public class SettingsActivity extends AppCompatActivity {
         editTextName.setText(sh.getString("Name", ""));
         editTextRollNo.setText(sh.getString("Roll No", ""));
         editTextDivision.setText(sh.getString("Div", ""));
+        editTextPRN.setText(sh.getString("PRN", ""));
 
         SharedPreferences.Editor myEdit = sh.edit();
 
