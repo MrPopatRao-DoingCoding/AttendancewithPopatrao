@@ -8,8 +8,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -21,9 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import org.eazegraph.lib.charts.PieChart;
 import org.eazegraph.lib.models.PieModel;
 
-import java.util.AbstractCollection;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
@@ -43,8 +39,8 @@ public class StatsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_stats);
 
 
-        tvR = findViewById(R.id.tvR);
-        tvPython = findViewById(R.id.tvPython);
+        tvR = findViewById(R.id.textView_Present);
+        tvPython = findViewById(R.id.textView_Absent);
         pieChart = findViewById(R.id.piechart);
 
         setData();
@@ -107,14 +103,14 @@ public class StatsActivity extends AppCompatActivity {
                     // Set the data and color to the pie chart
                     pieChart.addPieSlice(
                             new PieModel(
-                                    "R",
+                                    "Present",
                                     Integer.parseInt(tvR.getText().toString()),
-                                    Color.parseColor("#FFA726")));
+                                    Color.parseColor("#00FB54")));
                     pieChart.addPieSlice(
                             new PieModel(
-                                    "Python",
+                                    "Absent",
                                     Integer.parseInt(tvPython.getText().toString()),
-                                    Color.parseColor("#66BB6A")));
+                                    Color.parseColor("#FF0000")));
                     // To animate the pie chart
                     pieChart.startAnimation();
 

@@ -16,13 +16,28 @@
         tools:context=".HomeActivity1"
         android:id="@+id/activity_home1_background">
 
-        <androidx.cardview.widget.CardView
+        <TextView
+            android:id="@+id/idTVHeading"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:id="@+id/idMode1_card"
-            app:cardBackgroundColor="@color/green"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            app:cardCornerRadius="20dp"
+            android:fontFamily="@font/freckle_face"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text="STATS"
+            android:textAlignment="center"
+            android:textColor="@color/dark_green"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/idMode1_card"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/idTVHeading"
+            app:cardCornerRadius="30dp"
             app:cardElevation="10dp"
             app:cardMaxElevation="12dp"
             app:cardPreventCornerOverlap="true"
@@ -30,7 +45,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@drawable/background_home_gradient">
 
 
                 <ImageView
@@ -83,19 +99,18 @@
 
                     <!--Pie chart to display the data-->
 
-                    <org.eazegraph.lib.charts.PieChart
-                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                    <org.eazegraph.lib.charts.PieChart xmlns:app="http://schemas.android.com/apk/res-auto"
                         android:id="@+id/piechart"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:layout_weight="1"
                         android:padding="6dp"
                         app:egLegendTextSize="18sp"
                         app:egUsePieRotation="true"
                         app:egValueTextSize="36sp"
-                        android:layout_weight="1"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginBottom="15dp"
 
                         />
 
@@ -104,53 +119,52 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
                         android:layout_marginLeft="20dp"
-                        android:orientation="vertical"
+                        android:layout_weight="1"
                         android:gravity="center_vertical"
-                        >
+                        android:orientation="vertical">
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="15dp"
+                            android:layout_height="20dp"
                             android:layout_gravity="center_vertical">
 
                             <!--View to display the yellow color icon-->
                             <View
-                                android:layout_width="15dp"
+                                android:layout_width="20dp"
                                 android:layout_height="match_parent"
-                                android:background="#A1F"/>
+                                android:background="#00FB54" />
 
                             <!--Text view to display R -->
                             <TextView
-                                android:id="@+id/tvR"
+                                android:id="@+id/textView_Present"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="R"
-                                android:paddingLeft="10dp"/>
+                                android:paddingLeft="10dp"
+                                android:text="Present" />
 
                         </LinearLayout>
 
                         <!--Linear layout to display Python-->
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="15dp"
+                            android:layout_height="20dp"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginTop="5dp">
+                            android:layout_marginTop="10dp">
 
                             <!--View to display the green color icon-->
                             <View
-                                android:layout_width="15dp"
+                                android:layout_width="20dp"
                                 android:layout_height="match_parent"
-                                android:background="#000"/>
+                                android:background="#FF0000" />
 
                             <!--Text view to display python text -->
                             <TextView
-                                android:id="@+id/tvPython"
+                                android:id="@+id/textView_Absent"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Python"
-                                android:paddingLeft="10dp"/>
+                                android:paddingLeft="10dp"
+                                android:text="Absent" />
 
                         </LinearLayout>
 
@@ -160,7 +174,6 @@
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
         </androidx.cardview.widget.CardView>
