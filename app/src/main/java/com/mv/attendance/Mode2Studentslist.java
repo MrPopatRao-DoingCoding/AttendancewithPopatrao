@@ -38,9 +38,9 @@ public class Mode2Studentslist extends AppCompatActivity {
         SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference reference = database.getReference("Lectures");
+        DatabaseReference reference = database.getReference("Division");
 
-        reference.child(sh.getString("Name", "")).child(nameOfSession).child("Student").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        reference.child(sh.getString("Div", "")).child(sh.getString("PRN","")).child(nameOfSession).child("Students").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (task.isSuccessful()) {
