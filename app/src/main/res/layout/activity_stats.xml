@@ -32,9 +32,9 @@
 
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/idMode1_card"
+            android:id="@+id/idPresenty_card"
             android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_height="300dp"
             android:layout_marginTop="20dp"
             android:layout_below="@+id/idTVHeading"
             app:cardCornerRadius="30dp"
@@ -193,6 +193,14 @@
 
 
         </androidx.cardview.widget.CardView>
+
+
+
+        <ListView
+            android:id="@+id/subjectListView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/idPresenty_card" />
 
 
     </RelativeLayout>

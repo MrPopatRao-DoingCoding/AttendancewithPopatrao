@@ -2,12 +2,15 @@ package com.mv.attendance;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,8 +29,10 @@ import java.util.Objects;
 
 public class StatsActivity extends AppCompatActivity {
 
-    TextView tvR, tvPython;
+    TextView tvPresent, tvAbsent;
     PieChart pieChart;
+
+    ListView subjectListView;
 
     int totalClasses = 0;
     int presentClasses = 0;
@@ -39,9 +44,36 @@ public class StatsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_stats);
 
 
-        tvR = findViewById(R.id.textView_Present);
-        tvPython = findViewById(R.id.textView_Absent);
+        tvPresent = findViewById(R.id.textView_Present);
+        tvAbsent = findViewById(R.id.textView_Absent);
         pieChart = findViewById(R.id.piechart);
+        subjectListView = findViewById(R.id.subjectListView);
+
+        List<String> listOfSubjects = new ArrayList<>();
+        listOfSubjects.add("123");
+        listOfSubjects.add("1234");
+        listOfSubjects.add("12345");
+        listOfSubjects.add("123456");
+
+        List<Integer> present = new ArrayList<>();
+        present.add(2);
+        present.add(12);
+        List<Integer> absent = new ArrayList<>();
+        absent.add(3);
+        absent.add(9);
+        List<String> subjTitle = new ArrayList<>();
+        subjTitle.add("Maths");
+        subjTitle.add("Science");
+
+
+        //final ArrayAdapter<String> adapter = new ArrayAdapter<>(StatsActivity.this, android.R.layout.simple_list_item_1, listOfSubjects);
+        //subjectListView.setAdapter(adapter);
+
+        CustomListViewAdapter customAdapter = new CustomListViewAdapter(getApplicationContext(), present, absent, subjTitle);
+        //CustomListViewAdapter customAdapter = new CustomListViewAdapter(getApplicationContext(), subjTitle);
+        subjectListView.setAdapter(customAdapter);
+
+
 
         setData();
 
@@ -97,19 +129,19 @@ public class StatsActivity extends AppCompatActivity {
 
 
                     // Set the percentage of language used
-                    tvR.setText(Integer.toString(presentClasses));
-                    tvPython.setText(Integer.toString(totalClasses-presentClasses));
+                    tvPresent.setText(Integer.toString(presentClasses));
+                    tvAbsent.setText(Integer.toString(totalClasses-presentClasses));
 
                     // Set the data and color to the pie chart
                     pieChart.addPieSlice(
                             new PieModel(
                                     "Present",
-                                    Integer.parseInt(tvR.getText().toString()),
+                                    Integer.parseInt(tvPresent.getText().toString()),
                                     Color.parseColor("#00FB54")));
                     pieChart.addPieSlice(
                             new PieModel(
                                     "Absent",
-                                    Integer.parseInt(tvPython.getText().toString()),
+                                    Integer.parseInt(tvAbsent.getText().toString()),
                                     Color.parseColor("#FF0000")));
                     // To animate the pie chart
                     pieChart.startAnimation();
