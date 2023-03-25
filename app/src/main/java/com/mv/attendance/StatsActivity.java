@@ -113,6 +113,7 @@ public class StatsActivity extends AppCompatActivity {
                 final TextView textViewPresenty = new TextView(getApplicationContext());
                 layout.addView(textViewPresenty);
                 textViewPresenty.setText(presentyClassWise.get(i));
+                Log.d("QWERT", String.valueOf(presentyClassWise));
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         //  Action for 'NO' Button
@@ -168,6 +169,7 @@ public class StatsActivity extends AppCompatActivity {
                         subjTitle.add(listOfSubjects.get(iiiii));
                         int numberClassesPresentInSubject = 0;
                         int totalNumberClassesInSubject = 0;
+                        String newElementInPresentyClassWise = "";
                         Log.d("QWERT", "ListOfTeachers   ->   " + listOfTeachers);
                         Log.d("QWERT", "ListOfTeachersSnapShot   ->   " + dataSnapshot);
                         Log.d("QWERT", "ListOfTeachersSnapShotValue   ->   " + dataSnapshot.getValue());
@@ -184,7 +186,7 @@ public class StatsActivity extends AppCompatActivity {
                             for(int iii=0;iii<listOfClasses.size(); iii++){
                                 Log.d("QWERT", "Children Present    -> " + dataSnapshot.child(listOfSubjects.get(iiiii)).child(listOfTeachers.get(ii)).child(listOfClasses.get(iii)).child("Student").getValue());
                                 Iterator <DataSnapshot> childrenPresentNames = dataSnapshot.child(listOfSubjects.get(iiiii)).child(listOfTeachers.get(ii)).child(listOfClasses.get(iii)).child("Student").getChildren().iterator();
-                                String newElementInPresentyClassWise = "";
+
                                 while (childrenPresentNames.hasNext()){
                                     if (Objects.equals(childrenPresentNames.next().getKey(), sh.getString("PRN", " "))){
                                         presentClasses += 1;
@@ -193,9 +195,9 @@ public class StatsActivity extends AppCompatActivity {
                                         Log.d("QWERT", "Present!!");
                                     }
                                 }
-                                presentyClassWise.add(newElementInPresentyClassWise);
                             }
                         }
+                        presentyClassWise.add(newElementInPresentyClassWise);
                         present.add(numberClassesPresentInSubject);
                         absent.add(totalNumberClassesInSubject-numberClassesPresentInSubject);
                     }

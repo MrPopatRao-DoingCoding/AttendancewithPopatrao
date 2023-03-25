@@ -72,8 +72,8 @@ public class NewUser extends AppCompatActivity {
                 //TODO: Upload number on Firebase
                 PRN_teacher = teacherPRN.getText().toString();
                 myEdit.putString("TypeOfPerson", "Teacher");
-                myEdit.apply();
                 myEdit.putString("PRN", PRN_teacher );
+                myEdit.apply();
                 Intent intent = new Intent(NewUser.this, HomeActivity1.class);
                 startActivity(intent);
                 intent = new Intent(NewUser.this, Settings_teacher.class);
