@@ -3,7 +3,6 @@ package com.mv.attendance;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -12,12 +11,10 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -51,6 +48,9 @@ public class StatsActivity extends AppCompatActivity {
     List<Integer> absent;
     List<Integer> present;
 
+    List<String> presentyClassWise;
+    //List<List<String>> presentyClassWise = new ArrayList<List<String>>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +79,8 @@ public class StatsActivity extends AppCompatActivity {
         //subjTitle.add("Maths");
         //subjTitle.add("Science");
 
+        presentyClassWise = new ArrayList<>();
+
 
         //final ArrayAdapter<String> adapter = new ArrayAdapter<>(StatsActivity.this, android.R.layout.simple_list_item_1, listOfSubjects);
         //subjectListView.setAdapter(adapter);
@@ -98,7 +100,7 @@ public class StatsActivity extends AppCompatActivity {
                 layout.setOrientation(LinearLayout.VERTICAL);
                 layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT));
 
-                final EditText inputEditTextNameOfStudent = new EditText(getApplicationContext());
+                /*final EditText inputEditTextNameOfStudent = new EditText(getApplicationContext());
                 final EditText inputEditTextDivOfStudent = new EditText(getApplicationContext());
                 final EditText inputEditTextRollNoOfStudent = new EditText(getApplicationContext());
                 inputEditTextNameOfStudent.setHint("Name");
@@ -107,7 +109,10 @@ public class StatsActivity extends AppCompatActivity {
                 inputEditTextRollNoOfStudent.setInputType(InputType.TYPE_CLASS_NUMBER);
                 layout.addView(inputEditTextNameOfStudent);
                 layout.addView(inputEditTextDivOfStudent);
-                layout.addView(inputEditTextRollNoOfStudent);
+                layout.addView(inputEditTextRollNoOfStudent);*/
+                final TextView textViewPresenty = new TextView(getApplicationContext());
+                layout.addView(textViewPresenty);
+                textViewPresenty.setText(presentyClassWise.get(i));
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         //  Action for 'NO' Button
@@ -179,13 +184,16 @@ public class StatsActivity extends AppCompatActivity {
                             for(int iii=0;iii<listOfClasses.size(); iii++){
                                 Log.d("QWERT", "Children Present    -> " + dataSnapshot.child(listOfSubjects.get(iiiii)).child(listOfTeachers.get(ii)).child(listOfClasses.get(iii)).child("Student").getValue());
                                 Iterator <DataSnapshot> childrenPresentNames = dataSnapshot.child(listOfSubjects.get(iiiii)).child(listOfTeachers.get(ii)).child(listOfClasses.get(iii)).child("Student").getChildren().iterator();
+                                String newElementInPresentyClassWise = "";
                                 while (childrenPresentNames.hasNext()){
                                     if (Objects.equals(childrenPresentNames.next().getKey(), sh.getString("PRN", " "))){
                                         presentClasses += 1;
+                                        newElementInPresentyClassWise += listOfClasses.get(iii) + "\n";
                                         numberClassesPresentInSubject += 1;
                                         Log.d("QWERT", "Present!!");
                                     }
                                 }
+                                presentyClassWise.add(newElementInPresentyClassWise);
                             }
                         }
                         present.add(numberClassesPresentInSubject);
