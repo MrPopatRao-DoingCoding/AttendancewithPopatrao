@@ -2,14 +2,24 @@ package com.mv.attendance;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -75,6 +85,48 @@ public class StatsActivity extends AppCompatActivity {
 
 
         setData();
+
+        subjectListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(StatsActivity.this);
+                LinearLayout layout = new LinearLayout(StatsActivity.this);
+                layout.setBackgroundColor(Color.parseColor("#EEEEEE"));
+                Drawable drawable = ContextCompat.getDrawable(StatsActivity.this,  R.drawable.white_alert_dialogue_background);
+                layout.setBackground(drawable);
+                layout.setPadding(20,20,20,0);
+                layout.setOrientation(LinearLayout.VERTICAL);
+                layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT));
+
+                final EditText inputEditTextNameOfStudent = new EditText(getApplicationContext());
+                final EditText inputEditTextDivOfStudent = new EditText(getApplicationContext());
+                final EditText inputEditTextRollNoOfStudent = new EditText(getApplicationContext());
+                inputEditTextNameOfStudent.setHint("Name");
+                inputEditTextDivOfStudent.setHint("Div");
+                inputEditTextRollNoOfStudent.setHint("Roll No.");
+                inputEditTextRollNoOfStudent.setInputType(InputType.TYPE_CLASS_NUMBER);
+                layout.addView(inputEditTextNameOfStudent);
+                layout.addView(inputEditTextDivOfStudent);
+                layout.addView(inputEditTextRollNoOfStudent);
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //  Action for 'NO' Button
+                        dialog.cancel();
+                    }
+                });
+                //Creating dialog box
+                AlertDialog alert = builder.create();
+                //Setting the title manually
+                alert.setTitle("New Student");
+                alert.setView(layout);
+                drawable = ContextCompat.getDrawable(StatsActivity.this,  R.drawable.grey_alert_dialogue_background);
+                alert.getWindow().setBackgroundDrawable(drawable);
+                alert.show();
+                WindowManager.LayoutParams lp = alert.getWindow().getAttributes();
+                lp.dimAmount = 0.75f;
+                alert.getWindow().setAttributes(lp);
+            }
+        });
 
 
 
