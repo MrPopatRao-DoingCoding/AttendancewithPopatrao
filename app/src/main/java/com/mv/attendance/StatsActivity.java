@@ -37,6 +37,10 @@ public class StatsActivity extends AppCompatActivity {
     int totalClasses = 0;
     int presentClasses = 0;
 
+    List<String> subjTitle;
+    List<Integer> absent;
+    List<Integer> present;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,13 +59,13 @@ public class StatsActivity extends AppCompatActivity {
         listOfSubjects.add("12345");
         listOfSubjects.add("123456");
 
-        List<Integer> present = new ArrayList<>();
+        present = new ArrayList<>();
         present.add(2);
         present.add(12);
-        List<Integer> absent = new ArrayList<>();
+        absent = new ArrayList<>();
         absent.add(3);
         absent.add(9);
-        List<String> subjTitle = new ArrayList<>();
+        subjTitle = new ArrayList<>();
         subjTitle.add("Maths");
         subjTitle.add("Science");
 
@@ -107,6 +111,9 @@ public class StatsActivity extends AppCompatActivity {
                             //Log.d("QWERT", "ChildrenValues:  " + i.next());
                             listOfTeachers.add(i.next().getKey());
                         }
+                        subjTitle.add(listOfSubjects.get(iiiii));
+                        int numberClassesPresentInSubject = 0;
+                        int totalNumberClassesInSubject = 0;
                         Log.d("QWERT", "ListOfTeachers   ->   " + listOfTeachers);
                         Log.d("QWERT", "ListOfTeachersSnapShot   ->   " + dataSnapshot);
                         Log.d("QWERT", "ListOfTeachersSnapShotValue   ->   " + dataSnapshot.getValue());
@@ -114,6 +121,7 @@ public class StatsActivity extends AppCompatActivity {
                             Log.d("QWERT", "TeacherInfo   ->   " + listOfTeachers.get(ii) + " - " + dataSnapshot.child(listOfTeachers.get(ii)).getValue());
                             Iterator <DataSnapshot> lectureNames = dataSnapshot.child(listOfSubjects.get(iiiii)).child(listOfTeachers.get(ii)).getChildren().iterator();
                             totalClasses += dataSnapshot.child(listOfSubjects.get(iiiii)).child(listOfTeachers.get(ii)).getChildrenCount();
+                            totalNumberClassesInSubject = (int) dataSnapshot.child(listOfSubjects.get(iiiii)).child(listOfTeachers.get(ii)).getChildrenCount();
                             List<String> listOfClasses = new ArrayList<>();
                             while (lectureNames.hasNext()) {
                                 //Log.d("QWERT", "ChildrenValues:  " + i.next());
@@ -125,11 +133,14 @@ public class StatsActivity extends AppCompatActivity {
                                 while (childrenPresentNames.hasNext()){
                                     if (Objects.equals(childrenPresentNames.next().getKey(), sh.getString("PRN", " "))){
                                         presentClasses += 1;
+                                        numberClassesPresentInSubject += 1;
                                         Log.d("QWERT", "Present!!");
                                     }
                                 }
                             }
                         }
+                        present.add(numberClassesPresentInSubject);
+                        absent.add(totalNumberClassesInSubject-numberClassesPresentInSubject);
                     }
                     //Log.d("QWERT", "ListOfTeachersSnapShotValue   ->   " + dataSnapshot.child(Objects.requireNonNull(dataSnapshot.getKey())));
                     Log.d("QWERT", "Total     -> " + totalClasses);
