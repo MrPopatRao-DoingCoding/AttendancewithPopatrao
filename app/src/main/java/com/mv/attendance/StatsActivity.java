@@ -60,26 +60,23 @@ public class StatsActivity extends AppCompatActivity {
         listOfSubjects.add("123456");
 
         present = new ArrayList<>();
-        present.add(2);
-        present.add(12);
+        //present.add(2);
+        //present.add(12);
         absent = new ArrayList<>();
-        absent.add(3);
-        absent.add(9);
+        //absent.add(3);
+        //absent.add(9);
         subjTitle = new ArrayList<>();
-        subjTitle.add("Maths");
-        subjTitle.add("Science");
+        //subjTitle.add("Maths");
+        //subjTitle.add("Science");
 
 
         //final ArrayAdapter<String> adapter = new ArrayAdapter<>(StatsActivity.this, android.R.layout.simple_list_item_1, listOfSubjects);
         //subjectListView.setAdapter(adapter);
 
-        CustomListViewAdapter customAdapter = new CustomListViewAdapter(getApplicationContext(), present, absent, subjTitle);
-        //CustomListViewAdapter customAdapter = new CustomListViewAdapter(getApplicationContext(), subjTitle);
-        subjectListView.setAdapter(customAdapter);
-
-
 
         setData();
+
+
 
 
 
@@ -146,6 +143,8 @@ public class StatsActivity extends AppCompatActivity {
                     Log.d("QWERT", "Total     -> " + totalClasses);
                     Log.d("QWERT", "Present   -> " + presentClasses);
 
+                    setDataToListView();
+
 
                     // Set the percentage of language used
                     tvPresent.setText(Integer.toString(presentClasses));
@@ -170,6 +169,12 @@ public class StatsActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private void setDataToListView() {
+        CustomListViewAdapter customAdapter = new CustomListViewAdapter(StatsActivity.this, present, absent, subjTitle);
+        //CustomListViewAdapter customAdapter = new CustomListViewAdapter(getApplicationContext(), subjTitle);
+        subjectListView.setAdapter(customAdapter);
     }
 
 }
