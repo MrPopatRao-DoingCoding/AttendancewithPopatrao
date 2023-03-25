@@ -94,31 +94,39 @@ public class StatsActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (task.isSuccessful()) {
                     DataSnapshot dataSnapshot = task.getResult();
-                    Iterator<DataSnapshot> i = dataSnapshot.getChildren().iterator();
-                    List<String> listOfTeachers = new ArrayList<>();
-                    while (i.hasNext()) {
+                    Iterator<DataSnapshot> subjectsIterator = dataSnapshot.getChildren().iterator();
+                    List<String> listOfSubjects = new ArrayList<>();
+                    while (subjectsIterator.hasNext()) {
                         //Log.d("QWERT", "ChildrenValues:  " + i.next());
-                        listOfTeachers.add(i.next().getKey());
+                        listOfSubjects.add(subjectsIterator.next().getKey());
                     }
-                    Log.d("QWERT", "ListOfTeachers   ->   " + listOfTeachers);
-                    Log.d("QWERT", "ListOfTeachersSnapShot   ->   " + dataSnapshot);
-                    Log.d("QWERT", "ListOfTeachersSnapShotValue   ->   " + dataSnapshot.getValue());
-                    for(int ii=0;ii<listOfTeachers.size(); ii++){
-                        Log.d("QWERT", "TeacherInfo   ->   " + listOfTeachers.get(ii) + " - " + dataSnapshot.child(listOfTeachers.get(ii)).getValue());
-                        Iterator <DataSnapshot> lectureNames = dataSnapshot.child(listOfTeachers.get(ii)).getChildren().iterator();
-                        totalClasses += dataSnapshot.child(listOfTeachers.get(ii)).getChildrenCount();
-                        List<String> listOfClasses = new ArrayList<>();
-                        while (lectureNames.hasNext()) {
+                    for(int iiiii=0;iiiii<listOfSubjects.size(); iiiii++){
+                        Iterator<DataSnapshot> i = dataSnapshot.child(listOfSubjects.get(iiiii)).getChildren().iterator();
+                        List<String> listOfTeachers = new ArrayList<>();
+                        while (i.hasNext()) {
                             //Log.d("QWERT", "ChildrenValues:  " + i.next());
-                            listOfClasses.add(lectureNames.next().getKey());
+                            listOfTeachers.add(i.next().getKey());
                         }
-                        for(int iii=0;iii<listOfClasses.size(); iii++){
-                            Log.d("QWERT", "Children Present    -> " + dataSnapshot.child(listOfTeachers.get(ii)).child(listOfClasses.get(iii)).child("Student").getValue());
-                            Iterator <DataSnapshot> childrenPresentNames = dataSnapshot.child(listOfTeachers.get(ii)).child(listOfClasses.get(iii)).child("Student").getChildren().iterator();
-                            while (childrenPresentNames.hasNext()){
-                                if (Objects.equals(childrenPresentNames.next().getKey(), sh.getString("PRN", " "))){
-                                    presentClasses += 1;
-                                    Log.d("QWERT", "Present!!");
+                        Log.d("QWERT", "ListOfTeachers   ->   " + listOfTeachers);
+                        Log.d("QWERT", "ListOfTeachersSnapShot   ->   " + dataSnapshot);
+                        Log.d("QWERT", "ListOfTeachersSnapShotValue   ->   " + dataSnapshot.getValue());
+                        for(int ii=0;ii<listOfTeachers.size(); ii++){
+                            Log.d("QWERT", "TeacherInfo   ->   " + listOfTeachers.get(ii) + " - " + dataSnapshot.child(listOfTeachers.get(ii)).getValue());
+                            Iterator <DataSnapshot> lectureNames = dataSnapshot.child(listOfSubjects.get(iiiii)).child(listOfTeachers.get(ii)).getChildren().iterator();
+                            totalClasses += dataSnapshot.child(listOfSubjects.get(iiiii)).child(listOfTeachers.get(ii)).getChildrenCount();
+                            List<String> listOfClasses = new ArrayList<>();
+                            while (lectureNames.hasNext()) {
+                                //Log.d("QWERT", "ChildrenValues:  " + i.next());
+                                listOfClasses.add(lectureNames.next().getKey());
+                            }
+                            for(int iii=0;iii<listOfClasses.size(); iii++){
+                                Log.d("QWERT", "Children Present    -> " + dataSnapshot.child(listOfSubjects.get(iiiii)).child(listOfTeachers.get(ii)).child(listOfClasses.get(iii)).child("Student").getValue());
+                                Iterator <DataSnapshot> childrenPresentNames = dataSnapshot.child(listOfSubjects.get(iiiii)).child(listOfTeachers.get(ii)).child(listOfClasses.get(iii)).child("Student").getChildren().iterator();
+                                while (childrenPresentNames.hasNext()){
+                                    if (Objects.equals(childrenPresentNames.next().getKey(), sh.getString("PRN", " "))){
+                                        presentClasses += 1;
+                                        Log.d("QWERT", "Present!!");
+                                    }
                                 }
                             }
                         }

@@ -81,7 +81,7 @@ public class GiveAttendance2 extends AppCompatActivity {
                             Mode2QRCodeProperties QRProperties = new Mode2QRCodeProperties(textFromQRCode, unixTimeStamp);
 
 
-                            if(QRProperties.checkIfTimeInBuffer(2)){
+                            if(QRProperties.checkIfTimeInBuffer(20)){
 
                                 Log.d("QWERT", "Time checked");
 
@@ -102,13 +102,8 @@ public class GiveAttendance2 extends AppCompatActivity {
 
                                 Map<String, Object> addToFirebase = new HashMap<String,Object>();
                                 addToFirebase.put(nameOfStudent, QRProperties.QR_CODE_Encoded_time);
-                                reference.child(std.getDiv()).child(Mode2QRCodeProperties.Teacher1).child(Mode2QRCodeProperties.Title1).child("Student").child(PRN).setValue(std);
+                                reference.child(std.getDiv()).child(Mode2QRCodeProperties.subject).child(Mode2QRCodeProperties.Teacher1).child(Mode2QRCodeProperties.Title1).child("Student").child(PRN).setValue(std);
                                 Toast.makeText(GiveAttendance2.this, "Attendance marked  successfully!", Toast.LENGTH_SHORT).show();
-
-
-
-
-
 
 
                             }
