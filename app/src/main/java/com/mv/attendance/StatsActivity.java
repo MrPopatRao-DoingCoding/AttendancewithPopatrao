@@ -204,14 +204,16 @@ public class StatsActivity extends AppCompatActivity {
                                         long savedTime = Long.parseLong(dataSnapshotOfChildrenPresentNames.child("time").getValue().toString())*1000;
                                         Date df = new java.util.Date(savedTime);
                                         String savedTimeFormatted = new SimpleDateFormat("dd-MM hh:mm").format(df);
-                                        newElementInPresentyClassWise += "<font color=#00AA00> &nbsp&nbsp&nbsp ✓ &nbsp&nbsp&nbsp " + listOfClasses.get(iii) + String.join("", Collections.nCopies(20-listOfClasses.get(iii).length(), "&nbsp")) + " "  + savedTimeFormatted + "<br></font>";
+                                        newElementInPresentyClassWise += "<font color=#00AA00> &nbsp&nbsp&nbsp ✓ &nbsp&nbsp " + listOfClasses.get(iii) + String.join("", Collections.nCopies(20-listOfClasses.get(iii).length(), "&nbsp")) + " "  + savedTimeFormatted + "<br></font>";
                                         numberClassesPresentInSubject += 1;
                                         Log.d("QWERT", "Present!!   ->   " + dataSnapshotOfChildrenPresentNames.child("name").getValue());
                                         Log.d("QWERT", "Time now   ->    " + System.currentTimeMillis() / 1000);
                                     }
                                 }
                                 if(isPresentForThisLecture==false){
-                                    newElementInPresentyClassWise += "<font color=#FF0000> &nbsp&nbsp&nbsp X &nbsp&nbsp&nbsp " + listOfClasses.get(iii) + String.join("", Collections.nCopies(20-listOfClasses.get(iii).length(), "&nbsp")) + " " + timeForNotPresentCase + "<br></font>";
+                                    Date dateNotPresent = new java.util.Date(timeForNotPresentCase);
+                                    String savedTimeFormattedAbsent = new SimpleDateFormat("dd-MMM").format(dateNotPresent);
+                                    newElementInPresentyClassWise += "<font color=#FF0000> &nbsp&nbsp&nbsp X &nbsp&nbsp&nbsp " + listOfClasses.get(iii) + String.join("", Collections.nCopies(20-listOfClasses.get(iii).length(), "&nbsp")) + " " + savedTimeFormattedAbsent + "<br></font>";
                                 }
                             }
                         }
