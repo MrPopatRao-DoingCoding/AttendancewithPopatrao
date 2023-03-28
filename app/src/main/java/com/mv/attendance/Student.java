@@ -10,6 +10,13 @@ public class Student {
     String div;
     String name;
 
+    long time;
+
+
+
+
+
+
     public String getName() {
         return name;
     }
@@ -22,10 +29,24 @@ public class Student {
         return RollNo;
     }
 
+    public long getTime(){return time;}
+
+
+
+    public Student(int RollNo, String div, String name, String textFromQRCode) {
+        this.RollNo = RollNo;
+        this.div = div;
+        this.name = name;
+        String[] strsplit = textFromQRCode.split("\\|");
+        this.time = Long.parseLong(strsplit[5]);
+    }
+
     public Student(int RollNo, String div, String name) {
         this.RollNo = RollNo;
         this.div = div;
         this.name = name;
+        //String[] strsplit = textFromQRCode.split("\\|");
+        //this.time = Long.parseLong(strsplit[5]);
     }
 
 
@@ -50,14 +71,7 @@ public class Student {
         return true;
     }
 
-    public Student convertToStudent(String result){
-        Student student = new Student(0, "", "");
-        String[] splitted = result.split("\\|");
-        student.RollNo = Integer.parseInt(splitted[2]);
-        student.div = splitted[3];
-        student.name = splitted[4];
-        return student;
-    }
+
 
 
 }

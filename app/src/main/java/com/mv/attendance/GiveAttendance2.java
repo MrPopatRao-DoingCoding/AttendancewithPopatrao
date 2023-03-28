@@ -91,7 +91,7 @@ public class GiveAttendance2 extends AppCompatActivity {
                                 String divOfStudent = sh.getString("Div", "");
                                 String PRN = sh.getString("PRN","");
 
-                                Student std = new Student(RollNoOfStudent,divOfStudent,nameOfStudent);
+                                Student std = new Student(RollNoOfStudent,divOfStudent,nameOfStudent,textFromQRCode);
 
                                 //Lecture Lecture1 = new Lecture(Mode2QRCodeProperties.Teacher1,Mode2QRCodeProperties.Title1);
 
