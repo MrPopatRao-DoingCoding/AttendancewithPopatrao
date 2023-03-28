@@ -203,7 +203,7 @@ public class StatsActivity extends AppCompatActivity {
                                         presentClasses += 1;
                                         long savedTime = Long.parseLong(dataSnapshotOfChildrenPresentNames.child("time").getValue().toString())*1000;
                                         Date df = new java.util.Date(savedTime);
-                                        String savedTimeFormatted = new SimpleDateFormat("dd-MM hh:mm").format(df);
+                                        String savedTimeFormatted = new SimpleDateFormat("dd-MM hh:mm a").format(df);
                                         newElementInPresentyClassWise += "<font color=#00AA00> &nbsp&nbsp&nbsp ✓ &nbsp&nbsp " + listOfClasses.get(iii) + String.join("", Collections.nCopies(20-listOfClasses.get(iii).length(), "&nbsp")) + " "  + savedTimeFormatted + "<br></font>";
                                         numberClassesPresentInSubject += 1;
                                         Log.d("QWERT", "Present!!   ->   " + dataSnapshotOfChildrenPresentNames.child("name").getValue());
@@ -245,6 +245,8 @@ public class StatsActivity extends AppCompatActivity {
                                     Color.parseColor("#FF0000")));
                     // To animate the pie chart
                     pieChart.startAnimation();
+                    tvPresent.setText(100*presentClasses/totalClasses + "% (Present)");
+                    tvAbsent.setText(100*(totalClasses-presentClasses)/totalClasses + "% (Absent)");
 
                 }
             }

@@ -123,11 +123,11 @@
                         android:layout_marginBottom="15dp"
                         android:layout_weight="1"
                         android:padding="6dp"
-                        app:egLegendTextSize="18sp"
-                        app:egUsePieRotation="true"
-                        app:egValueTextSize="36sp"
+                        app:egLegendTextSize="0sp"
+                        app:egValueTextSize="0sp"
                         app:egInnerPaddingColor="#40000000"
                         app:egInnerPaddingOutline="0"
+                        app:egAutoCenter="false"
                         />
 
                     <!--Creating another linear layout -->

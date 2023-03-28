@@ -62,6 +62,8 @@ public class CustomListViewAdapter extends BaseAdapter {
             //TextView tvAbsent = view.findViewById(R.id.textView_Absent_inListView);
             CardView cardViewOfPresenty = view.findViewById(R.id.idPresenty_card);
             TextView title = view.findViewById(R.id.textInCardViewAttendance_InListView);
+            TextView textView_Present_inListView = view.findViewById(R.id.textView_Present_inListView);
+            TextView textView_Absent_inListView = view.findViewById(R.id.textView_Absent_inListView);
             PieChart pieChart = view.findViewById(R.id.piechart_ListView);
             title.setText(subjTitle.get(i));
             //Log.d("QWERT", "WHY NOT WORKINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG");
@@ -77,6 +79,11 @@ public class CustomListViewAdapter extends BaseAdapter {
                             Color.parseColor("#FF0000")));
             //pieChart.startAnimation();
             // To animate the pie chart
+        pieChart.setInnerValueString(String.valueOf(present.get(i)/(present.get(i)+absent.get(i))));
+        //pieChart.update();
+        textView_Present_inListView.setText(100*present.get(i)/(present.get(i)+absent.get(i)) + "%  (Present)");
+        textView_Absent_inListView.setText(100*absent.get(i)/(present.get(i)+absent.get(i)) + "%  (Absent)");
+        pieChart.setValueTextSize(0);
             cardViewOfPresenty.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
