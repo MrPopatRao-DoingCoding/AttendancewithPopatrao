@@ -169,7 +169,7 @@ public class HomeActivity1 extends AppCompatActivity {
                         //Do something after 100ms
                         mode2Img.setImageDrawable(d_rev);
                         d_rev.start();
-                        Log.d("QWERT", "unfdnvvfvfvffvvvvvvvvvvvvvvvvvvv");
+                        //Log.d("QWERT", "unfdnvvfvfvffvvvvvvvvvvvvvvvvvvv");
                     }
                 }, 800);
 
@@ -213,7 +213,7 @@ public class HomeActivity1 extends AppCompatActivity {
                         //Do something after 100ms
                         mode1Img.setImageDrawable(d2_rev);
                         d2_rev.start();
-                        Log.d("QWERT", "unfdnvvfvfvffvvvvvvvvvvvvvvvvvvv");
+                        //Log.d("QWERT", "unfdnvvfvfvffvvvvvvvvvvvvvvvvvvv");
                     }
                 }, 1200);
 

@@ -10,7 +10,9 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -30,6 +32,8 @@ import org.eazegraph.lib.charts.PieChart;
 import org.eazegraph.lib.models.PieModel;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
@@ -112,7 +116,8 @@ public class StatsActivity extends AppCompatActivity {
                 layout.addView(inputEditTextRollNoOfStudent);*/
                 final TextView textViewPresenty = new TextView(getApplicationContext());
                 layout.addView(textViewPresenty);
-                textViewPresenty.setText(presentyClassWise.get(i));
+                textViewPresenty.setTextSize(18);
+                textViewPresenty.setText(Html.fromHtml(presentyClassWise.get(i)));
                 Log.d("QWERT", String.valueOf(presentyClassWise));
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -123,7 +128,7 @@ public class StatsActivity extends AppCompatActivity {
                 //Creating dialog box
                 AlertDialog alert = builder.create();
                 //Setting the title manually
-                alert.setTitle("New Student");
+                alert.setTitle("Past classes\n");
                 alert.setView(layout);
                 drawable = ContextCompat.getDrawable(StatsActivity.this,  R.drawable.grey_alert_dialogue_background);
                 alert.getWindow().setBackgroundDrawable(drawable);
@@ -186,14 +191,27 @@ public class StatsActivity extends AppCompatActivity {
                             for(int iii=0;iii<listOfClasses.size(); iii++){
                                 Log.d("QWERT", "Children Present    -> " + dataSnapshot.child(listOfSubjects.get(iiiii)).child(listOfTeachers.get(ii)).child(listOfClasses.get(iii)).child("Student").getValue());
                                 Iterator <DataSnapshot> childrenPresentNames = dataSnapshot.child(listOfSubjects.get(iiiii)).child(listOfTeachers.get(ii)).child(listOfClasses.get(iii)).child("Student").getChildren().iterator();
+                                boolean isPresentForThisLecture = false;
+                                long timeForNotPresentCase = 0;
 
                                 while (childrenPresentNames.hasNext()){
-                                    if (Objects.equals(childrenPresentNames.next().getKey(), sh.getString("PRN", " "))){
+                                    DataSnapshot dataSnapshotOfChildrenPresentNames = childrenPresentNames.next();
+                                    String PRNOfChildrenPresentNames = dataSnapshotOfChildrenPresentNames.getKey();
+                                    timeForNotPresentCase = Long.parseLong(dataSnapshotOfChildrenPresentNames.child("time").getValue().toString());
+                                    if (Objects.equals(PRNOfChildrenPresentNames, sh.getString("PRN", " "))){
+                                        isPresentForThisLecture = true;
                                         presentClasses += 1;
-                                        newElementInPresentyClassWise += listOfClasses.get(iii) + "\n";
+                                        long savedTime = Long.parseLong(dataSnapshotOfChildrenPresentNames.child("time").getValue().toString())*1000;
+                                        Date df = new java.util.Date(savedTime);
+                                        String savedTimeFormatted = new SimpleDateFormat("dd-MM hh:mm").format(df);
+                                        newElementInPresentyClassWise += "<font color=#00AA00> &nbsp&nbsp&nbsp ✓ &nbsp&nbsp&nbsp " + listOfClasses.get(iii) + String.join("", Collections.nCopies(20-listOfClasses.get(iii).length(), "&nbsp")) + " "  + savedTimeFormatted + "<br></font>";
                                         numberClassesPresentInSubject += 1;
-                                        Log.d("QWERT", "Present!!");
+                                        Log.d("QWERT", "Present!!   ->   " + dataSnapshotOfChildrenPresentNames.child("name").getValue());
+                                        Log.d("QWERT", "Time now   ->    " + System.currentTimeMillis() / 1000);
                                     }
+                                }
+                                if(isPresentForThisLecture==false){
+                                    newElementInPresentyClassWise += "<font color=#FF0000> &nbsp&nbsp&nbsp X &nbsp&nbsp&nbsp " + listOfClasses.get(iii) + String.join("", Collections.nCopies(20-listOfClasses.get(iii).length(), "&nbsp")) + " " + timeForNotPresentCase + "<br></font>";
                                 }
                             }
                         }
