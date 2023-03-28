@@ -52,7 +52,7 @@ public class StatsActivity extends AppCompatActivity {
     List<Integer> absent;
     List<Integer> present;
 
-    List<String> presentyClassWise;
+    public static List<String> presentyClassWise;
     //List<List<String>> presentyClassWise = new ArrayList<List<String>>();
 
 
@@ -258,5 +258,8 @@ public class StatsActivity extends AppCompatActivity {
         //CustomListViewAdapter customAdapter = new CustomListViewAdapter(getApplicationContext(), subjTitle);
         subjectListView.setAdapter(customAdapter);
     }
+
+
+
 
 }
