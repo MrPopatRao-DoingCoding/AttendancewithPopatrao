@@ -13,9 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Attendance">
         <activity
-            android:name=".StatsActivity"
-            android:screenOrientation="portrait"
+            android:name=".Mode2Teacher_DivisonList"
             android:exported="false" />
+        <activity
+            android:name=".StatsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Settings_teacher"
             android:exported="false" />

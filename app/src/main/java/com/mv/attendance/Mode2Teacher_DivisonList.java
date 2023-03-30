@@ -1,0 +1,67 @@
+package com.mv.attendance;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.ListView;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+public class Mode2Teacher_DivisonList extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_mode2_teacher_divison_list);
+
+        String nameOfDivision = getIntent().getExtras().getString("DivisionSelected");
+
+        ListView listViewOfStudents=findViewById(R.id.listViewPast);
+        List<String> listOfClasses = new ArrayList<>();
+
+        SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference reference = database.getReference("Division");
+
+        List<String> lectureList = new ArrayList<>();
+
+        reference.child(nameOfDivision).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if(task.isSuccessful()){
+                    DataSnapshot dataSnapshot = task.getResult();
+                    Iterator<DataSnapshot> subjectListIterator = dataSnapshot.getChildren().iterator();
+                    while(subjectListIterator.hasNext()){
+                        String subject =  subjectListIterator.next().getKey();
+                        Log.d("QWERT", "SubjectList -> " + subject);
+                        Iterator<DataSnapshot> teachersInSubjectListIterator = dataSnapshot.child(subject).getChildren().iterator();
+                        while (teachersInSubjectListIterator.hasNext()){
+                            String teacherName = teachersInSubjectListIterator.next().getKey();
+                            if(teacherName.equals(sh.getString("Name", ""))){
+                                Iterator<DataSnapshot> lecturesInSubjectListIterator = dataSnapshot.child(subject).child(teacherName).getChildren().iterator();
+                                while(lecturesInSubjectListIterator.hasNext()){
+                                    String lectureName = lecturesInSubjectListIterator.next().getKey();
+                                    Log.d("QWERT", "LetureName -> " + lectureName);
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+}

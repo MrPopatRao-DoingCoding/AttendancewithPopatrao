@@ -131,9 +131,10 @@ public class AttendanceListViewMode2 extends AppCompatActivity {
         });
 
         database = FirebaseDatabase.getInstance();
-        reference = database.getReference("Lectures");
+        //reference = database.getReference("Lectures");
+        reference = database.getReference("Division");
 
-        reference.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        /*reference.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if(task.isSuccessful()) {
@@ -223,7 +224,56 @@ public class AttendanceListViewMode2 extends AppCompatActivity {
                         }
                     });
                     }
-                }}});
+                }}});*/
+
+        List<String> divisionListOfTeacher = new ArrayList<>();
+
+        reference.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DataSnapshot dataSnapshot = task.getResult();
+                    Iterator<DataSnapshot> divisionsIterator = dataSnapshot.getChildren().iterator();
+                    while (divisionsIterator.hasNext()) {
+                        //Log.d("QWERT", "ChildrenValues:  " + i.next());
+                        String division = divisionsIterator.next().getKey();
+                        Log.d("QWERT", "DivisionChecking -> " + division);
+                        Iterator<DataSnapshot> subjectInDivisionsIterator = dataSnapshot.child(division).getChildren().iterator();
+                        while (subjectInDivisionsIterator.hasNext()){
+                            boolean inDivision = false;
+                            String currentSubjects = subjectInDivisionsIterator.next().getKey().toString();
+                            Log.d("QWERT", "Subject -> " + currentSubjects);
+                            Iterator<DataSnapshot> teacherInSubjectInDivisionsIterator = dataSnapshot.child(division).child(currentSubjects).getChildren().iterator();
+                            while (teacherInSubjectInDivisionsIterator.hasNext()){
+                                String teacherName = teacherInSubjectInDivisionsIterator.next().getKey().toString();
+                                Log.d("QWERT", "Name -> " + teacherName);
+                                if(teacherName.equals(sh.getString("Name", ""))){
+                                    divisionListOfTeacher.add(division);
+                                    inDivision = true;
+                                    break;
+                                }
+                            }
+                            if(inDivision==true){
+                                break;
+                            }
+                        }
+                    }
+                    Log.d("QWERT", "DivisionsWithTeacherPresent -> " + divisionListOfTeacher);
+                    final ArrayAdapter<String> adapter = new ArrayAdapter<>(AttendanceListViewMode2.this, android.R.layout.simple_list_item_1, divisionListOfTeacher);
+                    listViewPast.setAdapter(adapter);
+
+                    listViewPast.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            Intent intent = new Intent(AttendanceListViewMode2.this, Mode2Teacher_DivisonList.class);
+                            //intent.putExtra("NameOfClass", divisionListOfTeacher.get(i));
+                            intent.putExtra("DivisionSelected", divisionListOfTeacher.get(i));
+                            startActivity(intent);
+                        }
+                    });
+                }
+            }
+        });
 
 
 
