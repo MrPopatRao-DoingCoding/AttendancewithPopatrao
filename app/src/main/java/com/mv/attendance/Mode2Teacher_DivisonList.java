@@ -4,9 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,7 +40,9 @@ public class Mode2Teacher_DivisonList extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference reference = database.getReference("Division");
 
-        List<String> lectureList = new ArrayList<>();
+        List<String> lectureList_Actual = new ArrayList<>();
+        List<String> lectureList_Actual_CorrespondingSubjects = new ArrayList<>();
+        List<String> lectureList_ForListView = new ArrayList<>();
 
         reference.child(nameOfDivision).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
@@ -55,11 +61,29 @@ public class Mode2Teacher_DivisonList extends AppCompatActivity {
                                 while(lecturesInSubjectListIterator.hasNext()){
                                     String lectureName = lecturesInSubjectListIterator.next().getKey();
                                     Log.d("QWERT", "LetureName -> " + lectureName);
+                                    lectureList_Actual.add(lectureName);
+                                    lectureList_ForListView.add(subject + "_" + lectureName);
+                                    lectureList_Actual_CorrespondingSubjects.add(subject);
                                 }
 
                             }
                         }
                     }
+                    final ArrayAdapter<String> adapter = new ArrayAdapter<>(Mode2Teacher_DivisonList.this, android.R.layout.simple_list_item_1, lectureList_ForListView);
+                    listViewOfStudents.setAdapter(adapter);
+
+                    listViewOfStudents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            Intent intent = new Intent(Mode2Teacher_DivisonList.this, Mode2Studentslist.class);
+                            //intent.putExtra("NameOfClass", divisionListOfTeacher.get(i));
+                            intent.putExtra("DivisionSelected", nameOfDivision);
+                            intent.putExtra("NameOfClass", lectureList_Actual.get(i));
+                            intent.putExtra("Subject", lectureList_Actual_CorrespondingSubjects.get(i));
+                            startActivity(intent);
+                        }
+
+                    });
                 }
             }
         });

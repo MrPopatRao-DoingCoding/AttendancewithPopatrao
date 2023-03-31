@@ -27,7 +27,9 @@ public class Mode2Studentslist extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mode2_studentslist);
 
+        String division = getIntent().getExtras().getString("DivisionSelected");
         String nameOfSession = getIntent().getExtras().getString("NameOfClass");
+        String subject = getIntent().getExtras().getString("Subject");
         Log.d("QWERT", nameOfSession);
 
         ListView listViewOfStudents=findViewById(R.id.listViewPast);
@@ -40,7 +42,9 @@ public class Mode2Studentslist extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference reference = database.getReference("Division");
 
-        reference.child(sh.getString("Div", "")).child(sh.getString("PRN","")).child(nameOfSession).child("Students").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        Log.d("QWERT", "Div, Sub, name = " + division + subject + nameOfSession);
+
+        reference.child(division).child(subject).child(sh.getString("Name","")).child(nameOfSession).child("Student").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (task.isSuccessful()) {
