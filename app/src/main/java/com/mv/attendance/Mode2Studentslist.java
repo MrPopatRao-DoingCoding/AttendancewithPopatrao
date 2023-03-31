@@ -52,12 +52,34 @@ public class Mode2Studentslist extends AppCompatActivity {
                     Iterator<DataSnapshot> i = dataSnapshot.getChildren().iterator();
                     while (i.hasNext()) {
                         //Log.d("QWERT", "ChildrenValues:  " + i.next());
-                        listOfStudents.add(i.next().getKey());
+                        //listOfStudents.add(i.next().getKey());
+                        String PRNOfStudent = i.next().getKey();
+                        String nameOfStudent  = dataSnapshot.child(PRNOfStudent).child("name").getValue().toString();
+                        String divOfStudent  = dataSnapshot.child(PRNOfStudent).child("div").getValue().toString();
+                        String rollNoOfStudent  = dataSnapshot.child(PRNOfStudent).child("rollNo").getValue().toString();
+                        long timeOfStudent  = Long.parseLong(dataSnapshot.child(PRNOfStudent).child("time").getValue().toString());
+                        String stringToAdd = formatToSpecificLength(nameOfStudent, 10, 2) + " " + divOfStudent + " " + formatToSpecificLength(rollNoOfStudent, 2, 0);// + " " + timeOfStudent;
+                        listOfStudents.add(stringToAdd);
                     }
                     final ArrayAdapter<String> adapter = new ArrayAdapter<>(Mode2Studentslist.this, android.R.layout.simple_list_item_1, listOfStudents);
                     listViewOfStudents.setAdapter(adapter);
                 }
             }
         });
+    }
+
+    private String formatToSpecificLength(String inputString, int length, int numberOfDotsIfExceeded){
+        Log.d("QWERT", "StrLengthOrig -> " + inputString.length());
+        if(inputString.length() > length-numberOfDotsIfExceeded){
+            Log.d("QWERT", "StrLengthNew -> " + inputString.substring(0, length-numberOfDotsIfExceeded-1) + "..");
+            return inputString.substring(0, length-numberOfDotsIfExceeded-1) + "..";
+        }
+        StringBuilder inputStringBuilder = new StringBuilder(inputString);
+        while (inputStringBuilder.length() < length-numberOfDotsIfExceeded+1){
+            inputStringBuilder.append(" ");
+        }
+        inputString = inputStringBuilder.toString();
+        Log.d("QWERT", "StrLengthNew -> " + inputString.length() + inputString + "|");
+        return inputString;
     }
 }
