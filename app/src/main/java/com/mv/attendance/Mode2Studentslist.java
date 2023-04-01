@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -63,6 +65,13 @@ public class Mode2Studentslist extends AppCompatActivity {
                     }
                     final ArrayAdapter<String> adapter = new ArrayAdapter<>(Mode2Studentslist.this, android.R.layout.simple_list_item_1, listOfStudents);
                     listViewOfStudents.setAdapter(adapter);
+
+                    /*listViewOfStudents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                        }
+                    });*/
                 }
             }
         });
