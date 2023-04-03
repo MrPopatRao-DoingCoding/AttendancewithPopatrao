@@ -27,11 +27,16 @@
         <entry key="..\:/users/madhur/Apps/AndroidStudio/Projects/AttendancewithPopatrao/app/src/main/res/drawable-v24/blue_list_background.xml" value="0.148" />
         <entry key="..\:/users/madhur/Apps/AndroidStudio/Projects/AttendancewithPopatrao/app/src/main/res/drawable-v24/green_list_background.xml" value="0.148" />
         <entry key="..\:/users/madhur/Apps/AndroidStudio/Projects/AttendancewithPopatrao/app/src/main/res/drawable-v24/grey_alert_dialogue_background.xml" value="0.148" />
+        <entry key="..\:/users/madhur/Apps/AndroidStudio/Projects/AttendancewithPopatrao/app/src/main/res/drawable-v24/grey_green_alert_dialogue_background.xml" value="0.1505" />
+        <entry key="..\:/users/madhur/Apps/AndroidStudio/Projects/AttendancewithPopatrao/app/src/main/res/drawable-v24/white_alert_dialogue_background.xml" value="0.1" />
+        <entry key="..\:/users/madhur/Apps/AndroidStudio/Projects/AttendancewithPopatrao/app/src/main/res/drawable/animated_check.xml" value="0.1505" />
         <entry key="..\:/users/madhur/Apps/AndroidStudio/Projects/AttendancewithPopatrao/app/src/main/res/drawable/background_home_gradient.xml" value="0.1815" />
         <entry key="..\:/users/madhur/Apps/AndroidStudio/Projects/AttendancewithPopatrao/app/src/main/res/drawable/background_home_gradient_teacher.xml" value="0.1215" />
         <entry key="..\:/users/madhur/Apps/AndroidStudio/Projects/AttendancewithPopatrao/app/src/main/res/drawable/button_background_blue.xml" value="0.148" />
         <entry key="..\:/users/madhur/Apps/AndroidStudio/Projects/AttendancewithPopatrao/app/src/main/res/drawable/button_background_green.xml" value="0.19" />
+        <entry key="..\:/users/madhur/Apps/AndroidStudio/Projects/AttendancewithPopatrao/app/src/main/res/drawable/check_mark.xml" value="0.1505" />
         <entry key="..\:/users/madhur/Apps/AndroidStudio/Projects/AttendancewithPopatrao/app/src/main/res/drawable/grey_background_shadowlike.xml" value="0.14" />
+        <entry key="..\:/users/madhur/Apps/AndroidStudio/Projects/AttendancewithPopatrao/app/src/main/res/drawable/ic_baseline_check_circle_24.xml" value="0.1535" />
         <entry key="..\:/users/madhur/Apps/AndroidStudio/Projects/AttendancewithPopatrao/app/src/main/res/drawable/ic_baseline_power_settings_new_24.xml" value="0.1065" />
         <entry key="..\:/users/madhur/Apps/AndroidStudio/Projects/AttendancewithPopatrao/app/src/main/res/drawable/phoneQR_mode1_animation.xml" value="0.174" />
         <entry key="..\:/users/madhur/Apps/AndroidStudio/Projects/AttendancewithPopatrao/app/src/main/res/drawable/phoneQR_mode1_animation_reverse.xml" value="0.174" />
@@ -40,6 +45,8 @@
         <entry key="..\:/users/madhur/Apps/AndroidStudio/Projects/AttendancewithPopatrao/app/src/main/res/drawable/projector_mode2_animation_reverese.xml" value="0.148" />
         <entry key="..\:/users/madhur/Apps/AndroidStudio/Projects/AttendancewithPopatrao/app/src/main/res/drawable/settings_anim.xml" value="0.1815" />
         <entry key="..\:/users/madhur/Apps/AndroidStudio/Projects/AttendancewithPopatrao/app/src/main/res/drawable/settings_anim_reverse.xml" value="0.174" />
+        <entry key="..\:/users/madhur/Apps/AndroidStudio/Projects/AttendancewithPopatrao/app/src/main/res/drawable/tick_anim.xml" value="0.1315" />
+        <entry key="..\:/users/madhur/Apps/AndroidStudio/Projects/AttendancewithPopatrao/app/src/main/res/font/freckle_face.xml" value="0.4" />
         <entry key="..\:/users/madhur/Apps/AndroidStudio/Projects/AttendancewithPopatrao/app/src/main/res/layout/activity_attendance_list_view_mode2.xml" value="0.264" />
         <entry key="..\:/users/madhur/Apps/AndroidStudio/Projects/AttendancewithPopatrao/app/src/main/res/layout/activity_give_attendance.xml" value="0.20697463768115942" />
         <entry key="..\:/users/madhur/Apps/AndroidStudio/Projects/AttendancewithPopatrao/app/src/main/res/layout/activity_give_attendance2.xml" value="0.152" />

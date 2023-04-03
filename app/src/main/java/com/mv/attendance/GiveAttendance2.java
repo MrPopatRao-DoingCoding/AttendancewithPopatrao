@@ -6,17 +6,37 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.Animatable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewOutlineProvider;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
@@ -71,6 +91,7 @@ public class GiveAttendance2 extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        mCodeScanner.stopPreview();
                         long unixTimeStamp = System.currentTimeMillis() / 1000L;
                         String textFromQRCode = result.getText();
                         Log.d("QWERT", textFromQRCode);
@@ -103,16 +124,80 @@ public class GiveAttendance2 extends AppCompatActivity {
                                 Map<String, Object> addToFirebase = new HashMap<String,Object>();
                                 addToFirebase.put(nameOfStudent, QRProperties.QR_CODE_Encoded_time);
                                 reference.child(std.getDiv()).child(Mode2QRCodeProperties.subject).child(Mode2QRCodeProperties.Teacher1).child(Mode2QRCodeProperties.Title1).child("Student").child(PRN).setValue(std);
-                                Toast.makeText(GiveAttendance2.this, "Attendance marked  successfully!", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(GiveAttendance2.this, "Attendance marked  successfully!", Toast.LENGTH_SHORT).show();
+                                //Snackbar.make(zoomSeekBar, "Attendance marked successfully!", Snackbar.LENGTH_LONG).show();
+                                AlertDialog.Builder builder = new AlertDialog.Builder(GiveAttendance2.this);
 
+                                LinearLayout layout = new LinearLayout(GiveAttendance2.this);
+                                final TextView successfulAlertDialogTextView = new TextView(GiveAttendance2.this);
+                                successfulAlertDialogTextView.setText("Attendance marked\nsuccessfully!");
+                                successfulAlertDialogTextView.setTextSize(30);
+                                successfulAlertDialogTextView.setTextColor(getResources().getColor(R.color.green));
+                                Typeface face= getResources().getFont(R.font.freckleface_regular_downloaded);
+                                successfulAlertDialogTextView.setTypeface(face);
+                                successfulAlertDialogTextView.setLineSpacing(0,0.8f);
+                                successfulAlertDialogTextView.setGravity(Gravity.CENTER);
 
+                                final ImageView checkBox = new ImageView(GiveAttendance2.this);
+                                checkBox.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_check_circle_24));
+                                checkBox.setElevation(10);
+                                //checkBox.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
+
+                                //VideoView checkVideo = new VideoView(GiveAttendance2.this);
+                                //String path = "android.resource://" + getPackageName() + "/" + R.raw.check_mark_video;
+                                //checkVideo.setVideoURI(Uri.parse(path));
+                                //checkVideo.start();
+
+                                layout.setPadding(20,20,20,0);
+                                layout.setOrientation(LinearLayout.VERTICAL);
+
+                                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                                params.weight = 1.0f;
+                                params.gravity = Gravity.CENTER_HORIZONTAL;
+                                successfulAlertDialogTextView.setLayoutParams(params);
+                                layout.addView(successfulAlertDialogTextView);
+                                layout.addView(checkBox);
+
+                                builder.setMessage("")
+                                        .setCancelable(false)
+                                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                finish();
+                                            }
+                                        });
+                                AlertDialog alert = builder.create();
+                                //Setting the title manually
+                                alert.setTitle("");
+                                alert.setView(layout);
+                                Drawable drawable = ContextCompat.getDrawable(GiveAttendance2.this,  R.drawable.background_home_gradient);
+                                alert.getWindow().setBackgroundDrawable(drawable);
+                                alert.show();
+                                Button OKbutton = alert.getButton(AlertDialog.BUTTON_POSITIVE);
+                                OKbutton.setScaleX(2);
+                                OKbutton.setScaleY(2);
+                                LinearLayout.LayoutParams positiveButtonLL = (LinearLayout.LayoutParams) OKbutton.getLayoutParams();
+                                positiveButtonLL.gravity = Gravity.CENTER;
+                                positiveButtonLL.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                                OKbutton.setLayoutParams(positiveButtonLL);
+                                Animation expandIn = AnimationUtils.loadAnimation(GiveAttendance2.this, R.anim.pop_from_nothing);
+                                //successfulAlertDialogTextView.startAnimation(expandIn);
+                                checkBox.startAnimation(expandIn);
+                                //((Animatable) checkBox.getDrawable()).start();
+                                //finish();
+
+                            }
+                            else{
+                                mCodeScanner.startPreview();
                             }
 
 
                         }
+                        else{
+                            mCodeScanner.startPreview();
+                        }
 
 
-                        mCodeScanner.startPreview();
+
                         }
                     });
                 }
