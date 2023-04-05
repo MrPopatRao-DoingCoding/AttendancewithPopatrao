@@ -50,6 +50,35 @@ public class Mode2QRCodeProperties {
 
     }
 
+    public static String decodeScannedString(String inputStr, int shiftKey){
+        String ALPHABET = "abcdefghijklmnopqrstuvwxyz1234567890|.,{}ABCDEFGHIJKLMNOPQRSTUVWXYZ '[]<>()!@#$%^&*-_";
+
+            // decryptStr to store decrypted data
+            String decryptStr = "";
+
+            // use for loop for traversing each character of the input string
+            for (int i = 0; i < inputStr.length(); i++)
+            {
+
+                // get position of each character of inputStr in ALPHABET
+                int pos = ALPHABET.indexOf(inputStr.charAt(i));
+
+                // get decrypted char for each char of inputStr
+                int decryptPos = (pos - shiftKey) % ALPHABET.length();
+
+                // if decryptPos is negative
+                if (decryptPos < 0){
+                    decryptPos = ALPHABET.length() + decryptPos;
+                }
+                char decryptChar = ALPHABET.charAt(decryptPos);
+
+                // add decrypted char to decrypted string
+                decryptStr += decryptChar;
+            }
+            // return decrypted string
+            return decryptStr;
+    }
+
     public boolean checkIfTimeInBuffer(long seconds) {
         long unixTime = System.currentTimeMillis() / 1000L;
         if(unixTime - QR_CODE_Encoded_time <= seconds){

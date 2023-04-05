@@ -94,7 +94,10 @@ public class GiveAttendance2 extends AppCompatActivity {
                         mCodeScanner.stopPreview();
                         long unixTimeStamp = System.currentTimeMillis() / 1000L;
                         String textFromQRCode = result.getText();
-                        Log.d("QWERT", textFromQRCode);
+                        Log.d("QWERT", "FromQR  -> " + textFromQRCode);
+
+                        textFromQRCode = Mode2QRCodeProperties.decodeScannedString(textFromQRCode, 5);
+                        Log.d("QWERT", "Decoded after FromQR  -> " + textFromQRCode);
 
                         if(Mode2QRCodeProperties.check_textFromQRCode_isCorrect(textFromQRCode, unixTimeStamp) == true){
                             //QR Code is in correct format. Now we need to up-load it
