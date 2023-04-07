@@ -27,7 +27,7 @@ class Mode2TakeAttendanceShowQRCode : AppCompatActivity() {
 
         qrCodeIV = findViewById(R.id.idTVQRCodeMode2TakeAttendance)
         val titleOfLectureAttendanceSession:String = intent.getStringExtra("Title").toString()
-        val teacherOfLectureAttendanceSession:String = intent.getStringExtra("TeacherName").toString()
+        val teacherOfLectureAttendanceSession:String = intent.getStringExtra("Teacher_PRN").toString()
         val divisionOfLectureAttendanceSession:String = intent.getStringExtra("Division").toString()
 
         var currentTime = (System.currentTimeMillis() / 1000).toInt()

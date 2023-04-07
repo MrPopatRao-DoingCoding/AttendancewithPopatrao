@@ -46,7 +46,7 @@ public class Mode2Studentslist extends AppCompatActivity {
 
         Log.d("QWERT", "Div, Sub, name = " + division + subject + nameOfSession);
 
-        reference.child(division).child(subject).child(sh.getString("Name","")).child(nameOfSession).child("Student").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        reference.child(division).child(subject).child(sh.getString("PRN","")).child(nameOfSession).child("Student").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (task.isSuccessful()) {

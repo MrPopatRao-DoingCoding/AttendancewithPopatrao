@@ -56,7 +56,7 @@ public class Mode2Teacher_DivisonList extends AppCompatActivity {
                         Iterator<DataSnapshot> teachersInSubjectListIterator = dataSnapshot.child(subject).getChildren().iterator();
                         while (teachersInSubjectListIterator.hasNext()){
                             String teacherName = teachersInSubjectListIterator.next().getKey();
-                            if(teacherName.equals(sh.getString("Name", ""))){
+                            if(teacherName.equals(sh.getString("PRN", ""))){
                                 Iterator<DataSnapshot> lecturesInSubjectListIterator = dataSnapshot.child(subject).child(teacherName).getChildren().iterator();
                                 while(lecturesInSubjectListIterator.hasNext()){
                                     String lectureName = lecturesInSubjectListIterator.next().getKey();

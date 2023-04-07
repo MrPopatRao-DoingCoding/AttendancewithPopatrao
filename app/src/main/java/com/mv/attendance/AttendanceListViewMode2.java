@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -20,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,6 +30,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
+import com.mv.attendance.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -42,9 +45,13 @@ public class AttendanceListViewMode2 extends AppCompatActivity {
 
     DatabaseReference reference;
 
+    //ActivityMainBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //binding = ActivityMainBinding.inflate(getLayoutInflater());
+        //setContentView(binding.getRoot());
         setContentView(R.layout.activity_attendance_list_view_mode2);
 
         listViewPast=findViewById(R.id.listViewPast);
@@ -78,8 +85,8 @@ public class AttendanceListViewMode2 extends AppCompatActivity {
                 final EditText divisionOfClass = new EditText(getApplicationContext());
                 //final EditText inputEditTextRollNoOfStudent = new EditText(getApplicationContext());
                 inputEditTextTitle.setHint("Title");
-                inputEditTextNameOfTeacher.setHint("Teacher Name");
-                inputEditTextNameOfTeacher.setText(sh.getString("Name", ""));
+                inputEditTextNameOfTeacher.setHint("Teacher PRN");
+                inputEditTextNameOfTeacher.setText(sh.getString("PRN", ""));
                 divisionOfClass.setHint("Division");
                 //inputEditTextRollNoOfStudent.setHint("Roll No.");
                 //inputEditTextRollNoOfStudent.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -104,7 +111,7 @@ public class AttendanceListViewMode2 extends AppCompatActivity {
                                 mainDisplayAttendanceTextView.setText(finalListAttendanceSession[0].get(countInListAttendance).generateStringNonRepeatative());*/
                                 Intent intent = new Intent(AttendanceListViewMode2.this, Mode2TakeAttendanceShowQRCode.class);
                                 intent.putExtra("Title", inputEditTextTitle.getText().toString());
-                                intent.putExtra("TeacherName", inputEditTextNameOfTeacher.getText().toString());
+                                intent.putExtra("Teacher_PRN", inputEditTextNameOfTeacher.getText().toString());
                                 intent.putExtra("Division", divisionOfClass.getText().toString());
                                 startActivity(intent);
                                 dialog.dismiss();
@@ -227,6 +234,7 @@ public class AttendanceListViewMode2 extends AppCompatActivity {
                 }}});*/
 
         List<String> divisionListOfTeacher = new ArrayList<>();
+        ArrayList<ListElement_class> element_ArrayList = new ArrayList<ListElement_class>();
 
         reference.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
@@ -247,8 +255,13 @@ public class AttendanceListViewMode2 extends AppCompatActivity {
                             while (teacherInSubjectInDivisionsIterator.hasNext()){
                                 String teacherName = teacherInSubjectInDivisionsIterator.next().getKey().toString();
                                 Log.d("QWERT", "Name -> " + teacherName);
-                                if(teacherName.equals(sh.getString("Name", ""))){
+                                if(teacherName.equals(sh.getString("PRN", ""))){
                                     divisionListOfTeacher.add(division);
+                                    //Image.add(R.drawable.classroom);
+                                    ListElement_class element = new ListElement_class(division, R.drawable.classroom);
+                                    element_ArrayList.add(element);
+
+
                                     inDivision = true;
                                     break;
                                 }
@@ -258,11 +271,29 @@ public class AttendanceListViewMode2 extends AppCompatActivity {
                             }
                         }
                     }
+                    /*
                     Log.d("QWERT", "DivisionsWithTeacherPresent -> " + divisionListOfTeacher);
                     final ArrayAdapter<String> adapter = new ArrayAdapter<>(AttendanceListViewMode2.this, android.R.layout.simple_list_item_1, divisionListOfTeacher);
                     listViewPast.setAdapter(adapter);
+                    */
 
-                    listViewPast.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+
+
+                    ListAdapter_cardview listAdapter = new ListAdapter_cardview(AttendanceListViewMode2.this,element_ArrayList );
+
+                    listViewPast.setAdapter(listAdapter);
+
+                    //binding.getRoot().
+
+                    //binding.listViewPast.setClickable(true);
+
+
+
+                  //  binding.listViewPast.setOnItemClickListner()
+
+
+                listViewPast.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                             Intent intent = new Intent(AttendanceListViewMode2.this, Mode2Teacher_DivisonList.class);
@@ -274,14 +305,5 @@ public class AttendanceListViewMode2 extends AppCompatActivity {
                 }
             }
         });
-
-
-
-
-
-
-
-
-
     }
 }
