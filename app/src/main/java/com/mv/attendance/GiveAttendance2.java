@@ -88,28 +88,28 @@ public class GiveAttendance2 extends AppCompatActivity {
         mCodeScanner.setDecodeCallback(new DecodeCallback() {
             @Override
             public void onDecoded(@NonNull Result result) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mCodeScanner.stopPreview();
-                        long unixTimeStamp = System.currentTimeMillis() / 1000L;
-                        String textFromQRCode = result.getText();
-                        Log.d("QWERT", "FromQR  -> " + textFromQRCode);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mCodeScanner.stopPreview();
+                            long unixTimeStamp = System.currentTimeMillis() / 1000L;
+                            String textFromQRCode = result.getText();
+                            Log.d("QWERT", "FromQR  -> " + textFromQRCode);
 
-                        textFromQRCode = Mode2QRCodeProperties.decodeScannedString(textFromQRCode, 5);
-                        Log.d("QWERT", "Decoded after FromQR  -> " + textFromQRCode);
+                            textFromQRCode = Mode2QRCodeProperties.decodeScannedString(textFromQRCode, 5);
+                            Log.d("QWERT", "Decoded after FromQR  -> " + textFromQRCode);
 
-                        if(Mode2QRCodeProperties.check_textFromQRCode_isCorrect(textFromQRCode, unixTimeStamp) == true){
-                            //QR Code is in correct format. Now we need to up-load it
+                            if(Mode2QRCodeProperties.check_textFromQRCode_isCorrect(textFromQRCode, unixTimeStamp) == true){
+                                //QR Code is in correct format. Now we need to up-load it
 
-                            Mode2QRCodeProperties QRProperties = new Mode2QRCodeProperties(textFromQRCode, unixTimeStamp);
+                                Mode2QRCodeProperties QRProperties = new Mode2QRCodeProperties(textFromQRCode, unixTimeStamp);
 
 
-                            if(QRProperties.checkIfTimeInBuffer(20)){
+                                if(QRProperties.checkIfTimeInBuffer(20)){
 
-                                Log.d("QWERT", "Time checked");
+                                    Log.d("QWERT", "Time checked");
 
-                                SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
+                                    SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
                                 String nameOfStudent = sh.getString("Name", "");
                                 int RollNoOfStudent = Integer.parseInt(sh.getString("Roll No", ""));
                                 String divOfStudent = sh.getString("Div", "");

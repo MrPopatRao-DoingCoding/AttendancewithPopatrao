@@ -17,7 +17,7 @@
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:padding="4dp"
-        android:text="SELECT LECTURE - MODE 2"
+        android:text="My Lectures"
         android:textAlignment="center"
         android:textColor="@color/dark_light_blue"
         android:textSize="36sp"
@@ -29,12 +29,12 @@
         android:layout_height="601dp"
         android:layout_below="@id/idTVHeading"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="81dp"
+        android:layout_marginTop="60dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/grey_alert_dialogue_background"
+        android:background="@drawable/white_alert_dialogue_background"
         android:elevation="10dp"
-        tools:listitem="@layout/list_item_background" />
+        tools:listitem="@layout/listitem_cardview" />
 
     <!--ImageButton
         android:id="@+id/buttonNewAttendanceMode2ThroughQRCode"

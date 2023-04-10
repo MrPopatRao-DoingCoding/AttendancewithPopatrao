@@ -43,6 +43,7 @@ public class Mode2Teacher_DivisonList extends AppCompatActivity {
         List<String> lectureList_Actual = new ArrayList<>();
         List<String> lectureList_Actual_CorrespondingSubjects = new ArrayList<>();
         List<String> lectureList_ForListView = new ArrayList<>();
+        ArrayList<ListElement_class> subject_list = new ArrayList<>();
 
         reference.child(nameOfDivision).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
@@ -64,13 +65,50 @@ public class Mode2Teacher_DivisonList extends AppCompatActivity {
                                     lectureList_Actual.add(lectureName);
                                     lectureList_ForListView.add(subject + "_" + lectureName);
                                     lectureList_Actual_CorrespondingSubjects.add(subject);
+
+                                    if(subject.equals("Math"))
+                                    {
+                                        ListElement_class element = new ListElement_class(subject + "_" + lectureName,R.drawable.maths);
+                                        subject_list.add(element);
+                                    }
+
+                                    else if(subject.equals("Chemistry"))
+                                    {
+                                        ListElement_class element = new ListElement_class(subject + "_" + lectureName,R.drawable.chemistry);
+                                        subject_list.add(element);
+                                    }
+                                    else if(subject.equals("Mechanics"))
+                                    {
+                                        ListElement_class element = new ListElement_class(subject + "_" + lectureName,R.drawable.physics);
+                                        subject_list.add(element);
+                                    }
+                                    else if (subject.equals("PDD"))
+                                    {
+                                        ListElement_class element = new ListElement_class(subject + "_" + lectureName,R.drawable.newproduct);
+                                        subject_list.add(element);
+                                    }
+                                    else if (subject.equals("C programming"))
+                                    {
+                                        ListElement_class element = new ListElement_class(subject + "_" + lectureName,R.drawable.programming);
+                                        subject_list.add(element);
+                                    }
+                                    else
+                                    {
+                                        ListElement_class element = new ListElement_class(subject + "_" + lectureName,R.drawable.textbooks);
+                                        subject_list.add(element);
+                                    }
                                 }
 
                             }
                         }
                     }
-                    final ArrayAdapter<String> adapter = new ArrayAdapter<>(Mode2Teacher_DivisonList.this, android.R.layout.simple_list_item_1, lectureList_ForListView);
+                   /* final ArrayAdapter<String> adapter = new ArrayAdapter<>(Mode2Teacher_DivisonList.this, android.R.layout.simple_list_item_1, lectureList_ForListView);
                     listViewOfStudents.setAdapter(adapter);
+                   */
+
+                    ListAdapter_cardview listAdapter = new ListAdapter_cardview(Mode2Teacher_DivisonList.this, subject_list );
+                    listViewOfStudents.setAdapter(listAdapter);
+
 
                     listViewOfStudents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override

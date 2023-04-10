@@ -258,7 +258,7 @@ public class AttendanceListViewMode2 extends AppCompatActivity {
                                 if(teacherName.equals(sh.getString("PRN", ""))){
                                     divisionListOfTeacher.add(division);
                                     //Image.add(R.drawable.classroom);
-                                    ListElement_class element = new ListElement_class(division, R.drawable.classroom);
+                                    ListElement_class element = new ListElement_class(division, R.drawable.training);
                                     element_ArrayList.add(element);
 
 

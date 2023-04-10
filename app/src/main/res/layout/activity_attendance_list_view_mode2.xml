@@ -32,7 +32,7 @@
         android:layout_marginTop="60dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/grey_alert_dialogue_background"
+        android:background="@drawable/white_alert_dialogue_background"
         android:elevation="10dp"
         tools:listitem="@layout/listitem_cardview" />
 
