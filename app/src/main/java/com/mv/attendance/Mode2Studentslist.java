@@ -238,7 +238,7 @@ public class Mode2Studentslist extends AppCompatActivity {
                               FirebaseDatabase database = FirebaseDatabase.getInstance();
                               DatabaseReference reference = database.getReference("Division");
 
-                              Student std1 = new Student(name, roll, division, 111111111111l);
+                              Student std1 = new Student(name, roll, division, System.currentTimeMillis() / 1000L);
                               reference.child(division).child(subject).child(sh.getString("PRN","")).child(nameOfSession).child("Student").child(PRN).setValue(std1);
                               listOfStudents.add(name + "_" + nameOfSession);
                               String stringToAdd = formatToSpecificLength(name, 10, 2) + " " + division + " " + formatToSpecificLength(roll, 2, 0);// + " " + timeOfStudent;
