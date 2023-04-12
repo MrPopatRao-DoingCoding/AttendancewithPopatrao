@@ -12,21 +12,25 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -43,6 +47,11 @@ public class Mode2Studentslist extends AppCompatActivity {
         String nameOfSession = getIntent().getExtras().getString("NameOfClass");
         String subject = getIntent().getExtras().getString("Subject");
         Log.d("QWERT", nameOfSession);
+
+        TextView text = findViewById(R.id.idTVHeading);
+        ImageView AddStudent=findViewById(R.id.buttonAddStudent);
+
+        text.setText(subject + "_" + nameOfSession);
 
         ListView listViewOfStudents=findViewById(R.id.listViewPast);
 
@@ -124,11 +133,11 @@ public class Mode2Studentslist extends AppCompatActivity {
                             layout.addView(Roll);
                             layout.addView(Div);
                             layout.addView(PRN);
-                            Name.setText(name_list.get(i));
-                            Roll.setText(Roll_list.get(i));
-                            Div.setText(division);
-                            PRN.setText(PRN_list.get(i));
-                            builder.setMessage(nameOfSession)
+                            Name.setText("Name: "+name_list.get(i));
+                            Roll.setText("Roll no: "+Roll_list.get(i));
+                            Div.setText("Division: "+division);
+                            PRN.setText("PRN: "+PRN_list.get(i));
+                            builder.setMessage("Lecture: "+nameOfSession)
                                     .setCancelable(false)
                                     .setPositiveButton("REMOVE", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
@@ -140,11 +149,15 @@ public class Mode2Studentslist extends AppCompatActivity {
 
                                             reference.child(division).child(subject).child(sh.getString("PRN","")).child(nameOfSession).child("Student").child(PRN_list.get(i)).removeValue();
                                             student_list.remove(i);
+                                            listAdapter.notifyDataSetChanged();
+                                            Toast.makeText(Mode2Studentslist.this, "Student removed successfully", Toast.LENGTH_SHORT).show();
+
 
                                         }
                                     })
                                     .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
+                                        public void onClick(DialogInterface dialog, int id)
+                                        {
                                             //  Action for 'NO' Button
                                             dialog.cancel();
                                         }
@@ -166,6 +179,99 @@ public class Mode2Studentslist extends AppCompatActivity {
 
                     });
                 }
+            }
+        });
+
+
+        AddStudent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(Mode2Studentslist.this);
+                LinearLayout layout = new LinearLayout(Mode2Studentslist.this);
+                layout.setBackgroundColor(Color.parseColor("#EEEEEE"));
+                Drawable drawable = ContextCompat.getDrawable(Mode2Studentslist.this,  R.drawable.white_alert_dialogue_background);
+                layout.setBackground(drawable);
+                layout.setPadding(20,20,20,0);
+                layout.setOrientation(LinearLayout.VERTICAL);
+                layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT));
+
+                final EditText inputEditTextNameOfStudent = new EditText(getApplicationContext());
+                //final EditText inputEditTextDivOfStudent = new EditText(getApplicationContext());
+                final EditText inputEditTextRollNoOfStudent = new EditText(getApplicationContext());
+                final EditText inputEditTextPRN = new EditText(getApplicationContext());
+                //final EditText inputEditTextSession = new EditText((getApplicationContext()));
+                inputEditTextNameOfStudent.setHint("Name");
+                //inputEditTextDivOfStudent.setHint("Div");
+                inputEditTextRollNoOfStudent.setHint("Roll No");
+                inputEditTextPRN.setHint("PRN");
+                //inputEditTextNameOfStudent.setHint("Session");
+                inputEditTextRollNoOfStudent.setInputType(InputType.TYPE_CLASS_NUMBER);
+                layout.addView(inputEditTextNameOfStudent);
+                //layout.addView(inputEditTextDivOfStudent);
+                layout.addView(inputEditTextRollNoOfStudent);
+                layout.addView(inputEditTextPRN);
+                //inputEditTextDivOfStudent.setText(division);
+                //inputEditTextSession.setText(nameOfSession);
+                builder.setMessage("Add a new student")
+                        .setCancelable(false)
+                        .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                              /*  Student student = new Student(Integer.parseInt(inputEditTextRollNoOfStudent.getText().toString()), inputEditTextDivOfStudent.getText().toString(), inputEditTextNameOfStudent.getText().toString());
+                                finalListAttendanceSession[0].get(countInListAttendance).addStudent(student);
+                                Gson gson = new Gson();
+                                String jsonToShareAttendanceSession = gson.toJson(attendanceSession);
+
+
+                                String jsonToListElementsAdapterList= gson.toJson(finalListAttendanceSession[0]);
+                                myEdit.putString("ListAttendanceSession", jsonToListElementsAdapterList);
+                                myEdit.apply();
+                                dialog.dismiss();
+                                mainDisplayAttendanceTextView.setText(finalListAttendanceSession[0].get(countInListAttendance).generateStringNonRepeatative());*/
+                              String name = inputEditTextNameOfStudent.getText().toString();
+                              String PRN = inputEditTextPRN.getText().toString();
+                              String roll = inputEditTextRollNoOfStudent.getText().toString();
+
+
+                              FirebaseDatabase database = FirebaseDatabase.getInstance();
+                              DatabaseReference reference = database.getReference("Division");
+
+                              Student std1 = new Student(name, roll, division, 111111111111l);
+                              reference.child(division).child(subject).child(sh.getString("PRN","")).child(nameOfSession).child("Student").child(PRN).setValue(std1);
+                              listOfStudents.add(subject + "_" + nameOfSession);
+                              listAdapter.notifyDataSetChanged();
+                              Toast.makeText(Mode2Studentslist.this, "Student added successfully", Toast.LENGTH_SHORT).show();
+
+
+
+
+
+
+
+
+
+
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                //  Action for 'NO' Button
+                                dialog.cancel();
+                            }
+                        });
+                //Creating dialog box
+                AlertDialog alert = builder.create();
+                //Setting the title manually
+                alert.setTitle("New Student");
+                alert.setView(layout);
+                drawable = ContextCompat.getDrawable(Mode2Studentslist.this,  R.drawable.grey_alert_dialogue_background);
+                alert.getWindow().setBackgroundDrawable(drawable);
+                alert.show();
+                WindowManager.LayoutParams lp = alert.getWindow().getAttributes();
+                lp.dimAmount = 0.75f;
+                alert.getWindow().setAttributes(lp);
+                //alert.setView(inputEditTextDivOfStudent);
+                //alert.setView(inputEditTextRollNoOfStudent);
             }
         });
 

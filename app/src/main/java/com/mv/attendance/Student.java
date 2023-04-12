@@ -7,6 +7,7 @@ import java.util.Arrays;
 public class Student {
 
     int RollNo;
+    String roll;
     String div;
     String name;
 
@@ -47,6 +48,13 @@ public class Student {
         this.name = name;
         //String[] strsplit = textFromQRCode.split("\\|");
         //this.time = Long.parseLong(strsplit[5]);
+    }
+
+    public Student(String name, String roll, String div, long time){
+        this.roll = roll;
+        this.name = name;
+        this.div = div;
+        this.time = time;
     }
 
 
