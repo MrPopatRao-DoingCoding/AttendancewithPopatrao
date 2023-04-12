@@ -76,6 +76,8 @@ public class Mode2Studentslist extends AppCompatActivity {
 
         Log.d("QWERT", "Div, Sub, name = " + division + subject + nameOfSession);
 
+        final Studentlist_Adapter[] listAdapter = new Studentlist_Adapter[1];
+
         reference.child(division).child(subject).child(sh.getString("PRN","")).child(nameOfSession).child("Student").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -102,8 +104,8 @@ public class Mode2Studentslist extends AppCompatActivity {
                     //final ArrayAdapter<String> adapter = new ArrayAdapter<>(Mode2Studentslist.this, android.R.layout.simple_list_item_1, listOfStudents);
                     //listViewOfStudents.setAdapter(adapter);
 
-                    studentlist_adapter listAdapter = new studentlist_adapter(Mode2Studentslist.this, student_list );
-                    listViewOfStudents.setAdapter(listAdapter);
+                    listAdapter[0] = new Studentlist_Adapter(Mode2Studentslist.this, student_list );
+                    listViewOfStudents.setAdapter(listAdapter[0]);
 
                     listViewOfStudents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
@@ -149,7 +151,7 @@ public class Mode2Studentslist extends AppCompatActivity {
 
                                             reference.child(division).child(subject).child(sh.getString("PRN","")).child(nameOfSession).child("Student").child(PRN_list.get(i)).removeValue();
                                             student_list.remove(i);
-                                            listAdapter.notifyDataSetChanged();
+                                            listAdapter[0].notifyDataSetChanged();
                                             Toast.makeText(Mode2Studentslist.this, "Student removed successfully", Toast.LENGTH_SHORT).show();
 
 
@@ -238,8 +240,10 @@ public class Mode2Studentslist extends AppCompatActivity {
 
                               Student std1 = new Student(name, roll, division, 111111111111l);
                               reference.child(division).child(subject).child(sh.getString("PRN","")).child(nameOfSession).child("Student").child(PRN).setValue(std1);
-                              listOfStudents.add(subject + "_" + nameOfSession);
-                              listAdapter.notifyDataSetChanged();
+                              listOfStudents.add(name + "_" + nameOfSession);
+                              String stringToAdd = formatToSpecificLength(name, 10, 2) + " " + division + " " + formatToSpecificLength(roll, 2, 0);// + " " + timeOfStudent;
+                              student_list.add(new ListElement_class(stringToAdd, R.drawable.student));
+                              listAdapter[0].notifyDataSetChanged();
                               Toast.makeText(Mode2Studentslist.this, "Student added successfully", Toast.LENGTH_SHORT).show();
 
 

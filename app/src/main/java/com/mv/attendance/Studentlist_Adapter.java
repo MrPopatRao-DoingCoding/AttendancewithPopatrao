@@ -14,12 +14,10 @@ import androidx.recyclerview.widget.ListAdapter;
 
 import java.util.ArrayList;
 
-public class studentlist_adapter extends ArrayAdapter<ListElement_class> {
+public class Studentlist_Adapter extends ArrayAdapter<ListElement_class> {
 
-    public studentlist_adapter(Context context, ArrayList<ListElement_class> elementArrayList){
+    public Studentlist_Adapter(Context context, ArrayList<ListElement_class> elementArrayList){
         super(context, R.layout.listitem_cardview, elementArrayList);
-
-
     }
 
     @NonNull
@@ -29,20 +27,14 @@ public class studentlist_adapter extends ArrayAdapter<ListElement_class> {
         ListElement_class listElement = getItem(position);
 
         if (convertView == null){
-
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.listitem_cardview_students, parent,  false);
         }
 
         ImageView image_element = convertView.findViewById(R.id.image_element);
         TextView text_element = convertView.findViewById(R.id.text_element);
 
-
         image_element.setImageResource(listElement.ImageID);
         text_element.setText(listElement.list_element);
-
-
-
-
 
         return convertView;
     }
