@@ -32,7 +32,7 @@ public class HomeActivity1 extends AppCompatActivity {
     CardView Mode2_card;
     CardView Stats_card;
     RelativeLayout backgroundRelativeLayout;
-    TextView heading_text;
+    TextView heading_text,TextViewCardView1,TextViewCardView2;
 
     //private AnimatedVectorDrawable animationOfSettings;
 
@@ -48,6 +48,8 @@ public class HomeActivity1 extends AppCompatActivity {
         Mode1_card = findViewById(R.id.idMode1_card);
         Mode2_card = findViewById(R.id.idMode2_card);
         Stats_card = findViewById(R.id.idStats_card);
+        TextViewCardView1 = findViewById(R.id.textView_CardView1);
+        TextViewCardView2 = findViewById(R.id.textView_CardView2);
         backgroundRelativeLayout = findViewById(R.id.activity_home1_background);
         heading_text = findViewById(R.id.idTVHeading);
 
@@ -61,6 +63,8 @@ public class HomeActivity1 extends AppCompatActivity {
             Mode1_card.setCardBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.dark_light_blue));
             Mode2_card.setCardBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.dark_light_blue));
             Stats_card.setVisibility(View.GONE);
+            TextViewCardView1.setText("Take\nAttendance");
+            TextViewCardView2.setText("Previous\nAttendances");
         }
 
 
@@ -86,7 +90,7 @@ public class HomeActivity1 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (type.equals("Teacher")) {
-                    Intent intent = new Intent(HomeActivity1.this, TakeAttendanceList.class);
+                    Intent intent = new Intent(HomeActivity1.this, SelectModeForTakingAttendance.class);
                     startActivity(intent);
                 } else {
                     Intent intent = new Intent(HomeActivity1.this, GiveAttendance.class);

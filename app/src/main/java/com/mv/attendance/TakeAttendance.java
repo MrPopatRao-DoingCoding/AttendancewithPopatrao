@@ -128,13 +128,13 @@ public class TakeAttendance extends AppCompatActivity {
                             if(Student.checkIfFormatCorrect(decrypted)){
                                 //Toast.makeText(TakeAttendance.this, "erer", Toast.LENGTH_SHORT).show();
                                 Log.d("QWERTY", "Ikde");
-                                Student scannedStudent = new Student(decrypted);
+                                Student scannedStudent = new Student(decrypted, System.currentTimeMillis() / 1000L);
                                 attendanceSession.addStudent(scannedStudent);
                                 Log.d("QWERTY", attendanceSession.generateStringNonRepeatative());
                                 ListAttendanceSession.set(countInListAttendance, attendanceSession);
                                 Log.d("QWERTY", "Actaul kaay aahe -> " + ListAttendanceSession.get(countInListAttendance).generateString());
                                 Gson gson = new Gson();
-                                String jsonToListElementsAdapterList= gson.toJson(ListAttendanceSession);
+                                String jsonToListElementsAdapterList = gson.toJson(ListAttendanceSession);
                                 Type listType = new TypeToken<List<AttendanceSession>>() {}.getType();
                                 jsonToListElementsAdapterList= gson.toJson(ListAttendanceSession, listType);
                                 myEdit.putString("ListAttendanceSession", jsonToListElementsAdapterList);
@@ -147,7 +147,7 @@ public class TakeAttendance extends AppCompatActivity {
                                         //scannerTV.setText("Scanned Data will appear here");
                                         scannerTV.setText(attendanceSession.getTitle());
                                     }
-                                }, 500);
+                                }, 400);
                             }
                         }
 
@@ -164,9 +164,9 @@ public class TakeAttendance extends AppCompatActivity {
     }
 
     private boolean checkPermission() {
-        int camer_permission = ContextCompat.checkSelfPermission(getApplicationContext(), CAMERA);
+        int camera_permission = ContextCompat.checkSelfPermission(getApplicationContext(), CAMERA);
         int vibrate_permission = ContextCompat.checkSelfPermission(getApplicationContext(), VIBRATE);
-        return camer_permission == PackageManager.PERMISSION_GRANTED && vibrate_permission == PackageManager.PERMISSION_GRANTED;
+        return camera_permission == PackageManager.PERMISSION_GRANTED && vibrate_permission == PackageManager.PERMISSION_GRANTED;
     }
     private void requestPermissions() {
         int PERMISSION_CODE = 200;

@@ -1,5 +1,6 @@
 package com.mv.attendance;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -8,10 +9,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -22,18 +24,21 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class TakeAttendanceList extends AppCompatActivity {
 
     ListView listViewPast;
-    ImageButton new_attendance_session_button, button_sort_alphabetically;
+    ImageButton new_attendance_session_button, button_sync_to_firebase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,7 @@ public class TakeAttendanceList extends AppCompatActivity {
 
         listViewPast=findViewById(R.id.listViewPast);
         new_attendance_session_button=findViewById(R.id.buttonNewAttendance);
+        button_sync_to_firebase = findViewById(R.id.buttonSyncTOFirebase);
 
 
         SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
@@ -61,6 +67,7 @@ public class TakeAttendanceList extends AppCompatActivity {
         if(ListAttendanceSession.size()>0){
             for(int i=0;i<ListAttendanceSession.size();i++){
                 ListElementsArrayList.add(ListAttendanceSession.get(i).title);
+                Log.d("QWER", "AttendanceSession ->  " + ListAttendanceSession.get(i).title + " " + ListAttendanceSession.get(i).division + " " + ListAttendanceSession.get(i).subject);
             }
         }
 
@@ -81,12 +88,18 @@ public class TakeAttendanceList extends AppCompatActivity {
 
                 final EditText inputEditTextDialogue = new EditText(getApplicationContext());
                 inputEditTextDialogue.setHint("Title");
+                final EditText inputDivisionEditTextDialogue = new EditText(getApplicationContext());
+                inputDivisionEditTextDialogue.setHint("Division");
+                final EditText inputSubjectEditTextDialogue = new EditText(getApplicationContext());
+                inputSubjectEditTextDialogue.setHint("Subject");
                 LinearLayout layout = new LinearLayout(TakeAttendanceList.this);
                 layout.setBackground(ContextCompat.getDrawable(TakeAttendanceList.this,  R.drawable.white_alert_dialogue_background));
                 layout.setPadding(20,20,20,0);
                 layout.setOrientation(LinearLayout.VERTICAL);
                 layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT));
                 layout.addView(inputEditTextDialogue);
+                layout.addView(inputDivisionEditTextDialogue);
+                layout.addView(inputSubjectEditTextDialogue);
 
                 //Setting message manually and performing action on button click
                 builder.setMessage("Set a new name for the Attendance Session")
@@ -95,6 +108,8 @@ public class TakeAttendanceList extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int id) {
                                 AttendanceSession attendanceSession = new AttendanceSession();
                                 attendanceSession.title = inputEditTextDialogue.getText().toString();
+                                attendanceSession.division = inputDivisionEditTextDialogue.getText().toString();
+                                attendanceSession.subject = inputSubjectEditTextDialogue.getText().toString();
 
                                 Gson gson = new Gson();
                                 String jsonToShareAttendanceSession = gson.toJson(attendanceSession);
@@ -110,6 +125,7 @@ public class TakeAttendanceList extends AppCompatActivity {
                                 String jsonToListElementsAdapterList= gson.toJson(finalListAttendanceSession);
                                 myEdit.putString("ListAttendanceSession", jsonToListElementsAdapterList);
                                 myEdit.apply();
+                                Log.d("QWER", "AttendanceSession ->  " + attendanceSession.title + " " + attendanceSession.division + " " + attendanceSession.subject);
                             }
                         })
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -186,6 +202,27 @@ public class TakeAttendanceList extends AppCompatActivity {
         });
 
 
+        List<AttendanceSession> finalListAttendanceSession3 = ListAttendanceSession;
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference reference = database.getReference("Division");
+        //SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+        button_sync_to_firebase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isNetworkAvailable()) {
+                    uploadToFirebase(finalListAttendanceSession3, reference, sh);
+                    myEdit.putString("ListAttendanceSession", "");
+                    myEdit.apply();
+                    ListElementsArrayList.clear();
+                    adapter.notifyDataSetChanged();
+                }
+                else{
+                    Toast.makeText(TakeAttendanceList.this, "Network Not Available!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
 
 
 
@@ -194,5 +231,60 @@ public class TakeAttendanceList extends AppCompatActivity {
     public <T> List<T> getList(String jsonArray, Class<T> clazz) {
         Type typeOfT = TypeToken.getParameterized(List.class, clazz).getType();
         return new Gson().fromJson(jsonArray, typeOfT);
+    }
+
+
+    public void uploadToFirebase(List<AttendanceSession> finalListAttendanceSession3, DatabaseReference reference, SharedPreferences sh){
+        if(finalListAttendanceSession3.size()>0){
+            int i = 0;
+            while (finalListAttendanceSession3.size()> 0){
+                //ListElementsArrayList.add(finalListAttendanceSession3.get(i).title);
+                uploadAttendanceSessionToFirebase(finalListAttendanceSession3.get(i), reference, sh);
+                finalListAttendanceSession3.remove(i);
+            }
+        }
+    }
+
+    public void uploadAttendanceSessionToFirebase(AttendanceSession attendanceSession, DatabaseReference reference, SharedPreferences sh){
+        Log.d("QWER", "AttendanceSession ->  " + attendanceSession.title + " " + attendanceSession.division + " " + attendanceSession.subject);
+        int student_i = 0;
+        if (attendanceSession.present.size() > 0) {
+            //reference.child(attendanceSession.division).child(attendanceSession.subject).child(sh.getString("PRN", "ERROR")).child(attendanceSession.title).child("Student").child(String.valueOf(attendanceSession.present.get(student_i).PRN_number)).setValue(attendanceSession.present.get(student_i));
+            uploadStudentToFirebase(attendanceSession, reference, sh, attendanceSession.present, attendanceSession.division, attendanceSession.subject, attendanceSession.title, attendanceSession.present.get(student_i));
+            //attendanceSession.present.remove(student_i);
+        }
+        //uploadStudentToFirebase(attendanceSession, reference, sh, attendanceSession.present, attendanceSession.division, attendanceSession.subject, attendanceSession.title, attendanceSession.present.get(student_i));
+        //finalListAttendanceSession3.remove(i);
+    }
+
+    public void uploadStudentToFirebase(AttendanceSession attendanceSession, DatabaseReference reference, SharedPreferences sh, ArrayList<Student> presentlist, String division, String subject, String title, Student student){
+        //reference.child(division).child(subject).child(sh.getString("PRN", "ERROR")).child(title).child("Student").child(String.valueOf(student.PRN_number)).setValue(student);
+        Log.d("QWER", "Added");
+        Log.d("QWER", "PresentList -> " + presentlist);
+        int student_i = 0;
+        if(presentlist.size() > 0) {
+            Log.d("QWER", "wwwwwwww");
+            reference.child(attendanceSession.division).child(attendanceSession.subject).child(sh.getString("PRN", "ERROR")).child(attendanceSession.title).child("Student").child(String.valueOf(presentlist.get(student_i).PRN_number)).setValue(presentlist.get(student_i)).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    presentlist.remove(0);
+                    if(presentlist.size() > 0) {
+                        uploadStudentToFirebase(attendanceSession, reference, sh, presentlist, attendanceSession.division, attendanceSession.subject, attendanceSession.title, presentlist.get(student_i));
+                    }
+
+                }
+            });
+            //reference.child(attendanceSession.division).child(attendanceSession.subject).child(sh.getString("PRN", "ERROR")).child(attendanceSession.title).child("Student").child(String.valueOf(presentlist.get(student_i).PRN_number)).setValue(presentlist.get(student_i));
+            //presentlist.remove(0);
+        }
+    }
+
+
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager != null ? connectivityManager.getActiveNetworkInfo() : null;
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }
