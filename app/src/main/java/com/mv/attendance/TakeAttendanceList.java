@@ -248,7 +248,7 @@ public class TakeAttendanceList extends AppCompatActivity {
     public void uploadAttendanceSessionToFirebase(AttendanceSession attendanceSession, DatabaseReference reference, SharedPreferences sh){
         Log.d("QWER", "AttendanceSession ->  " + attendanceSession.title + " " + attendanceSession.division + " " + attendanceSession.subject);
         int student_i = 0;
-        if (attendanceSession.present.size() > 0) {
+        if ((attendanceSession.present !=null) &&attendanceSession.present.size() > 0) {
             //reference.child(attendanceSession.division).child(attendanceSession.subject).child(sh.getString("PRN", "ERROR")).child(attendanceSession.title).child("Student").child(String.valueOf(attendanceSession.present.get(student_i).PRN_number)).setValue(attendanceSession.present.get(student_i));
             uploadStudentToFirebase(attendanceSession, reference, sh, attendanceSession.present, attendanceSession.division, attendanceSession.subject, attendanceSession.title, attendanceSession.present.get(student_i));
             //attendanceSession.present.remove(student_i);
