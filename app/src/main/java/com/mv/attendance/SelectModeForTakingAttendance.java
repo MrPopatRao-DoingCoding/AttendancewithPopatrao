@@ -171,11 +171,13 @@ public class SelectModeForTakingAttendance extends AppCompatActivity {
 
                 final EditText inputEditTextTitle = new EditText(getApplicationContext());
                 final EditText inputEditTextNameOfTeacher = new EditText(getApplicationContext());
+                final EditText subjectOfClass = new EditText(getApplicationContext());
                 final EditText divisionOfClass = new EditText(getApplicationContext());
                 //final EditText inputEditTextRollNoOfStudent = new EditText(getApplicationContext());
                 inputEditTextTitle.setHint("Title");
                 inputEditTextNameOfTeacher.setHint("Teacher PRN");
                 inputEditTextNameOfTeacher.setText(sh.getString("PRN", ""));
+                subjectOfClass.setHint("Subject");
                 divisionOfClass.setHint("Division");
                 //inputEditTextRollNoOfStudent.setHint("Roll No.");
                 //inputEditTextRollNoOfStudent.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -202,6 +204,7 @@ public class SelectModeForTakingAttendance extends AppCompatActivity {
                                 intent.putExtra("Title", inputEditTextTitle.getText().toString());
                                 intent.putExtra("Teacher_PRN", inputEditTextNameOfTeacher.getText().toString());
                                 intent.putExtra("Division", divisionOfClass.getText().toString());
+                                intent.putExtra("Subject", subjectOfClass.getText().toString());
                                 startActivity(intent);
                                 dialog.dismiss();
                             }

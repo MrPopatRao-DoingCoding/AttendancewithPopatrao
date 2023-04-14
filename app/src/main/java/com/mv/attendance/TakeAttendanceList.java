@@ -9,19 +9,27 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -215,6 +223,7 @@ public class TakeAttendanceList extends AppCompatActivity {
                     myEdit.apply();
                     ListElementsArrayList.clear();
                     adapter.notifyDataSetChanged();
+                    show_successfulUploadDialog();
                 }
                 else{
                     Toast.makeText(TakeAttendanceList.this, "Network Not Available!", Toast.LENGTH_SHORT).show();
@@ -277,6 +286,60 @@ public class TakeAttendanceList extends AppCompatActivity {
             //reference.child(attendanceSession.division).child(attendanceSession.subject).child(sh.getString("PRN", "ERROR")).child(attendanceSession.title).child("Student").child(String.valueOf(presentlist.get(student_i).PRN_number)).setValue(presentlist.get(student_i));
             //presentlist.remove(0);
         }
+    }
+
+
+    public void show_successfulUploadDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(TakeAttendanceList.this);
+
+        LinearLayout layout = new LinearLayout(TakeAttendanceList.this);
+        final TextView successfulAlertDialogTextView = new TextView(TakeAttendanceList.this);
+        successfulAlertDialogTextView.setText("Attendance uploaded\nsuccessfully!");
+        successfulAlertDialogTextView.setTextSize(30);
+        successfulAlertDialogTextView.setTextColor(getResources().getColor(R.color.dark_light_blue));
+        Typeface face= getResources().getFont(R.font.freckleface_regular_downloaded);
+        successfulAlertDialogTextView.setTypeface(face);
+        successfulAlertDialogTextView.setLineSpacing(0,0.8f);
+        successfulAlertDialogTextView.setGravity(Gravity.CENTER);
+
+        final ImageView checkBox = new ImageView(TakeAttendanceList.this);
+        checkBox.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_check_circle_24_blue));
+        checkBox.setElevation(10);
+
+        layout.setPadding(20,20,20,0);
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        params.weight = 1.0f;
+        params.gravity = Gravity.CENTER_HORIZONTAL;
+        successfulAlertDialogTextView.setLayoutParams(params);
+        layout.addView(successfulAlertDialogTextView);
+        layout.addView(checkBox);
+
+        builder.setMessage("")
+                .setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        //Setting the title manually
+        alert.setTitle("");
+        alert.setView(layout);
+        Drawable drawable = ContextCompat.getDrawable(TakeAttendanceList.this,  R.drawable.background_home_gradient_teacher);
+        alert.getWindow().setBackgroundDrawable(drawable);
+        alert.show();
+        Button OKbutton = alert.getButton(AlertDialog.BUTTON_POSITIVE);
+        OKbutton.setScaleX(2);
+        OKbutton.setScaleY(2);
+        LinearLayout.LayoutParams positiveButtonLL = (LinearLayout.LayoutParams) OKbutton.getLayoutParams();
+        positiveButtonLL.gravity = Gravity.CENTER;
+        positiveButtonLL.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        OKbutton.setLayoutParams(positiveButtonLL);
+        Animation expandIn = AnimationUtils.loadAnimation(TakeAttendanceList.this, R.anim.pop_from_nothing);
+        //successfulAlertDialogTextView.startAnimation(expandIn);
+        checkBox.startAnimation(expandIn);
     }
 
 
