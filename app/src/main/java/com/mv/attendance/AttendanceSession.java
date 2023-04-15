@@ -10,6 +10,8 @@ public class AttendanceSession {
 
     ArrayList<Student> present;
     String title;
+    String division;
+    String subject;
 
     public AttendanceSession(ArrayList<Student> present, String title) {
         this.present = present;

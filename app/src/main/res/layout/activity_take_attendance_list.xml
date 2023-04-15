@@ -43,7 +43,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="0dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/button_background_blue"
@@ -52,6 +52,25 @@
         android:foreground="?attr/selectableItemBackground"
         android:gravity="center"
         android:src="@drawable/ic_baseline_add_24"
+        android:stateListAnimator="@null"
+        android:textAlignment="center" />
+
+    <ImageButton
+        android:id="@+id/buttonSyncTOFirebase"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_above="@id/buttonNewAttendance"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/button_background_blue"
+        android:clickable="true"
+        android:elevation="20dp"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:src="@drawable/ic_baseline_cloud_sync_24"
         android:stateListAnimator="@null"
         android:textAlignment="center" />
 

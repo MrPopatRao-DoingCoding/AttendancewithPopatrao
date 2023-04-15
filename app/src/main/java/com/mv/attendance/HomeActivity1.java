@@ -22,7 +22,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.concurrent.Executor;
 
@@ -54,7 +53,6 @@ public class HomeActivity1 extends AppCompatActivity {
 
         SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
         String type = sh.getString("TypeOfPerson", "Not Set");
-        String prn = sh.getString("PRN", "");
 
         if(type.equals("Teacher")){
             backgroundRelativeLayout.setBackgroundResource(R.drawable.background_home_gradient_teacher);
@@ -87,23 +85,14 @@ public class HomeActivity1 extends AppCompatActivity {
         Mode1_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(prn.isEmpty()){
-                    Log.d("QWERT", prn);
-                    Toast.makeText(HomeActivity1.this, "Fill all credentials!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(HomeActivity1.this, HomeActivity1.class);
-                    intent = new Intent(HomeActivity1.this, SettingsActivity.class);
+                if (type.equals("Teacher")) {
+                    Intent intent = new Intent(HomeActivity1.this, TakeAttendanceList.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(HomeActivity1.this, GiveAttendance.class);
                     startActivity(intent);
                 }
-                else{
-                    Log.d("QWERT", prn);
-                    if (type.equals("Teacher")) {
-                        Intent intent = new Intent(HomeActivity1.this, TakeAttendanceList.class);
-                        startActivity(intent);
-                    } else {
-                        Intent intent = new Intent(HomeActivity1.this, GiveAttendance.class);
-                        startActivity(intent);
-                    }
-                }}
+            }
         });
 
         Stats_card.setOnClickListener(new View.OnClickListener() {
@@ -150,21 +139,13 @@ public class HomeActivity1 extends AppCompatActivity {
         Mode2_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(prn.isEmpty()){
-                    Log.d("QWERT", prn);
-                    Toast.makeText(HomeActivity1.this, "Fill all credentials", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(HomeActivity1.this, SettingsActivity.class);
+                if (type.equals("Teacher")) {
+                    Intent intent = new Intent(HomeActivity1.this, AttendanceListViewMode2.class);
                     startActivity(intent);
+                } else {
+                    biometricPrompt.authenticate(promptInfo);
                 }
-                else{
-                    Log.d("QWERT", prn);
-                    if (type.equals("Teacher")) {
-                        Intent intent = new Intent(HomeActivity1.this, AttendanceListViewMode2.class);
-                        startActivity(intent);
-                    } else {
-                        biometricPrompt.authenticate(promptInfo);
-                    }
-            }}
+            }
         });
     }
 

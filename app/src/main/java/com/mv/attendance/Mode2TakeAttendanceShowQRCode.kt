@@ -29,9 +29,10 @@ class Mode2TakeAttendanceShowQRCode : AppCompatActivity() {
         val titleOfLectureAttendanceSession:String = intent.getStringExtra("Title").toString()
         val teacherOfLectureAttendanceSession:String = intent.getStringExtra("Teacher_PRN").toString()
         val divisionOfLectureAttendanceSession:String = intent.getStringExtra("Division").toString()
+        val subjectOfLectureAttendanceSession:String = intent.getStringExtra("Subject").toString()
 
         var currentTime = (System.currentTimeMillis() / 1000).toInt()
-        var finalString = decodeScannedString("{}|$titleOfLectureAttendanceSession|$teacherOfLectureAttendanceSession|$divisionOfLectureAttendanceSession|$currentTime|", -5)
+        var finalString = decodeScannedString("{}|$titleOfLectureAttendanceSession|$teacherOfLectureAttendanceSession|$divisionOfLectureAttendanceSession|$subjectOfLectureAttendanceSession|$currentTime|22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222", -5)
         val data: QrData = QrData.Text(finalString)
         var options = QrVectorOptions.Builder()
             .padding(.3f)
@@ -73,7 +74,7 @@ class Mode2TakeAttendanceShowQRCode : AppCompatActivity() {
             runOnUiThread {
                 //tvTime.text = SimpleDateFormat("dd MMM - HH:mm", Locale.US).format(Date())
                 var currentTime = (System.currentTimeMillis() / 1000).toInt()
-                finalString = decodeScannedString("{}|$titleOfLectureAttendanceSession|$teacherOfLectureAttendanceSession|$divisionOfLectureAttendanceSession|$currentTime|", -5)
+                finalString = decodeScannedString("{}|$titleOfLectureAttendanceSession|$teacherOfLectureAttendanceSession|$divisionOfLectureAttendanceSession|$subjectOfLectureAttendanceSession|$currentTime|22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222", -5)
                 val data: QrData = QrData.Text(finalString)
                 options = QrVectorOptions.Builder()
                     .padding(.3f)

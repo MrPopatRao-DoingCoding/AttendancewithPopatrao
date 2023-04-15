@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -28,6 +29,8 @@ public class Settings_teacher extends AppCompatActivity {
     //EditText editTextDivision;
     ImageButton clearDataButton;
 
+    ImageView homeButton;
+
     EditText editTextPRN;
 
     @Override
@@ -40,6 +43,8 @@ public class Settings_teacher extends AppCompatActivity {
         clearDataButton = findViewById(R.id.ClearDataButton);
 
         editTextPRN = findViewById(R.id.editTextPRN);
+
+        homeButton = findViewById(R.id.home_image);
 
         SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
         editTextName.setText(sh.getString("Name", ""));
@@ -105,6 +110,13 @@ public class Settings_teacher extends AppCompatActivity {
                     myEdit.putLong("savedTime", t);
                 }
                 myEdit.apply();
+            }
+        });
+
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
     }
