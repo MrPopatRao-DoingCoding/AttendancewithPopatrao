@@ -39,8 +39,8 @@ public class NewUser extends AppCompatActivity {
                 myEdit.apply();
                 Intent intent = new Intent(NewUser.this, HomeActivity1.class);
                 startActivity(intent);
-                intent = new Intent(NewUser.this, SettingsActivity.class);
-                startActivity(intent);
+                //intent = new Intent(NewUser.this, SettingsActivity.class);
+                //startActivity(intent);
                 finish();
             }
         });
@@ -76,8 +76,8 @@ public class NewUser extends AppCompatActivity {
                 myEdit.apply();
                 Intent intent = new Intent(NewUser.this, HomeActivity1.class);
                 startActivity(intent);
-                intent = new Intent(NewUser.this, Settings_teacher.class);
-                startActivity(intent);
+                //intent = new Intent(NewUser.this, Settings_teacher.class);
+                //startActivity(intent);
                 finish();
             }
         });
