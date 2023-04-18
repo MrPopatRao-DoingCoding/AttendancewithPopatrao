@@ -122,8 +122,6 @@ public class HomeActivity1 extends AppCompatActivity {
                 startActivity(intent);
                 //Toast.makeText(getApplicationContext(), "Login Success", Toast.LENGTH_SHORT).show();
                 //loginbutton.setText("Login Successful");
-
-                //HPTEST
             }
             @Override
             public void onAuthenticationFailed() {
