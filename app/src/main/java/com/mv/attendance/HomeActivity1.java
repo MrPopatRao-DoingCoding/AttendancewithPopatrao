@@ -17,7 +17,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -33,6 +32,7 @@ public class HomeActivity1 extends AppCompatActivity {
     CardView Stats_card;
     RelativeLayout backgroundRelativeLayout;
     TextView heading_text,TextViewCardView1,TextViewCardView2;
+    BiometricPrompt biometricPrompt;
 
     //private AnimatedVectorDrawable animationOfSettings;
 
@@ -42,6 +42,7 @@ public class HomeActivity1 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home1);
 
+        // Linking variables with views in XML
         setting_image = findViewById(R.id.setting_image);
         mode2Img = findViewById(R.id.imgOfMode2);
         mode1Img = findViewById(R.id.imgOfMode1);
@@ -53,33 +54,24 @@ public class HomeActivity1 extends AppCompatActivity {
         backgroundRelativeLayout = findViewById(R.id.activity_home1_background);
         heading_text = findViewById(R.id.idTVHeading);
 
+        // Shared Preferences
         SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
-        String type = sh.getString("TypeOfPerson", "Not Set");
+        String typeOfPerson = sh.getString("TypeOfPerson", "Not Set");
 
-        if(type.equals("Teacher")){
-            backgroundRelativeLayout.setBackgroundResource(R.drawable.background_home_gradient_teacher);
-            setting_image.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_light_blue), android.graphics.PorterDuff.Mode.SRC_IN);
-            heading_text.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.dark_light_blue));
-            Mode1_card.setCardBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.dark_light_blue));
-            Mode2_card.setCardBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.dark_light_blue));
-            Stats_card.setVisibility(View.GONE);
-            TextViewCardView1.setText("Take\nAttendance");
-            TextViewCardView2.setText("Previous\nAttendances");
+        if(typeOfPerson.equals("Teacher")){  // If user is teacher, switch type to teacher
+            switchToTeacher();
         }
-
-
-        /*Animation rotation = AnimationUtils.loadAnimation(HomeActivity1.this, R.anim.rotate_settings_logo);
-        rotation.setFillAfter(true);
-        setting_image.startAnimation(rotation);*/
 
         setting_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (type.equals("Teacher")) {
+                if (typeOfPerson.equals("Teacher")) {
+                    // If teacher, start teacher settings activity
                     Intent intent = new Intent(HomeActivity1.this, Settings_teacher.class);
                     startActivity(intent);
                 }
                 else{
+                    // If student, start student settings activity
                     Intent intent = new Intent(HomeActivity1.this, SettingsActivity.class);
                     startActivity(intent);
                 }
@@ -89,10 +81,12 @@ public class HomeActivity1 extends AppCompatActivity {
         Mode1_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (type.equals("Teacher")) {
+                // If teacher, go to activity for selecting mode of attendance
+                if (typeOfPerson.equals("Teacher")) {
                     Intent intent = new Intent(HomeActivity1.this, SelectModeForTakingAttendance.class);
                     startActivity(intent);
                 } else {
+                    // If student, go to activity for giving Mode1 attendance
                     Intent intent = new Intent(HomeActivity1.this, GiveAttendance.class);
                     startActivity(intent);
                 }
@@ -102,6 +96,7 @@ public class HomeActivity1 extends AppCompatActivity {
         Stats_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Start stats activity for students
                 Intent intent = new Intent(HomeActivity1.this, StatsActivity.class);
                 startActivity(intent);
             }
@@ -109,10 +104,28 @@ public class HomeActivity1 extends AppCompatActivity {
 
 
 
+        final BiometricPrompt.PromptInfo promptInfo = createBiometricSecurityPrompt();  // Set up fingerprint biometric prompt
+
+        Mode2_card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (typeOfPerson.equals("Teacher")) {
+                    // If teacher, open Past Attendances Activity
+                    Intent intent = new Intent(HomeActivity1.this, AttendanceListViewMode2.class);
+                    startActivity(intent);
+                } else {
+                    // Authenticate biometric info and then start the next activity of giving attendance through mode 2
+                    biometricPrompt.authenticate(promptInfo);
+                }
+            }
+        });
+    }
+
+    private BiometricPrompt.PromptInfo createBiometricSecurityPrompt() {
         // creating a variable for our Executor
         Executor executor = ContextCompat.getMainExecutor(this);
         // this will give us result of AUTHENTICATION
-        final BiometricPrompt biometricPrompt = new BiometricPrompt(HomeActivity1.this, executor, new BiometricPrompt.AuthenticationCallback() {
+        biometricPrompt = new BiometricPrompt(HomeActivity1.this, executor, new BiometricPrompt.AuthenticationCallback() {
             @Override
             public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
                 super.onAuthenticationError(errorCode, errString);
@@ -124,8 +137,6 @@ public class HomeActivity1 extends AppCompatActivity {
                 super.onAuthenticationSucceeded(result);
                 Intent intent = new Intent(HomeActivity1.this, GiveAttendance2.class);
                 startActivity(intent);
-                //Toast.makeText(getApplicationContext(), "Login Success", Toast.LENGTH_SHORT).show();
-                //loginbutton.setText("Login Successful");
             }
             @Override
             public void onAuthenticationFailed() {
@@ -134,34 +145,34 @@ public class HomeActivity1 extends AppCompatActivity {
         });
         // creating a variable for our promptInfo
         // BIOMETRIC DIALOG
-        final BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder().setTitle("Security! 😁")
+        return new BiometricPrompt.PromptInfo.Builder().setTitle("Security! 😁")
                 .setDescription("Use your fingerprint to access the next screen!").setNegativeButtonText("Cancel").build();
+    }
 
-
-
-
-        Mode2_card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (type.equals("Teacher")) {
-                    Intent intent = new Intent(HomeActivity1.this, AttendanceListViewMode2.class);
-                    startActivity(intent);
-                } else {
-                    biometricPrompt.authenticate(promptInfo);
-                }
-            }
-        });
+    private void switchToTeacher() {
+        // Change views so that they match to the theme of teacher
+        backgroundRelativeLayout.setBackgroundResource(R.drawable.background_home_gradient_teacher);
+        setting_image.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_light_blue), android.graphics.PorterDuff.Mode.SRC_IN);
+        heading_text.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.dark_light_blue));
+        Mode1_card.setCardBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.dark_light_blue));
+        Mode2_card.setCardBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.dark_light_blue));
+        Stats_card.setVisibility(View.GONE);
+        TextViewCardView1.setText("Take\nAttendance");
+        TextViewCardView2.setText("Previous\nAttendances");
     }
 
 
     @Override
     protected void onStart() {
         super.onStart();
-        AnimatedVectorDrawable d = (AnimatedVectorDrawable) getDrawable(R.drawable.projector_mode2_animation);
-        AnimatedVectorDrawable d_rev = (AnimatedVectorDrawable) getDrawable(R.drawable.projector_mode2_animation_reverese);
+        startAnimationsOfViews();
+    }
 
-        mode2Img.setImageDrawable(d);
-        //d.start();
+    private void startAnimationsOfViews() {
+        AnimatedVectorDrawable d = (AnimatedVectorDrawable) getDrawable(R.drawable.projector_mode2_animation);  // Forward Animation
+        AnimatedVectorDrawable d_rev = (AnimatedVectorDrawable) getDrawable(R.drawable.projector_mode2_animation_reverese);  // Reverse Animation
+
+        mode2Img.setImageDrawable(d);  // Set animation to view
 
         d.registerAnimationCallback(new Animatable2.AnimationCallback() {
             @Override
@@ -170,12 +181,10 @@ public class HomeActivity1 extends AppCompatActivity {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        //Do something after 100ms
                         mode2Img.setImageDrawable(d_rev);
                         d_rev.start();
-                        //Log.d("QWERT", "unfdnvvfvfvffvvvvvvvvvvvvvvvvvvv");
                     }
-                }, 800);
+                }, 800);  // Start animation, repeating after 800 milliseconds
 
             }
         });
@@ -187,25 +196,23 @@ public class HomeActivity1 extends AppCompatActivity {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        //Do something after 100ms
                         mode2Img.setImageDrawable(d);
                         d.start();
                     }
-                }, 800);
+                }, 800);  // After animation ends, reverse the animation
 
             }
         });
 
-        d.start();
+        d.start();  // Start Animation
 
 
 
 
-        AnimatedVectorDrawable d2 = (AnimatedVectorDrawable) getDrawable(R.drawable.phone_qr_mode1_animation);
-        AnimatedVectorDrawable d2_rev = (AnimatedVectorDrawable) getDrawable(R.drawable.phone_qr_mode1_animation_reverse);
+        AnimatedVectorDrawable d2 = (AnimatedVectorDrawable) getDrawable(R.drawable.phone_qr_mode1_animation);  // Forward Animation
+        AnimatedVectorDrawable d2_rev = (AnimatedVectorDrawable) getDrawable(R.drawable.phone_qr_mode1_animation_reverse);  // Reverse Animation
 
-        mode1Img.setImageDrawable(d2);
-        //d.start();
+        mode1Img.setImageDrawable(d2);  // Set animation to view
 
         d.registerAnimationCallback(new Animatable2.AnimationCallback() {
             @Override
@@ -214,12 +221,10 @@ public class HomeActivity1 extends AppCompatActivity {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        //Do something after 100ms
                         mode1Img.setImageDrawable(d2_rev);
                         d2_rev.start();
-                        //Log.d("QWERT", "unfdnvvfvfvffvvvvvvvvvvvvvvvvvvv");
                     }
-                }, 1200);
+                }, 1200);  // Start animation, repeating after 1200 milliseconds
 
             }
         });
@@ -235,18 +240,12 @@ public class HomeActivity1 extends AppCompatActivity {
                         mode1Img.setImageDrawable(d2);
                         d2.start();
                     }
-                }, 1200);
+                }, 1200);  // After animation ends, reverse the animation
 
             }
         });
 
         d.start();
-        /*Drawable d = setting_image.getDrawable();
-        if (d instanceof AnimatedVectorDrawable) {
-            Log.d("QWERT", "onCreate: instancefound" + d.toString());
-            animationOfSettings = (AnimatedVectorDrawable) d;
-            animationOfSettings.start();
-        }*/
     }
 
 }

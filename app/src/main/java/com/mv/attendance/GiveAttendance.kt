@@ -1,6 +1,7 @@
 package com.mv.attendance
 
-import android.graphics.Bitmap
+import android.content.SharedPreferences
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.WindowManager
@@ -13,30 +14,35 @@ import com.github.alexzhirkevich.customqrgenerator.vector.QrCodeDrawable
 import com.github.alexzhirkevich.customqrgenerator.vector.QrVectorOptions
 import com.github.alexzhirkevich.customqrgenerator.vector.style.*
 import se.simbio.encryption.Encryption
-import java.lang.Math.abs
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 
 class GiveAttendance : AppCompatActivity() {
-    private lateinit var qrCodeIV: ImageView
-        //private val qrgEncoder: QRGEncoder? = null
-    private val bitmap: Bitmap? = null
+    private lateinit var qrCodeImageView: ImageView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.setFlags(
+        window.setFlags(  //Make the activity Un-ScreenShotAble
             WindowManager.LayoutParams.FLAG_SECURE,
             WindowManager.LayoutParams.FLAG_SECURE
         )
         setContentView(R.layout.activity_give_attendance)
-        qrCodeIV = findViewById(R.id.idTVQRCode)
 
 
-        val sh = getSharedPreferences("MySharedPref", MODE_PRIVATE)
+        qrCodeImageView = findViewById(R.id.idImageViewQRCode)  // Linking the QRCode Textview with the xml file
 
-        /*editTextName.setText(sh.getString("Name", ""))
-        editTextRollNo.setText(sh.getString("Roll No", ""))
-        editTextDivision.setText(sh.getString("Div", ""))*/
+
+        val sh = getSharedPreferences("MySharedPref", MODE_PRIVATE)   // Open SharedPreferences
+        val drawable = createQRCode(sh)  // Create QR Code
+
+        if(kotlin.math.abs(sh.getLong("savedTime", 167666442) - getTime()) > 20) {  // Check if the specified time has passed since changing settings ////////Change time here!!
+            qrCodeImageView.setImageDrawable(drawable)  // Set the QR Code on the ImageView
+        }
+
+    }
+
+    private fun createQRCode(sh : SharedPreferences) : Drawable {
         val current_time = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         val formatted_date = current_time.format(formatter)
@@ -48,18 +54,15 @@ class GiveAttendance : AppCompatActivity() {
         val encryption = Encryption.getDefault(key, salt, iv)
         finalString = encryption.encryptOrNull(finalString)
         val data: QrData = QrData.Text(finalString)
-        val options = QrVectorOptions.Builder()
+        val options = createQROptions()
+
+        return QrCodeDrawable(applicationContext, data, options)
+    }
+
+    private fun createQROptions(): QrVectorOptions {
+
+        return QrVectorOptions.Builder()
             .padding(.3f)
-            /*.logo(
-                QrVectorLogo(
-                    drawable = DrawableSource
-                        .Resource(R.drawable.ic_baseline_sim_card_24),
-                    size = .3f,
-                    padding = QrVectorLogoPadding.Natural(.05f),
-                    shape = QrVectorLogoShape
-                        .Circle
-                )
-            )*/
             .colors(
                 QrVectorColors(
                     dark = QrVectorColor
@@ -80,31 +83,10 @@ class GiveAttendance : AppCompatActivity() {
                 )
             )
             .build()
-
-        val drawable = QrCodeDrawable(applicationContext, data, options)
-
-
-        if(kotlin.math.abs(sh.getLong("savedTime", 167666442) - getTime()) > 20) {     ////////Change time here!!
-            qrCodeIV.setImageDrawable(drawable)
-        }
-        Log.d("QWERT", "Saved - " + sh.getLong("savedTime", 167666442).toString() +"   Current - " + getTime())
-
     }
 
 
-    @Throws(Exception::class)
     private fun getTime(): Long {
-        /*val url = "https://time.is/Unix_time"
-        val doc: Document = Jsoup.parse(URL(url).openStream(), "UTF-8", url)
-        val tags = arrayOf(
-            "div[id=time_section]",
-            "div[id=clock0_bg]"
-        )
-        var elements: Elements = doc.select(tags[0])
-        for (i in tags.indices) {
-            elements = elements.select(tags[i])
-        }
-        return elements.text().toLong()*/
         return System.currentTimeMillis() / 1000L
     }
 }
