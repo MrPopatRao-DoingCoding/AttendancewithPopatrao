@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.jsoup.Jsoup;
@@ -32,7 +31,6 @@ public class SettingsActivity extends AppCompatActivity {
     ImageButton clearDataButton;
 
     EditText editTextPRN;
-    ImageView homeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +42,6 @@ public class SettingsActivity extends AppCompatActivity {
         editTextDivision = findViewById(R.id.editTextDivision);
         clearDataButton = findViewById(R.id.ClearDataButton);
         editTextPRN = findViewById(R.id.editTextPRN);
-        homeButton = findViewById(R.id.home_image);
 
         SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
         editTextName.setText(sh.getString("Name", ""));
@@ -167,13 +164,6 @@ public class SettingsActivity extends AppCompatActivity {
                     myEdit.putLong("savedTime", t);
                 }
                 myEdit.apply();
-            }
-        });
-
-        homeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
             }
         });
     }

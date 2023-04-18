@@ -41,7 +41,7 @@ class GiveAttendance : AppCompatActivity() {
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         val formatted_date = current_time.format(formatter)
 
-        var finalString = "{}|" + formatted_date + "|" + sh.getString("Roll No", "") + "|" + sh.getString("Div", "") + "|" + sh.getString("Name", "") + "|" + sh.getString("PRN", "") + "|"
+        var finalString = "{}|" + formatted_date + "|" + sh.getString("Roll No", "") + "|" + sh.getString("Div", "") + "|" + sh.getString("Name", "")
         val key = formatted_date
         val salt = "Mith"
         val iv = ByteArray(16)

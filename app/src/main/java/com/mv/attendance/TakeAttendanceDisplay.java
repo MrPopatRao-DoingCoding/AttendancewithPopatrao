@@ -129,22 +129,19 @@ public class TakeAttendanceDisplay extends AppCompatActivity {
                 final EditText inputEditTextNameOfStudent = new EditText(getApplicationContext());
                 final EditText inputEditTextDivOfStudent = new EditText(getApplicationContext());
                 final EditText inputEditTextRollNoOfStudent = new EditText(getApplicationContext());
-                final EditText inputEditTextPRNOfStudent = new EditText(getApplicationContext());
                 inputEditTextNameOfStudent.setHint("Name");
                 inputEditTextDivOfStudent.setHint("Div");
                 inputEditTextRollNoOfStudent.setHint("Roll No.");
-                inputEditTextPRNOfStudent.setHint("PRN No. ");
                 inputEditTextRollNoOfStudent.setInputType(InputType.TYPE_CLASS_NUMBER);
                 layout.addView(inputEditTextNameOfStudent);
                 layout.addView(inputEditTextDivOfStudent);
                 layout.addView(inputEditTextRollNoOfStudent);
-                layout.addView(inputEditTextPRNOfStudent);
                 builder.setMessage("Add a new student")
                         .setCancelable(false)
                         .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
 
-                                Student student = new Student(Integer.parseInt(inputEditTextRollNoOfStudent.getText().toString()), inputEditTextDivOfStudent.getText().toString(), inputEditTextNameOfStudent.getText().toString(), System.currentTimeMillis() / 1000L, Integer.parseInt(inputEditTextPRNOfStudent.getText().toString()));
+                                Student student = new Student(Integer.parseInt(inputEditTextRollNoOfStudent.getText().toString()), inputEditTextDivOfStudent.getText().toString(), inputEditTextNameOfStudent.getText().toString());
                                 finalListAttendanceSession[0].get(countInListAttendance).addStudent(student);
                                 Gson gson = new Gson();
                                 String jsonToShareAttendanceSession = gson.toJson(attendanceSession);
