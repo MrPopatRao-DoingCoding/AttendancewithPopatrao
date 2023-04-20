@@ -38,7 +38,6 @@ import java.util.List;
 public class AttendanceListViewMode2 extends AppCompatActivity {
 
     ListView listViewPast;
-    ImageButton new_attendance_session_button;
 
     FirebaseDatabase database;
     DatabaseReference reference;
@@ -50,46 +49,9 @@ public class AttendanceListViewMode2 extends AppCompatActivity {
 
         // Linking corresponding XML views to variables
         listViewPast=findViewById(R.id.listViewPast);
-        new_attendance_session_button=findViewById(R.id.buttonNewAttendanceMode2ThroughQRCode);
 
         // Shared Preferences
         SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
-
-        new_attendance_session_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(AttendanceListViewMode2.this);  // AlertDialog Creation
-                Drawable drawable = ContextCompat.getDrawable(AttendanceListViewMode2.this,  R.drawable.white_alert_dialogue_background);
-                final EditText inputEditTextTitle = new EditText(getApplicationContext());
-                final EditText inputEditTextNameOfTeacher = new EditText(getApplicationContext());
-                final EditText divisionOfClass = new EditText(getApplicationContext());
-                LinearLayout layout = createAlertDialogLayout(sh, drawable, inputEditTextTitle, inputEditTextNameOfTeacher, divisionOfClass);  // Create Layout Of AlertDialog
-                builder.setMessage("Add a new lecture")
-                        .setCancelable(false)
-                        .setPositiveButton("Add", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                positiveButtonClickedAlertDialog(inputEditTextTitle, inputEditTextNameOfTeacher, divisionOfClass);
-                                dialog.dismiss();
-                            }
-                        })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                //  Action for 'NO' Button
-                                dialog.cancel();
-                            }
-                        });
-                AlertDialog alert = builder.create();  //Creating dialog box
-                alert.setTitle("New Attendance Session");  //Setting the title
-                alert.setView(layout);  // Set layout to alertDialog
-                drawable = ContextCompat.getDrawable(AttendanceListViewMode2.this,  R.drawable.grey_alert_dialogue_background);
-                alert.getWindow().setBackgroundDrawable(drawable);
-                alert.show();  // Show alertDialog
-                //Change WindowManager layout to dim background after showing alertDialog
-                WindowManager.LayoutParams lp = alert.getWindow().getAttributes();
-                lp.dimAmount = 0.75f;
-                alert.getWindow().setAttributes(lp);
-            }
-        });
 
         // Getting FireBase Realtime Database instance
         database = FirebaseDatabase.getInstance();

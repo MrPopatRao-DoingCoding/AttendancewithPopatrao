@@ -184,6 +184,7 @@ public class SelectModeForTakingAttendance extends AppCompatActivity {
                 layout.addView(inputEditTextTitle);
                 layout.addView(inputEditTextNameOfTeacher);
                 layout.addView(divisionOfClass);
+                layout.addView(subjectOfClass);
                 //layout.addView(inputEditTextRollNoOfStudent);
                 builder.setMessage("Add a new lecture")
                         .setCancelable(false)
