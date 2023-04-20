@@ -17,10 +17,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.concurrent.Executor;
 
@@ -57,6 +59,7 @@ public class HomeActivity1 extends AppCompatActivity {
         // Shared Preferences
         SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
         String typeOfPerson = sh.getString("TypeOfPerson", "Not Set");
+        //String setPRN = sh.getString("PRN", "NULL");
 
         if(typeOfPerson.equals("Teacher")){  // If user is teacher, switch type to teacher
             switchToTeacher();
@@ -81,24 +84,54 @@ public class HomeActivity1 extends AppCompatActivity {
         Mode1_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                String setPRN = sh.getString("PRN", "");
+                Log.d("QWERT", "PRN -> " + setPRN);
                 // If teacher, go to activity for selecting mode of attendance
                 if (typeOfPerson.equals("Teacher")) {
-                    Intent intent = new Intent(HomeActivity1.this, SelectModeForTakingAttendance.class);
-                    startActivity(intent);
+
+                    if(sh.getString("PRN", "").equals("")){
+                        Toast.makeText(HomeActivity1.this, "Entering all fields is mandatory!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(HomeActivity1.this, Settings_teacher.class);
+                        startActivity(intent);
+                    }
+                    else{Intent intent = new Intent(HomeActivity1.this, SelectModeForTakingAttendance.class);
+                        startActivity(intent);}
+
+                    //Intent intent = new Intent(HomeActivity1.this, SelectModeForTakingAttendance.class);
+                    //startActivity(intent);
+
                 } else {
                     // If student, go to activity for giving Mode1 attendance
-                    Intent intent = new Intent(HomeActivity1.this, GiveAttendance.class);
-                    startActivity(intent);
+                    if(setPRN.equals("")){
+                        Toast.makeText(HomeActivity1.this, "Entering all fields is mandatory!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(HomeActivity1.this, SettingsActivity.class);
+                        startActivity(intent);
+                    }
+                    else {
+                        Intent intent = new Intent(HomeActivity1.this, GiveAttendance.class);
+                        startActivity(intent);
+                    }
                 }
             }
         });
 
         Stats_card.setOnClickListener(new View.OnClickListener() {
+
+            String setPRN = sh.getString("PRN", "");
             @Override
             public void onClick(View view) {
                 // Start stats activity for students
-                Intent intent = new Intent(HomeActivity1.this, StatsActivity.class);
-                startActivity(intent);
+                if(sh.getString("PRN", "").equals("")){
+                    Toast.makeText(HomeActivity1.this, "Entering all fields is mandatory!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(HomeActivity1.this, SettingsActivity.class);
+                    startActivity(intent);
+                }
+                else {
+                    Intent intent = new Intent(HomeActivity1.this, StatsActivity.class);
+                    startActivity(intent);
+                }
+
             }
         });
 
@@ -107,16 +140,34 @@ public class HomeActivity1 extends AppCompatActivity {
         final BiometricPrompt.PromptInfo promptInfo = createBiometricSecurityPrompt();  // Set up fingerprint biometric prompt
 
         Mode2_card.setOnClickListener(new View.OnClickListener() {
+
+            //String setPRN = sh.getString("PRN", "");
             @Override
             public void onClick(View v) {
                 if (typeOfPerson.equals("Teacher")) {
                     // If teacher, open Past Attendances Activity
-                    Intent intent = new Intent(HomeActivity1.this, AttendanceListViewMode2.class);
-                    startActivity(intent);
-                } else {
-                    // Authenticate biometric info and then start the next activity of giving attendance through mode 2
-                    biometricPrompt.authenticate(promptInfo);
+                    if (sh.getString("PRN", "").equals("")) {
+                        Toast.makeText(HomeActivity1.this, "Entering all fields is mandatory!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(HomeActivity1.this, Settings_teacher.class);
+                        startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(HomeActivity1.this, AttendanceListViewMode2.class);
+                        startActivity(intent);
+                    }
                 }
+                else{
+                    if (sh.getString("PRN", "").equals("")) {
+                        Toast.makeText(HomeActivity1.this, "Entering all fields is mandatory!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(HomeActivity1.this, SettingsActivity.class);
+                        startActivity(intent);
+                    } else {
+                        // Authenticate biometric info and then start the next activity of giving attendance through mode 2
+                        biometricPrompt.authenticate(promptInfo);
+                    }
+
+                    }
+
+
             }
         });
     }
